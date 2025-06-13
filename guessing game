@@ -1,0 +1,32 @@
+import random
+
+class Solution(object):
+    def numberGuess(self):
+
+        surprise_num = random.randint(1, 100)
+
+        game_on = True
+        while game_on:
+            player_num = input("Enter a number from 1 - 100:")
+            if not player_num.isdigit():
+                print("Enter a valid number.")
+                continue
+                
+
+            player_num = int(player_num)
+
+            if player_num < surprise_num:
+                print("Too low, try again")
+                player_num
+
+            elif player_num > surprise_num:
+                print("Too high, try again")
+                player_num
+
+            else:
+                print("Congratulations, you have won the game!!")
+                game_on = False
+
+
+answer = Solution()
+answer.numberGuess()
