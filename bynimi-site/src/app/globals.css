@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/*
+  Two themes, chosen per page (see ROADMAP.md, "Look and feel"):
+    atelier: light and soft, for shopping (shop, product, cart, checkout)
+    noir:    dark and dramatic, for the brand pages (home, lookbook, charm bar, about)
+  A section opts in with data-theme="noir" | "atelier"; everything below it
+  picks up the tokens.
+*/
+
+:root,
+[data-theme="atelier"] {
+  --bg: #f6f1ea;
+  --surface: #fffdf9;
+  --ink: #1c1714;
+  --muted: #6e625a;
+  --line: #e3d8cc;
+  --accent: #7a1e2c;
+  --accent-ink: #fff8f0;
+  --gold: #a8823f;
+  --success: #3f6b45;
+  --warning: #9a5b13;
+  color-scheme: light;
+}
+
+[data-theme="noir"] {
+  --bg: #0d0a09;
+  --surface: #171210;
+  --ink: #f2eadf;
+  --muted: #a39385;
+  --line: #2e2420;
+  --accent: #c9a46a;
+  --accent-ink: #0d0a09;
+  --gold: #c9a46a;
+  --success: #8fbf8f;
+  --warning: #e0a85a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-gold: var(--gold);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-instrument-serif);
+  --font-mono: var(--font-spline-mono);
+
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme] {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Small uppercase labels: prices, eyebrows, tags. */
+@utility label {
+  font-family: var(--font-spline-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Page transition: content rises in on every navigation. */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.page-in {
+  animation: page-in 0.7s var(--ease-silk) both;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

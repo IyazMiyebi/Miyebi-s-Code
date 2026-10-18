@@ -57,7 +57,7 @@ customers are on phones and mobile data, so this matters.
 
 *Alternative:* keep **Bumpa as the back office** (where you already manage stock and orders) and
 build only the new front end on top of it. That's faster, but you depend on Bumpa's
-unofficial storefront API and its checkout. Decide in Stage 0.
+unofficial storefront API and its checkout. *(Decided: Supabase. See Decisions below.)*
 
 ---
 
@@ -73,7 +73,7 @@ Each stage lists **what we build**, **what I need from you**, and **done means**
 - Page shell: header, menu, footer, page transitions, loading screen
 
 **I need from you**
-- The decisions in the list at the end of this file
+- ~~The decisions at the end of this file~~ (done)
 - Logo files, brand fonts if any, and the **best product and lifestyle photos** (the original high-res files, not Instagram downloads)
 - 2–3 websites you love the look of (any industry)
 
@@ -166,7 +166,15 @@ Reviews with photos, customer accounts with loyalty points, "build your bag" (ba
 
 ## Progress
 
-- [ ] Stage 0: Foundations
+- [ ] Stage 0: Foundations (built; waiting on the items below)
+  - [x] Next.js project, design tokens for both themes, fonts, site shell, page transitions
+  - [x] Product data imported and cleaned: 27 Bumpa listings → 13 products, 79 variants, 6 collections
+  - [x] Supabase schema + seed, tested on Postgres 16 (re-runnable, public read-only)
+  - [x] Shop, collection and product pages with finish/colour picker; style guide at `/style-guide`
+  - [ ] Vercel account + preview link (you: import the repo, root directory `bynimi-site`)
+  - [ ] Supabase project created and connected (you: create it, run the two SQL files, share the URL + anon key)
+  - [ ] Nimi approves the style guide
+  - [ ] Loading screen (moved to Stage 1, where the ASCII effect is built)
 - [ ] Stage 1: Home page
 - [ ] Stage 2: Shop and product pages
 - [ ] Stage 3: Cart, checkout and payments
@@ -175,10 +183,20 @@ Reviews with photos, customer accounts with loyalty points, "build your bag" (ba
 - [ ] Stage 6: Polish, speed, SEO, testing
 - [ ] Stage 7: Launch
 
-## Decisions needed before Stage 0
+## Questions for Nimi (found while importing the data)
 
-1. **Back office:** our own (Supabase, recommended) or keep Bumpa behind the new front end?
-2. **Payments:** Paystack (recommended) or Flutterwave? Do you already have a business account with either?
-3. **Look and feel:** dark and dramatic (like the reel) or light and soft, or dark home page with lighter shop pages?
-4. **Access:** are you the business owner, or building this for them? We'll need the owner's logins for the domain, Paystack and Meta later on.
-5. **Hosting accounts:** is it OK to create free Vercel and Supabase accounts under the business email?
+1. **First-order offer:** the old banner said 10% (WELCOME10), the pop-up said 20%. The new site uses 10% only. Correct?
+2. **Exchange rates:** currently ₦1,000 = $1 = C$1 and ₦1,300 = £1 = €1. Keep, or update?
+3. **Colour names:** the Classic Smooth Dahlia has both *Pink* and *Baby Pink*, and *Green* and *Olive Green*. Are these really different colours?
+4. **Photos needed first**, because these variants are in stock but have no photo of their own (Bumpa's links are dead or missing):
+   Dahlia Classic Smooth **Black** (2 in stock) and **Pastel Blue** (1), and the Asooke Alissa in **Black, Brown, Purple, Sanyan** (1 each).
+   Also the Textured Pebble Dahlia in Black (sold out).
+5. **Most Loved** in Bumpa only contains the Dahlia. Which other pieces belong there?
+
+## Decisions (agreed 18 Oct 2026)
+
+1. **Back office:** our own, on **Supabase**. Bumpa is retired at launch.
+2. **Payments:** **Paystack**. A new business account will be set up; we build against test keys until it's verified.
+3. **Look and feel:** **mixed, by page.** Dark and dramatic for the home page, Lookbook, Charm Bar and About; light and soft for the shop, product pages, cart and checkout, where clarity sells.
+4. **Owner:** the site is built **for Nimi**. Before Stages 3 and 7 we need Nimi's access to the Paystack account, the bynimiie.com domain, and Meta/Instagram.
+5. **Photos and logo:** coming later. Until then we use the current product photos from the live store as placeholders.
