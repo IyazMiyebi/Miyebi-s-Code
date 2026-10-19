@@ -91,6 +91,44 @@ body {
   animation: page-in 0.7s var(--ease-silk) both;
 }
 
+/* Regional prices (src/components/price.tsx): every price is in the markup
+   in all currencies; show the one on <html data-currency>, Naira by default. */
+[data-cur]:not([data-cur="NGN"]) {
+  display: none;
+}
+
+html[data-currency="USD"] [data-cur="NGN"] {
+  display: none;
+}
+
+html[data-currency="USD"] [data-cur="USD"] {
+  display: inline;
+}
+
+html[data-currency="GBP"] [data-cur="NGN"] {
+  display: none;
+}
+
+html[data-currency="GBP"] [data-cur="GBP"] {
+  display: inline;
+}
+
+html[data-currency="EUR"] [data-cur="NGN"] {
+  display: none;
+}
+
+html[data-currency="EUR"] [data-cur="EUR"] {
+  display: inline;
+}
+
+html[data-currency="CAD"] [data-cur="NGN"] {
+  display: none;
+}
+
+html[data-currency="CAD"] [data-cur="CAD"] {
+  display: inline;
+}
+
 /* First-visit ASCII intro (src/components/effects/ascii-intro.tsx). */
 [data-intro-seen] .ascii-intro {
   display: none;

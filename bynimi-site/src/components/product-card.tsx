@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cardImages, priceRange, swatches, totalStock, type Product } from "@/lib/catalog";
-import { formatRange } from "@/lib/money";
 import { variantHref, variantsMatching } from "@/lib/variant-link";
+import { Price } from "./price";
 import { StockBadge } from "./stock-badge";
 import { SwatchDots } from "./swatch-dots";
 
@@ -22,6 +22,7 @@ export function ProductCard({
   const [cover, hover] = cardImages(product);
   const colours = swatches(product);
   const stock = totalStock(product);
+  const range = priceRange(product);
 
   return (
     <Link href={variantHref(full.slug, featured.length ? options : {})} className="group block">
@@ -50,7 +51,9 @@ export function ProductCard({
 
       <div className="mt-3 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
         <h3 className="font-serif text-xl leading-tight">{product.name}</h3>
-        <p className="label shrink-0 sm:pt-1">{formatRange(priceRange(product))}</p>
+        <p className="label shrink-0 sm:pt-1">
+          <Price ngn={range.min} from={range.min !== range.max} />
+        </p>
       </div>
       {colours.length > 1 && <SwatchDots swatches={colours} className="mt-2" />}
     </Link>

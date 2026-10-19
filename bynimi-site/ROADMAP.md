@@ -184,7 +184,12 @@ Reviews with photos, customer accounts with loyalty points, "build your bag" (ba
   - [x] Follow @by.nimiie strip
   - [x] PageSpeed Insights on the live site (mobile): **performance 94**, accessibility 96–100, best practices 100, SEO 100
   - Moved: "quick add" on product cards needs the bag, so it ships with Stage 3. A live Instagram feed needs Meta access, so for now it's a link strip
-- [ ] Stage 2: Shop and product pages
+- [ ] Stage 2: Shop and product pages (in progress)
+  - [x] Links open a product on a chosen finish/colour (`?finish=…&colour=…`); spiral cards, the Suede Velvet Edit and finish collections use them; picking options updates the address bar for sharing
+  - [x] **Regional prices** (agreed 19 Oct): ₦35,500 shows as ₦35,499 in Nigeria and 34.99 in $, £, € and C$ (thousands of naira, rounded down, less a cent). Currency picked from the visitor's country, changeable in the header, remembered; no flash of the wrong price
+  - [ ] Shop filters, sort and search
+  - [ ] Product page: zoomable gallery, "Notify me" for sold-out colours, pre-order button, complete-the-look
+  - Note for Stage 3: Paystack charges in naira (USD only with a Zenith dom account), so a £34.99 order is charged as its naira equivalent at the day's rate and the checkout says so
 - [ ] Stage 3: Cart, checkout and payments
 - [ ] Stage 4: Brand and content pages
 - [ ] Stage 5: Back office
@@ -194,7 +199,7 @@ Reviews with photos, customer accounts with loyalty points, "build your bag" (ba
 ## Questions for Nimi (found while importing the data)
 
 1. **First-order offer:** the old banner said 10% (WELCOME10), the pop-up said 20%. The new site uses 10% only. Correct?
-2. **Exchange rates:** currently ₦1,000 = $1 = C$1 and ₦1,300 = £1 = €1. Keep, or update?
+2. ~~**Exchange rates**~~ Decided 19 Oct: regional prices instead (₦35,499 / 34.99 in $, £, €, C$). Exchange rates are only needed at checkout, to charge foreign prices in naira
 3. **Colour names:** the Classic Smooth Dahlia has both *Pink* and *Baby Pink*, and *Green* and *Olive Green*. Are these really different colours?
 4. **Photos needed first**, because these variants are in stock but have no photo of their own (Bumpa's links are dead or missing):
    Dahlia Classic Smooth **Black** (2 in stock) and **Pastel Blue** (1), and the Asooke Alissa in **Black, Brown, Purple, Sanyan** (1 each).

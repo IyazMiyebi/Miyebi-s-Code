@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Instrument_Serif, Spline_Sans_Mono } from "next/font/google";
+import { currencyGuard } from "@/lib/currency";
 import { introGuard } from "@/lib/intro";
 import { store } from "@/lib/store";
 import "./globals.css";
@@ -41,11 +42,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${geistSans.variable} ${instrumentSerif.variable} ${splineMono.variable} h-full antialiased`}
-      // introGuard may add data-intro-seen before React hydrates.
+      // introGuard and currencyGuard set data-* attributes before React hydrates.
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: introGuard }} />
+        <script dangerouslySetInnerHTML={{ __html: introGuard + currencyGuard }} />
       </head>
       <body className="min-h-full font-sans">{children}</body>
     </html>
