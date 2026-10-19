@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Price } from "@/components/price";
 import { ProductCard } from "@/components/product-card";
 import { StockBadge } from "@/components/stock-badge";
 import { SwatchDots } from "@/components/swatch-dots";
@@ -88,7 +89,9 @@ export default async function StyleGuide() {
           </div>
           <div>
             <p className="label text-muted">Labels and prices: Spline Sans Mono</p>
-            <p className="label">₦35,500 · Only 2 left · Dispatched same or next day</p>
+            <p className="label">
+              <Price ngn={35500} /> · Only 2 left · Dispatched same or next day
+            </p>
           </div>
         </div>
       </section>

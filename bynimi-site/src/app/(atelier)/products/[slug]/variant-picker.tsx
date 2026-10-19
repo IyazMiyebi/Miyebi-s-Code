@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { Product, Variant } from "@/lib/catalog";
-import { formatNgn } from "@/lib/money";
+import { Price } from "@/components/price";
 import { bestVariant, variantQuery } from "@/lib/variant-link";
 
 const SWATCH_OPTIONS = new Set(["Colour", "Metal"]);
@@ -108,9 +108,11 @@ export function VariantPicker({
       <div className="min-w-0">
         <h1 className="font-serif text-5xl leading-none sm:text-6xl">{product.name}</h1>
         <p className="mt-4 flex items-baseline gap-3 text-xl">
-          {formatNgn(variant.price_ngn)}
+          <Price ngn={variant.price_ngn} />
           {variant.compare_at_ngn && (
-            <s className="text-base text-muted">{formatNgn(variant.compare_at_ngn)}</s>
+            <s className="text-base text-muted">
+              <Price ngn={variant.compare_at_ngn} />
+            </s>
           )}
         </p>
 

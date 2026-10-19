@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav } from "@/lib/store";
+import { CurrencySwitcher } from "./currency-switcher";
 import { Wordmark } from "./wordmark";
 
 export function Header() {
@@ -53,10 +54,13 @@ export function Header() {
             </ul>
           </nav>
   
-          {/* The bag (cart) arrives in Stage 3. */}
-          <span className="label md:ml-6" aria-label="Bag, 0 items">
-            Bag (0)
-          </span>
+          <div className="flex items-center gap-5 md:ml-6">
+            <CurrencySwitcher className="hidden md:inline-flex" />
+            {/* The bag (cart) arrives in Stage 3. */}
+            <span className="label" aria-label="Bag, 0 items">
+              Bag (0)
+            </span>
+          </div>
         </div>
       </header>
 
@@ -78,6 +82,9 @@ export function Header() {
             </li>
           ))}
         </ul>
+        <div className="mt-10 px-6">
+          <CurrencySwitcher />
+        </div>
       </div>
     </>
   );
