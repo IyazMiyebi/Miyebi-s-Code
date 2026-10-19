@@ -34,6 +34,12 @@ export const store = {
     { name: "Esther Ibeh", quote: "★★★★★" },
     { name: "Deborah Guful", quote: "🥰" },
   ],
+  // Collections that are really one finish of a product: their cards show
+  // and open that finish (e.g. the Dahlia in suede velvet).
+  collectionOptions: {
+    "the-suede-velvet-edit": { Finish: "Suede Velvet" },
+    "asooke-designs": { Finish: "Asooke" },
+  } as Record<string, Record<string, string>>,
   home: {
     // Campaign shot: two Dahlia Minis. Swap for Nimi's own hero photo later.
     heroImage:

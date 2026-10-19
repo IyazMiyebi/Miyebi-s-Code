@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { getCollection, getCollections } from "@/lib/catalog";
+import { store } from "@/lib/store";
 
 export async function generateStaticParams() {
   return (await getCollections()).map((c) => ({ slug: c.slug }));
@@ -29,7 +30,7 @@ export default async function CollectionPage({ params }: PageProps<"/collections
       </header>
       <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
         {collection.products.map((p, i) => (
-          <ProductCard key={p.slug} product={p} priority={i < 4} />
+          <ProductCard key={p.slug} product={p} options={store.collectionOptions[slug]} priority={i < 4} />
         ))}
       </div>
     </div>
