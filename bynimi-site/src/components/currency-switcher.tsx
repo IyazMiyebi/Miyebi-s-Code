@@ -25,8 +25,13 @@ function subscribe(listener: () => void) {
   return () => listeners.delete(listener);
 }
 
+/** The visitor's current currency (Naira during prerendering). */
+export function useCurrency() {
+  return useSyncExternalStore(subscribe, read, () => DEFAULT_CURRENCY);
+}
+
 export function CurrencySwitcher({ className = "" }: { className?: string }) {
-  const current = useSyncExternalStore(subscribe, read, () => DEFAULT_CURRENCY);
+  const current = useCurrency();
   return (
     <label className={`label relative inline-flex items-center ${className}`}>
       <span className="sr-only">Currency</span>
