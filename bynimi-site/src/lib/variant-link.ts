@@ -4,7 +4,7 @@
 // case-insensitively. Any subset works: ?finish=suede-velvet picks the best
 // colour in that finish (in stock first).
 
-import type { Product, Variant } from "./catalog";
+import type { Product, Variant } from "./product";
 
 export const optionSlug = (s: string) =>
   s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

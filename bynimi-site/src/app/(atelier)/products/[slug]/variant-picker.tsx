@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import type { Product, Variant } from "@/lib/catalog";
+import type { Product, Variant } from "@/lib/product";
 import { Price } from "@/components/price";
 import { bestVariant, variantQuery } from "@/lib/variant-link";
 

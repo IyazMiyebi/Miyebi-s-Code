@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import type { Product } from "@/lib/catalog";
+import type { Product } from "@/lib/product";
 import { optionsFromParams } from "@/lib/variant-link";
 import { VariantPicker } from "./variant-picker";
 
