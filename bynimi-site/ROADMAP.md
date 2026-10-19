@@ -172,7 +172,7 @@ Reviews with photos, customer accounts with loyalty points, "build your bag" (ba
   - [x] Supabase schema + seed, tested on Postgres 16 (re-runnable, public read-only)
   - [x] Shop, collection and product pages with finish/colour picker; style guide at `/style-guide`
   - [ ] Vercel account + preview link (you: import the repo, root directory `bynimi-site`)
-  - [ ] Supabase project created and connected (you: create it, run the two SQL files, share the URL + anon key)
+  - [x] Supabase project created, schema + products loaded, site reading from it live
   - [ ] Nimi approves the style guide
   - [ ] Loading screen (moved to Stage 1, where the ASCII effect is built)
 - [ ] Stage 1: Home page

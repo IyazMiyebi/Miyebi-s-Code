@@ -6,10 +6,13 @@ import { getCollection, getProduct, getProducts } from "@/lib/catalog";
 // Stage 0 version of the home page: the layout and content are real, the
 // interactive effects (water ripple hero, spiral gallery, box grid) arrive
 // in Stage 1.
-export default function Home() {
-  const dahlia = getProduct("the-dahlia-mini");
-  const velvet = getCollection("the-suede-velvet-edit");
-  const latest = getProducts().filter((p) => p.category === "bag").slice(0, 4);
+export default async function Home() {
+  const [dahlia, velvet, products] = await Promise.all([
+    getProduct("the-dahlia-mini"),
+    getCollection("the-suede-velvet-edit"),
+    getProducts(),
+  ]);
+  const latest = products.filter((p) => p.category === "bag").slice(0, 4);
   const heroImage = dahlia?.images[0];
   const velvetImage = velvet?.image ?? dahlia?.variants.find((v) => v.options.Finish === "Suede Velvet")?.images[0];
 
