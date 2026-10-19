@@ -91,6 +91,22 @@ body {
   animation: page-in 0.7s var(--ease-silk) both;
 }
 
+/* First-visit ASCII intro (src/components/effects/ascii-intro.tsx). */
+[data-intro-seen] .ascii-intro {
+  display: none;
+}
+
+.ascii-intro {
+  animation: intro-failsafe 0.5s 3.5s forwards;
+}
+
+@keyframes intro-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 @keyframes marquee {
   to {
     transform: translateX(-50%);

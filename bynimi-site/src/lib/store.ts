@@ -23,6 +23,23 @@ export const store = {
     "Free shipping on your first 5 UK orders",
     "Pre-order anything that's sold out",
   ],
+  // From the old site's homepage.
+  testimonials: [
+    { name: "Mat", quote: "I absolutely love shopping with Nimi. Her designs are unique, and the quality? Impeccable!" },
+    { name: "Feyikemi Odesanmi", quote: "Amazing bag ❤❤❤" },
+    { name: "Nissi Jatau", quote: "New found favorite bag" },
+    { name: "Deborah-Ruth Isimoya", quote: "Great purchase!" },
+    { name: "Daniel Eda", quote: "Lovely bag" },
+    { name: "Atilehin", quote: "★★★★★" },
+    { name: "Esther Ibeh", quote: "★★★★★" },
+    { name: "Deborah Guful", quote: "🥰" },
+  ],
+  home: {
+    // Campaign shot: two Dahlia Minis. Swap for Nimi's own hero photo later.
+    heroImage:
+      "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8475813577976dfac005e7376fc65c2d12c8fe75.jpeg",
+    heroAlt: "Two women holding Dahlia Mini bags in brown and navy",
+  },
 } as const;
 
 export const nav = [

@@ -14,16 +14,19 @@ npm run dev          # http://localhost:3000
 
 Other checks: `npm run lint`, `npm run build`.
 
-## Pages so far (Stage 0)
+## Pages so far
 
 | Path | Theme | What it is |
 |---|---|---|
-| `/` | noir | Home: layout and content; the interactive effects come in Stage 1 |
+| `/` | noir | Home: ASCII intro, water-ripple hero, spiral gallery, testimonials, Inner Circle sign-up on the box grid |
 | `/shop` | atelier | Every product, grouped by category |
 | `/collections/[slug]` | atelier | Most Loved, The Suede Velvet Edit, Mini Bags, Shoulder Bags, Bag Accessories, Asooke Designs |
 | `/products/[slug]` | atelier | Product page with finish and colour picker, live stock, gallery |
 | `/style-guide` | atelier | Colours, type and components, for Nimi to approve |
 | `/charm-bar`, `/lookbook`, `/about` | noir | Placeholders for Stage 4 |
+
+The effects live in `src/components/effects/`. Each one keeps the plain content underneath (the
+photo, the form), pauses when off screen, and respects the phone's "reduce motion" setting.
 
 Themes are set per route group: pages in `src/app/(noir)/` are dark, pages in
 `src/app/(atelier)/` are light. Colour tokens live in `src/app/globals.css`.
@@ -54,8 +57,14 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
 Without them it falls back to `data/catalog.json`. The catalog is cached and refreshes at most a
 minute after a change in Supabase (`src/lib/catalog.ts`).
 
-To set up a fresh database: run `supabase/migrations/20261018000000_catalog.sql` once in the SQL
-editor, then `supabase/seed.sql` (safe to re-run; it updates, never duplicates).
+To set up a fresh database, run these in the SQL editor, in order:
+
+1. `supabase/migrations/20261018000000_catalog.sql` (once)
+2. `supabase/migrations/20261019000000_newsletter.sql` (once): Inner Circle sign-ups
+3. `supabase/seed.sql` (safe to re-run; it updates, never duplicates)
+
+Sign-ups land in the `newsletter_subscribers` table (Table Editor in Supabase). The public can add
+an email but can't read the list.
 
 Public visitors can only read published products and collections (row level security, verified
 against the live project). The publishable key is safe in the browser; the **secret / service_role
