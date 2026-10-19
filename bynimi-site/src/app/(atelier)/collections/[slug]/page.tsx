@@ -3,19 +3,19 @@ import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { getCollection, getCollections } from "@/lib/catalog";
 
-export function generateStaticParams() {
-  return getCollections().map((c) => ({ slug: c.slug }));
+export async function generateStaticParams() {
+  return (await getCollections()).map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/collections/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const c = getCollection(slug);
+  const c = await getCollection(slug);
   return c ? { title: c.name, description: c.description ?? undefined } : {};
 }
 
 export default async function CollectionPage({ params }: PageProps<"/collections/[slug]">) {
   const { slug } = await params;
-  const collection = getCollection(slug);
+  const collection = await getCollection(slug);
   if (!collection) notFound();
 
   return (

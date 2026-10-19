@@ -42,9 +42,8 @@ function Palette({ theme }: { theme: "atelier" | "noir" }) {
   );
 }
 
-export default function StyleGuide() {
-  const dahlia = getProduct("the-dahlia-mini");
-  const liora = getProduct("the-liora");
+export default async function StyleGuide() {
+  const [dahlia, liora] = await Promise.all([getProduct("the-dahlia-mini"), getProduct("the-liora")]);
 
   return (
     <div className="mx-auto max-w-6xl space-y-20 px-4 py-14 sm:px-6">

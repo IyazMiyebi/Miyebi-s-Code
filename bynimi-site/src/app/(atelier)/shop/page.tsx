@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 // Stage 0: every product, grouped by category. Filtering, sorting and search
 // arrive in Stage 2.
-export default function Shop() {
-  const products = getProducts();
+export default async function Shop() {
+  const [products, collections] = await Promise.all([getProducts(), getCollections()]);
   const groups = (["bag", "charm", "scarf"] as Category[])
     .map((c) => ({ category: c, products: products.filter((p) => p.category === c) }))
     .filter((g) => g.products.length);
@@ -22,7 +22,7 @@ export default function Shop() {
         <p className="label text-muted">{products.length} pieces</p>
         <h1 className="mt-3 font-serif text-6xl sm:text-8xl">The shop</h1>
         <ul className="mt-8 flex flex-wrap gap-2">
-          {getCollections().map((c) => (
+          {collections.map((c) => (
             <li key={c.slug}>
               <Link
                 href={`/collections/${c.slug}`}

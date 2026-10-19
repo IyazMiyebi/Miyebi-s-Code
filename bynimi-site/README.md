@@ -14,16 +14,19 @@ npm run dev          # http://localhost:3000
 
 Other checks: `npm run lint`, `npm run build`.
 
-## Pages so far (Stage 0)
+## Pages so far
 
 | Path | Theme | What it is |
 |---|---|---|
-| `/` | noir | Home: layout and content; the interactive effects come in Stage 1 |
+| `/` | noir | Home: ASCII intro, water-ripple hero, spiral gallery, testimonials, Inner Circle sign-up on the box grid |
 | `/shop` | atelier | Every product, grouped by category |
 | `/collections/[slug]` | atelier | Most Loved, The Suede Velvet Edit, Mini Bags, Shoulder Bags, Bag Accessories, Asooke Designs |
 | `/products/[slug]` | atelier | Product page with finish and colour picker, live stock, gallery |
 | `/style-guide` | atelier | Colours, type and components, for Nimi to approve |
 | `/charm-bar`, `/lookbook`, `/about` | noir | Placeholders for Stage 4 |
+
+The effects live in `src/components/effects/`. Each one keeps the plain content underneath (the
+photo, the form), pauses when off screen, and respects the phone's "reduce motion" setting.
 
 Themes are set per route group: pages in `src/app/(noir)/` are dark, pages in
 `src/app/(atelier)/` are light. Colour tokens live in `src/app/globals.css`.
@@ -40,20 +43,37 @@ scripts/catalog-to-sql.mjs data/catalog.json ->  supabase/seed.sql
 - The importer merges the old duplicate listings (13 Dahlia Mini listings become one product with
   Finish and Colour options), takes prices from the variants, drops photo links that no longer
   exist on Bumpa's CDN, and never shows another colour's photo for a variant that has none.
-- Until Supabase is connected, the site reads `data/catalog.json` through `src/lib/catalog.ts`.
 
-## Connecting Supabase
+## Supabase
 
-1. Create a project at [supabase.com](https://supabase.com) (region: closest to Lagos, e.g. `eu-west`), ideally under the business email.
-2. In the SQL editor, run `supabase/migrations/20261018000000_catalog.sql`, then `supabase/seed.sql`.
-   Both are tested on Postgres 16; the seed is safe to run again (it updates, never duplicates).
-3. Share the project URL and anon key; `src/lib/catalog.ts` then switches to reading from Supabase.
+The live project is connected. The site reads the catalog from Supabase when these are set
+(locally in `.env.local`, which git ignores; see `.env.example`):
 
-Public visitors can only read published products and collections (row level security); all writes go
-through the server with the service role key, and the admin login arrives in Stage 5.
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xotbgaxdmlofqkywwuio.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
+```
+
+Without them it falls back to `data/catalog.json`. The catalog is cached and refreshes at most a
+minute after a change in Supabase (`src/lib/catalog.ts`).
+
+To set up a fresh database, run these in the SQL editor, in order:
+
+1. `supabase/migrations/20261018000000_catalog.sql` (once)
+2. `supabase/migrations/20261019000000_newsletter.sql` (once): Inner Circle sign-ups
+3. `supabase/seed.sql` (safe to re-run; it updates, never duplicates)
+
+Sign-ups land in the `newsletter_subscribers` table (Table Editor in Supabase). The public can add
+an email but can't read the list.
+
+Public visitors can only read published products and collections (row level security, verified
+against the live project). The publishable key is safe in the browser; the **secret / service_role
+key must never go in this repo or in a `NEXT_PUBLIC_` variable**.
 
 ## Deploying a preview (Vercel)
 
 1. Sign in to [vercel.com](https://vercel.com) with GitHub and import this repository.
 2. Set **Root Directory** to `bynimi-site`. Everything else stays at its default.
-3. Every push then gets its own preview link to try on a phone.
+3. Under **Environment Variables**, add `NEXT_PUBLIC_SUPABASE_URL` and
+   `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (values above) for all environments.
+4. Every push then gets its own preview link to try on a phone.

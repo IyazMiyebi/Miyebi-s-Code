@@ -172,10 +172,20 @@ Reviews with photos, customer accounts with loyalty points, "build your bag" (ba
   - [x] Supabase schema + seed, tested on Postgres 16 (re-runnable, public read-only)
   - [x] Shop, collection and product pages with finish/colour picker; style guide at `/style-guide`
   - [ ] Vercel account + preview link (you: import the repo, root directory `bynimi-site`)
-  - [ ] Supabase project created and connected (you: create it, run the two SQL files, share the URL + anon key)
+  - [x] Supabase project created, schema + products loaded, site reading from it live
   - [ ] Nimi approves the style guide
-  - [ ] Loading screen (moved to Stage 1, where the ASCII effect is built)
-- [ ] Stage 1: Home page
+  - [x] Loading screen (built in Stage 1 as the ASCII intro)
+- [ ] Stage 1: Home page (built; waiting on the items below)
+  - [x] First-visit **ASCII intro** (once per session, skippable, never on reduced motion)
+  - [x] Hero with the **water ripple** over the campaign photo (touch/mouse, gentle idle drops)
+  - [x] **Spiral gallery**: one rising ring of 12 Dahlia colours, drag/swipe to spin
+  - [x] Latest products, Suede Velvet Edit, **testimonials** marquee (the 8 real reviews)
+  - [x] **Inner Circle** sign-up on the **interactive box grid**, saving to Supabase (insert-only, private list)
+  - [x] Follow @by.nimiie strip
+  - [x] Accessibility, best practices and SEO: 100 / 100 / 100 (Lighthouse, mobile)
+  - [ ] Performance: 81 median in the test container (from 33 before tuning; target 90). Re-measure on the live Vercel URL with PageSpeed Insights, which has a real GPU
+  - [ ] You: run `supabase/migrations/20261019000000_newsletter.sql` in Supabase so sign-ups save
+  - [ ] Moved: "quick add" on product cards needs the bag, so it ships with Stage 3. A live Instagram feed needs Meta access, so for now it's a link strip
 - [ ] Stage 2: Shop and product pages
 - [ ] Stage 3: Cart, checkout and payments
 - [ ] Stage 4: Brand and content pages
