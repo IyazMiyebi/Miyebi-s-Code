@@ -10,5 +10,10 @@ import { VariantPicker } from "./variant-picker";
 // inside a Suspense boundary whose fallback is the picker on its default bag.
 export function VariantPickerFromUrl({ product }: { product: Product }) {
   const params = useSearchParams();
-  return <VariantPicker product={product} initialOptions={optionsFromParams(product, params)} />;
+  // Next.js keeps visited pages alive, so arriving again from a different
+  // link (another spiral card, say) would otherwise keep the old choice. A
+  // new key per link starts the picker fresh from that link's options.
+  return (
+    <VariantPicker key={params.toString()} product={product} initialOptions={optionsFromParams(product, params)} />
+  );
 }
