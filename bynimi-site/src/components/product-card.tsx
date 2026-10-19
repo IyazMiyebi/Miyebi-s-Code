@@ -1,0 +1,45 @@
+import Image from "next/image";
+import Link from "next/link";
+import { cardImages, priceRange, swatches, totalStock, type Product } from "@/lib/catalog";
+import { formatRange } from "@/lib/money";
+import { StockBadge } from "./stock-badge";
+import { SwatchDots } from "./swatch-dots";
+
+export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
+  const [cover, hover] = cardImages(product);
+  const colours = swatches(product);
+  const stock = totalStock(product);
+
+  return (
+    <Link href={`/products/${product.slug}`} className="group block">
+      <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+        {cover && (
+          <Image
+            src={cover}
+            alt={product.name}
+            fill
+            priority={priority}
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+            className="object-cover transition-transform duration-700 ease-silk group-hover:scale-[1.03]"
+          />
+        )}
+        {hover && (
+          <Image
+            src={hover}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+            className="object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          />
+        )}
+        <StockBadge stock={stock} className="absolute top-3 left-3" />
+      </div>
+
+      <div className="mt-3 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+        <h3 className="font-serif text-xl leading-tight">{product.name}</h3>
+        <p className="label shrink-0 sm:pt-1">{formatRange(priceRange(product))}</p>
+      </div>
+      {colours.length > 1 && <SwatchDots swatches={colours} className="mt-2" />}
+    </Link>
+  );
+}

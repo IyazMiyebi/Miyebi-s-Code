@@ -1,0 +1,2587 @@
+{
+  "source": {
+    "platform": "bumpa",
+    "url": "https://bynimiie.com",
+    "fetched_at": "2026-10-18T22:35:06.638Z"
+  },
+  "currencies": [
+    {
+      "code": "NGN",
+      "symbol": "₦",
+      "rate": 1
+    },
+    {
+      "code": "USD",
+      "symbol": "$",
+      "rate": 1000
+    },
+    {
+      "code": "GBP",
+      "symbol": "£",
+      "rate": 1300
+    },
+    {
+      "code": "EUR",
+      "symbol": "€",
+      "rate": 1300
+    },
+    {
+      "code": "CAD",
+      "symbol": "C$",
+      "rate": 1000
+    }
+  ],
+  "collections": [
+    {
+      "slug": "most-loved",
+      "name": "Most Loved",
+      "description": "The pieces everyone’s talking about, our most-loved designs, proven to turn heads.",
+      "image": "https://dodptt9f4zk9h.cloudfront.net/stores/8942/collections/3f1f2d13134edeb259bd8cd99cac17a02b1fd2eb.png",
+      "products": [
+        "the-dahlia-mini"
+      ]
+    },
+    {
+      "slug": "the-suede-velvet-edit",
+      "name": "The Suede Velvet Edit",
+      "description": "The Suede Velvet Edit is an exploration of softness, depth, and quiet presence. This collection reimagines our signature Dahlia Mini through a more tactile lens, where texture leads, and colour reveals itself slowly. Each piece is crafted in suede velvet selected for its richness and subtle variation, designed to move with light and feel unmistakably personal. These bags are designed for close moments. For evenings that linger. For days when detail matters more than display. Intentional by design and limited in expression, The Suede Velvet Edit invites you to experience Dahlia differently, softer, warmer, and undeniably refined.",
+      "image": "https://dodptt9f4zk9h.cloudfront.net/stores/8942/collections/d8501a1ee80aeaf09d5d89dbca4493c260187563.jpeg",
+      "products": [
+        "the-dahlia-mini"
+      ]
+    },
+    {
+      "slug": "shoulder-bags",
+      "name": "Shoulder Bags",
+      "description": null,
+      "image": "https://dodptt9f4zk9h.cloudfront.net/stores/8942/collections/831269a71c619efc306db9f27e8598a5cd41b670.jpeg",
+      "products": [
+        "ottie-shoulder-bag",
+        "the-amma-shoulder-bag",
+        "the-aria-tote-bag"
+      ]
+    },
+    {
+      "slug": "mini-bags",
+      "name": "Mini Bags",
+      "description": null,
+      "image": "https://dodptt9f4zk9h.cloudfront.net/stores/8942/collections/7520379ae3fe6410b17d1e825654f8394803bfed.gif",
+      "products": [
+        "the-dahlia-mini",
+        "the-mimi-mini"
+      ]
+    },
+    {
+      "slug": "bag-accessories",
+      "name": "Bag Accessories",
+      "description": "Give your bag a playful touch with our bag accessories.",
+      "image": "https://dodptt9f4zk9h.cloudfront.net/stores/8942/collections/4841d7d6b77251d6a3fe82afb786af0b2f5cd7d7.jpeg",
+      "products": [
+        "cute-cat-charm",
+        "cute-bear-charm",
+        "fluffy-cherry-charm",
+        "initial-cherry-charm",
+        "pastel-mini-scarf"
+      ]
+    },
+    {
+      "slug": "asooke-designs",
+      "name": "Asooke Designs",
+      "description": null,
+      "image": "https://dodptt9f4zk9h.cloudfront.net/stores/8942/collections/c4d229e50ec191dd11e1b1965928a4c6358b7bc6.jpeg",
+      "products": [
+        "the-alissa-clutch"
+      ]
+    }
+  ],
+  "products": [
+    {
+      "slug": "the-dahlia-mini",
+      "name": "The Dahlia Mini",
+      "category": "bag",
+      "description": "Bold Minimalism. Timeless Form.",
+      "dimensions": "8.5\" x 6\"",
+      "option_names": [
+        "Finish",
+        "Colour"
+      ],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/606d5e6823130f4294e61384c0ed34e4834d6c7c.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9eeafe1ea7c2dd03a7dad0e0cd72e0d017dc13af.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/94c07bc73d5719f4dfbfe03222aaef08c056ffdd.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/74ccf341e9c16da18b1559894ccaa1089a818bee.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b9a0a740dd7223e6b3f9a6234949887912c87f14.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/101aefd9a40d9ff446a1a1ed1561b9800bba1fae.png",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8475813577976dfac005e7376fc65c2d12c8fe75.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/135986e751d98f25b1aedbfda623a8810b0ae52b.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/cd2e684db7f7fb0c04600af481603fbef20400bc.png"
+      ],
+      "variants": [
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "White"
+          },
+          "swatch": "#F4F1EA",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855793
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-white"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Black"
+          },
+          "swatch": "#141211",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 2,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": false,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855794
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-black"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Brown"
+          },
+          "swatch": "#6B4329",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855795
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-brown"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Pink"
+          },
+          "swatch": "#E7A6B8",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855796
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-pink"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Green"
+          },
+          "swatch": "#3F6B45",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855797
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-green"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Red"
+          },
+          "swatch": "#B3202C",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855798
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-red"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Purple"
+          },
+          "swatch": "#5E3A7A",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855799
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-purple"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Wine"
+          },
+          "swatch": "#5C1A2B",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855800
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-wine"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Beige"
+          },
+          "swatch": "#D9C3A5",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855801
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-beige"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Pastel Blue"
+          },
+          "swatch": "#A9C7E8",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": false,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855802
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-pastel-blue"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Lilac"
+          },
+          "swatch": "#C3A9DA",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855803
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-lilac"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Dark Blue"
+          },
+          "swatch": "#1F2F5C",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3ac493d233f49913ab46474567b5a54f12305802.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6db66203ed87a8c8e3a56434f95bc586ad3f0af3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/87461da1279ce95fe3206a613e5c97aa03f0644d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/73bb29192d8bb03987f7a91c164ee917aeb71e33.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1e9b48257c1d865e4362a313e1d25a98bd0b1d5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46f01986a1510c13097edf8b35c133f20378bc92.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/35d6f7a10aedd6baf49b9a03f48821ade36dfd3b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/19befff6242aef56e7149add00d651076f5b1926.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be4d578b05076f6825495182ef2857df66516fe9.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17d917f8632bbd6e5c9515c10bfa013dffdb731a.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5200031,
+            "bumpa_variant_id": 9855804
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-dark-blue"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Olive Green"
+          },
+          "swatch": "#6B6B34",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 2,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/101aefd9a40d9ff446a1a1ed1561b9800bba1fae.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5255511,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-olive-green"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Dark Espresso"
+          },
+          "swatch": "#3B2418",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8475813577976dfac005e7376fc65c2d12c8fe75.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17fe696e815586021b816caa87f78704bda5df14.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5389086,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-dark-espresso"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Baby Pink"
+          },
+          "swatch": "#F3C9D4",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/cd2e684db7f7fb0c04600af481603fbef20400bc.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5533190,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-dahlia-mini-classic-smooth-leather-baby-pink"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Mint Green"
+          },
+          "swatch": "#A8D5BA",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b9a0a740dd7223e6b3f9a6234949887912c87f14.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c7fc0f6ac4d2eecc25bea422ec7294122e47e226.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/cb1c6e12e48a72748114b6197da523c6063ff042.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 4387459,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-mint-green"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "White"
+          },
+          "swatch": "#F4F1EA",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778611
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-white"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Black"
+          },
+          "swatch": "#141211",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": false,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778612
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-black"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Brown"
+          },
+          "swatch": "#6B4329",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778613
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-brown"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Pink"
+          },
+          "swatch": "#E7A6B8",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778614
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-pink"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Green"
+          },
+          "swatch": "#3F6B45",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778615
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-green"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Red"
+          },
+          "swatch": "#B3202C",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778616
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-red"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Purple"
+          },
+          "swatch": "#5E3A7A",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778617
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-purple"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Wine"
+          },
+          "swatch": "#5C1A2B",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778618
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-wine"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Beige"
+          },
+          "swatch": "#D9C3A5",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778619
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-beige"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Pastel Blue"
+          },
+          "swatch": "#A9C7E8",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778620
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-pastel-blue"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Lilac"
+          },
+          "swatch": "#C3A9DA",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778621
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-lilac"
+        },
+        {
+          "options": {
+            "Finish": "Textured Pebble Grain Leather",
+            "Colour": "Dark Blue"
+          },
+          "swatch": "#1F2F5C",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c55f267cd33ffbeb9b31b12e1f2f443aec5a52d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6bdbffa0be3f1a271f6c099830381b1384240c11.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/48af3978147fce7c961dd8b314f7d21cfbaedc67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9fdd26541537a8f5918891e68ea5184f96e4dfdf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f5089b959d998b495ec109112ceaffb28ec85e5d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/11c162fe4a19a02e8dceddd670170575831d5c17.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/82b92d74d4dce93a88e552bba176ff2bf4495931.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/bf93ac34ed4c3c42cda21edff04f555cc0a14c8a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/631f893f20c00d900ce00a5d596454b5ecc3d950.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/71d777a5db980bcf09fb4621883e1d0f470e6a05.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/57a794188452b9b72619a0384a119bc517b1e70e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b4c2ab01beb38f20721b0018a26db3cd072dea18.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c91c69fac544a1131444cf9ab14385c9c9eef681.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/efc3f3cf0fe1822a6ea79a1ca6a322d4fc1cbec8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5c4e9d91491c98a7341f5de053713b5e677f0181.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6c07f619875cce8574c05e6d39248dc226f710f6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d670228a211179f3e586b83ad129e1e13e78f2c.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5156139,
+            "bumpa_variant_id": 9778622
+          },
+          "sku": "the-dahlia-mini-textured-pebble-grain-leather-dark-blue"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "White"
+          },
+          "swatch": "#F4F1EA",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674862
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-white"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Black"
+          },
+          "swatch": "#141211",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674863
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-black"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Brown"
+          },
+          "swatch": "#6B4329",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674864
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-brown"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Pink"
+          },
+          "swatch": "#E7A6B8",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674865
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-pink"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Green"
+          },
+          "swatch": "#3F6B45",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674866
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-green"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Red"
+          },
+          "swatch": "#B3202C",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674867
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-red"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Purple"
+          },
+          "swatch": "#5E3A7A",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674868
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-purple"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Wine"
+          },
+          "swatch": "#5C1A2B",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674869
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-wine"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Beige"
+          },
+          "swatch": "#D9C3A5",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674870
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-beige"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Pastel Blue"
+          },
+          "swatch": "#A9C7E8",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674871
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-pastel-blue"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Lilac"
+          },
+          "swatch": "#C3A9DA",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674872
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-lilac"
+        },
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Dark Blue"
+          },
+          "swatch": "#1F2F5C",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8272b7b04c7006be49895b1f906c9de4adc280bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3b8af29626250dfe931c09e6f1582beda0331a38.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c73eac6a58b7caabdd855fa2e81bd6d0dddb01c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/be1e5702a6e058550d16f42a716b25e6d355e5ed.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/ac106a3874efa52c4ff3f569d1537ccab58c9ded.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/718819d0d057fd0be1f7a4ea41d11b5372943990.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a4ce2c45a4184943170eec4d4d4f3167578ad5a.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fe724e64aee5e18022573c584ed9242ca39c2b62.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/eeeae0822214b3c1ae3c6441f2646b39c5d456b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/04e751d0d055226272e5f0011c95f45e3251ccb6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7a86cdfe38883b49c3fecd41fe68aebe91185b67.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6e35d57e95d1f2bbf774efaae1b66ddf99049271.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fc0c99f0d75e916dbc8d4f923c625b660450b80d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f52b200ab76b70fd7d2d5f6ee1f58ed01f9c8396.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3a7c8cbdb31905da4a70ca8dd6a95d7770d66704.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 3349514,
+            "bumpa_variant_id": 6674873
+          },
+          "sku": "the-dahlia-mini-croc-embossed-leather-dark-blue"
+        },
+        {
+          "options": {
+            "Finish": "Suede Velvet",
+            "Colour": "Dark Crimson"
+          },
+          "swatch": "#6E1023",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8f7fe316aca4d71ebb5bbb4d71258cf0633ac173.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/606d5e6823130f4294e61384c0ed34e4834d6c7c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1bd6fe95bfdc3c5b951f5b24e3b4e3aa0fbbcdd.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/51ecd2a7a1d6e250dd315395c8dc3abd7afe7463.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a49bf572e48fe6fe77128b35da4aeff1ad2748e9.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 4138821,
+            "bumpa_variant_id": 7988108
+          },
+          "sku": "the-dahlia-mini-suede-velvet-dark-crimson"
+        },
+        {
+          "options": {
+            "Finish": "Suede Velvet",
+            "Colour": "Emerald Green"
+          },
+          "swatch": "#0F5E46",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1bd6fe95bfdc3c5b951f5b24e3b4e3aa0fbbcdd.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/606d5e6823130f4294e61384c0ed34e4834d6c7c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/51ecd2a7a1d6e250dd315395c8dc3abd7afe7463.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a49bf572e48fe6fe77128b35da4aeff1ad2748e9.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8f7fe316aca4d71ebb5bbb4d71258cf0633ac173.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 4138821,
+            "bumpa_variant_id": 7988109
+          },
+          "sku": "the-dahlia-mini-suede-velvet-emerald-green"
+        },
+        {
+          "options": {
+            "Finish": "Suede Velvet",
+            "Colour": "Royal Velvet"
+          },
+          "swatch": "#3B2A86",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a49bf572e48fe6fe77128b35da4aeff1ad2748e9.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/606d5e6823130f4294e61384c0ed34e4834d6c7c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1bd6fe95bfdc3c5b951f5b24e3b4e3aa0fbbcdd.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/51ecd2a7a1d6e250dd315395c8dc3abd7afe7463.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8f7fe316aca4d71ebb5bbb4d71258cf0633ac173.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 4138821,
+            "bumpa_variant_id": 8340084
+          },
+          "sku": "the-dahlia-mini-suede-velvet-royal-velvet"
+        },
+        {
+          "options": {
+            "Finish": "Suede Velvet",
+            "Colour": "Vintage Cocoa"
+          },
+          "swatch": "#5A3B2B",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/51ecd2a7a1d6e250dd315395c8dc3abd7afe7463.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/606d5e6823130f4294e61384c0ed34e4834d6c7c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1bd6fe95bfdc3c5b951f5b24e3b4e3aa0fbbcdd.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a49bf572e48fe6fe77128b35da4aeff1ad2748e9.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8f7fe316aca4d71ebb5bbb4d71258cf0633ac173.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 4138821,
+            "bumpa_variant_id": 8340152
+          },
+          "sku": "the-dahlia-mini-suede-velvet-vintage-cocoa"
+        },
+        {
+          "options": {
+            "Finish": "Denim",
+            "Colour": "Washed"
+          },
+          "swatch": "#8FA7C4",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 2,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/9eeafe1ea7c2dd03a7dad0e0cd72e0d017dc13af.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 4386896,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-dahlia-mini-denim-washed"
+        },
+        {
+          "options": {
+            "Finish": "Denim",
+            "Colour": "Classic Indigo"
+          },
+          "swatch": "#3A4F7A",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/135986e751d98f25b1aedbfda623a8810b0ae52b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/7370e4dbe9246b8612cc6fa261a391c2e5daa1b7.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5389171,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-dahlia-mini-denim-classic-indigo"
+        },
+        {
+          "options": {
+            "Finish": "Woven Leather",
+            "Colour": "Green"
+          },
+          "swatch": "#3F6B45",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/94c07bc73d5719f4dfbfe03222aaef08c056ffdd.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8fadf94022f918c3f823d1bbfc21f51f82e461b3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/842ed8b2d7266afb83b6d212f382926cdffc82da.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 4386949,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-dahlia-mini-woven-leather-green"
+        },
+        {
+          "options": {
+            "Finish": "Animal Print",
+            "Colour": "Leopard"
+          },
+          "swatch": "#C08A4A",
+          "price_ngn": 35500,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/74ccf341e9c16da18b1559894ccaa1089a818bee.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c8112efe0d0d67991a31a2f050f562d2b6c339ee.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 4386964,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-dahlia-mini-animal-print-leopard"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          3349514,
+          4138821,
+          4386896,
+          4386949,
+          4386964,
+          4387459,
+          5156139,
+          5200031,
+          5255511,
+          5389086,
+          5389171,
+          5533190
+        ],
+        "bumpa_urls": [
+          "/products/the-dahlia-mini-croc-embossed-leather/3349514",
+          "/products/the-dahlia-mini-suede-velvet-collection/4138821",
+          "/products/the-dahlia-mini-washed-denim/4386896",
+          "/products/the-dahlia-mini-woven-leather-green/4386949",
+          "/products/the-dahlia-mini-animal-print-leopard/4386964",
+          "/products/the-dahlia-mini-textured-pebble-leather-mint-green/4387459",
+          "/products/the-dahlia-mini-textured-pebble-grain-leather/5156139",
+          "/products/the-dahlia-mini-classic-smooth-leather/5200031",
+          "/products/the-dahlia-mini-classic-smooth-leather-olive-green/5255511",
+          "/products/the-dahlia-mini-classic-smooth-leather-dark-espresso/5389086",
+          "/products/the-dahlia-mini-denim/5389171",
+          "/products/the-dahlia-mini-classic-smooth-leather-baby-pink/5533190"
+        ]
+      },
+      "position": 1
+    },
+    {
+      "slug": "the-avaia",
+      "name": "The Avaia",
+      "category": "bag",
+      "description": "Two sides. Two colours. One bag. A two-tone statement bag designed with a different colour on each side, finished with a detachable long adjustable strap for multiple ways to wear.",
+      "dimensions": null,
+      "option_names": [],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/29d7ce6ed96577370de7c88f4ecc248a908004c5.png",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5a33bc5f6763aadff9977ceabaca2a41ee1c9907.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/96bb529ade4e151a48e9953ff80006a5c5818f06.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {},
+          "swatch": null,
+          "price_ngn": 85000,
+          "compare_at_ngn": 90000,
+          "stock": 48,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/29d7ce6ed96577370de7c88f4ecc248a908004c5.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/5a33bc5f6763aadff9977ceabaca2a41ee1c9907.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/96bb529ade4e151a48e9953ff80006a5c5818f06.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5397332,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-avaia"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5397332
+        ],
+        "bumpa_urls": [
+          "/products/the-avaia/5397332"
+        ]
+      },
+      "position": 2
+    },
+    {
+      "slug": "the-liora",
+      "name": "The Liora",
+      "category": "bag",
+      "description": "Designed for versatility: clutch, top handle, and long-strap wear all in one elegant silhouette.",
+      "dimensions": null,
+      "option_names": [],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/98ceaa0feea1e72c6735b814db18cc3d6326336e.png",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/09e05a6bab8ebd42602c52010b6c738a08c7a487.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6ec270b625302d3dbc9d9887e6408e99cab0e7c6.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1b31f0af385b2bf3967e7f5d215e9f68a713203.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fce2da7c43b838d5f8a69e6f098a11b3faec6955.png"
+      ],
+      "variants": [
+        {
+          "options": {},
+          "swatch": null,
+          "price_ngn": 90000,
+          "compare_at_ngn": 100000,
+          "stock": 50,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/98ceaa0feea1e72c6735b814db18cc3d6326336e.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/09e05a6bab8ebd42602c52010b6c738a08c7a487.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6ec270b625302d3dbc9d9887e6408e99cab0e7c6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b1b31f0af385b2bf3967e7f5d215e9f68a713203.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/fce2da7c43b838d5f8a69e6f098a11b3faec6955.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5397326,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-liora"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5397326
+        ],
+        "bumpa_urls": [
+          "/products/the-liora/5397326"
+        ]
+      },
+      "position": 3
+    },
+    {
+      "slug": "the-mimi-mini",
+      "name": "The Mimi Mini",
+      "category": "bag",
+      "description": "Sleek. Structured. Unapologetically chic.",
+      "dimensions": "8.5\" x 6\"",
+      "option_names": [
+        "Finish",
+        "Colour"
+      ],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/573459bdcc5e55a3bb556770e9e4ae8e98afba55.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/01cd2f4c3469a7bcb1431129fe1db61a950f9142.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a3b30e4c193f07e9d2df5e4eda37c69f8fa45b06.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Black"
+          },
+          "swatch": "#141211",
+          "price_ngn": 30000,
+          "compare_at_ngn": null,
+          "stock": 2,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/573459bdcc5e55a3bb556770e9e4ae8e98afba55.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/01cd2f4c3469a7bcb1431129fe1db61a950f9142.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a3b30e4c193f07e9d2df5e4eda37c69f8fa45b06.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5273271,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-mimi-mini-croc-embossed-leather-black"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5273271
+        ],
+        "bumpa_urls": [
+          "/products/the-mimi-mini-croc-embossed-leather-black/5273271"
+        ]
+      },
+      "position": 4
+    },
+    {
+      "slug": "cute-cat-charm",
+      "name": "Cute Cat Charm",
+      "category": "charm",
+      "description": "Give your bag a signature touch with this cute cat charm.",
+      "dimensions": null,
+      "option_names": [
+        "Colour"
+      ],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8ec264733fab343ae0bc713f1525b0c425a6880d.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8fc78f86dfc0d934bf4ac83aeacb5658f40648b1.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c0f9672cf46a3a75be9ec834340181a3a7056746.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b44b537b5f2124d91cdaf0718d47f4e5066879bf.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/79d7256bb3b803dcd6f6e59a3036da92ae3e9618.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {
+            "Colour": "Brown"
+          },
+          "swatch": "#6B4329",
+          "price_ngn": 15000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8ec264733fab343ae0bc713f1525b0c425a6880d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8fc78f86dfc0d934bf4ac83aeacb5658f40648b1.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c0f9672cf46a3a75be9ec834340181a3a7056746.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b44b537b5f2124d91cdaf0718d47f4e5066879bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/79d7256bb3b803dcd6f6e59a3036da92ae3e9618.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5172236,
+            "bumpa_variant_id": 9807885
+          },
+          "sku": "cute-cat-charm-brown"
+        },
+        {
+          "options": {
+            "Colour": "Black"
+          },
+          "swatch": "#141211",
+          "price_ngn": 15000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8fc78f86dfc0d934bf4ac83aeacb5658f40648b1.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8ec264733fab343ae0bc713f1525b0c425a6880d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c0f9672cf46a3a75be9ec834340181a3a7056746.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b44b537b5f2124d91cdaf0718d47f4e5066879bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/79d7256bb3b803dcd6f6e59a3036da92ae3e9618.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5172236,
+            "bumpa_variant_id": 9807886
+          },
+          "sku": "cute-cat-charm-black"
+        },
+        {
+          "options": {
+            "Colour": "Pink"
+          },
+          "swatch": "#E7A6B8",
+          "price_ngn": 15000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/79d7256bb3b803dcd6f6e59a3036da92ae3e9618.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8ec264733fab343ae0bc713f1525b0c425a6880d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8fc78f86dfc0d934bf4ac83aeacb5658f40648b1.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c0f9672cf46a3a75be9ec834340181a3a7056746.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b44b537b5f2124d91cdaf0718d47f4e5066879bf.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5172236,
+            "bumpa_variant_id": 9807887
+          },
+          "sku": "cute-cat-charm-pink"
+        },
+        {
+          "options": {
+            "Colour": "Wine"
+          },
+          "swatch": "#5C1A2B",
+          "price_ngn": 15000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b44b537b5f2124d91cdaf0718d47f4e5066879bf.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8ec264733fab343ae0bc713f1525b0c425a6880d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8fc78f86dfc0d934bf4ac83aeacb5658f40648b1.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c0f9672cf46a3a75be9ec834340181a3a7056746.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/79d7256bb3b803dcd6f6e59a3036da92ae3e9618.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5172236,
+            "bumpa_variant_id": 9807888
+          },
+          "sku": "cute-cat-charm-wine"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5172236
+        ],
+        "bumpa_urls": [
+          "/products/cute-cat-charm/5172236"
+        ]
+      },
+      "position": 5
+    },
+    {
+      "slug": "cute-bear-charm",
+      "name": "Cute Bear Charm",
+      "category": "charm",
+      "description": "Give your bag a signature touch with this cute bear charm.",
+      "dimensions": null,
+      "option_names": [
+        "Colour"
+      ],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/80084bf461b0adeccca0a2b16667b5cf78a00cb5.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d6680971848410e8969c355fea05329f0d802d9.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c529b98fe5c3d28986d602823629c8a81b07f0d3.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {
+            "Colour": "White"
+          },
+          "swatch": "#F4F1EA",
+          "price_ngn": 15000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d6680971848410e8969c355fea05329f0d802d9.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/80084bf461b0adeccca0a2b16667b5cf78a00cb5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c529b98fe5c3d28986d602823629c8a81b07f0d3.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5172211,
+            "bumpa_variant_id": 9807864
+          },
+          "sku": "cute-bear-charm-white"
+        },
+        {
+          "options": {
+            "Colour": "Brown"
+          },
+          "swatch": "#6B4329",
+          "price_ngn": 15000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c529b98fe5c3d28986d602823629c8a81b07f0d3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/80084bf461b0adeccca0a2b16667b5cf78a00cb5.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8d6680971848410e8969c355fea05329f0d802d9.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5172211,
+            "bumpa_variant_id": 9807865
+          },
+          "sku": "cute-bear-charm-brown"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5172211
+        ],
+        "bumpa_urls": [
+          "/products/cute-bear-charm/5172211"
+        ]
+      },
+      "position": 6
+    },
+    {
+      "slug": "fluffy-cherry-charm",
+      "name": "Fluffy Cherry Charm",
+      "category": "charm",
+      "description": "Give your bag a signature touch with this cute fluffy charm.",
+      "dimensions": null,
+      "option_names": [],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/97e121ed0de9b12a5b8dac56813e3400ce879e0b.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {},
+          "swatch": null,
+          "price_ngn": 20000,
+          "compare_at_ngn": null,
+          "stock": 3,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/97e121ed0de9b12a5b8dac56813e3400ce879e0b.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5172157,
+            "bumpa_variant_id": null
+          },
+          "sku": "fluffy-cherry-charm"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5172157
+        ],
+        "bumpa_urls": [
+          "/products/fluffy-cherry-charm/5172157"
+        ]
+      },
+      "position": 7
+    },
+    {
+      "slug": "initial-cherry-charm",
+      "name": "Initial Letter Cherry Charm",
+      "category": "charm",
+      "description": "Give your bag a signature touch with this unique initial letter charm.",
+      "dimensions": null,
+      "option_names": [
+        "Metal",
+        "Letter"
+      ],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f6c06b490cbeb42140af9f5ca5309b9ddc9a4a5e.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c20ec59bcd1fa2754757268cf012790460b3dbe.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {
+            "Metal": "Gold",
+            "Letter": "O"
+          },
+          "swatch": "#C9A44A",
+          "price_ngn": 30000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f6c06b490cbeb42140af9f5ca5309b9ddc9a4a5e.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5172112,
+            "bumpa_variant_id": null
+          },
+          "sku": "initial-cherry-charm-gold-o"
+        },
+        {
+          "options": {
+            "Metal": "Silver",
+            "Letter": "N"
+          },
+          "swatch": "#C0C4C8",
+          "price_ngn": 30000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4c20ec59bcd1fa2754757268cf012790460b3dbe.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/4ab969ae0ac5ac9b586295fcbf56f15d95ce4e33.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5172127,
+            "bumpa_variant_id": null
+          },
+          "sku": "initial-cherry-charm-silver-n"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5172112,
+          5172127
+        ],
+        "bumpa_urls": [
+          "/products/gold-initial-letter-cherry-charm-letter-o/5172112",
+          "/products/silver-initial-letter-cherry-charm-letter-n/5172127"
+        ]
+      },
+      "position": 8
+    },
+    {
+      "slug": "the-alissa-clutch",
+      "name": "The Alissa Clutch",
+      "category": "bag",
+      "description": "Crafted for moments that matter.",
+      "dimensions": "8\" x 6\"",
+      "option_names": [
+        "Finish",
+        "Colour"
+      ],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c6d22b2fd0b1353bd9e48fa4d0a523c6894bed3e.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f76528dc593824d58abab3cfe39d72efe05b830c.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {
+            "Finish": "Asooke",
+            "Colour": "Black"
+          },
+          "swatch": "#141211",
+          "price_ngn": 55000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c6d22b2fd0b1353bd9e48fa4d0a523c6894bed3e.jpeg"
+          ],
+          "has_photo": false,
+          "legacy": {
+            "bumpa_product_id": 5171585,
+            "bumpa_variant_id": 9806653
+          },
+          "sku": "the-alissa-clutch-asooke-black"
+        },
+        {
+          "options": {
+            "Finish": "Asooke",
+            "Colour": "Brown"
+          },
+          "swatch": "#6B4329",
+          "price_ngn": 55000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c6d22b2fd0b1353bd9e48fa4d0a523c6894bed3e.jpeg"
+          ],
+          "has_photo": false,
+          "legacy": {
+            "bumpa_product_id": 5171585,
+            "bumpa_variant_id": 9806654
+          },
+          "sku": "the-alissa-clutch-asooke-brown"
+        },
+        {
+          "options": {
+            "Finish": "Asooke",
+            "Colour": "Purple"
+          },
+          "swatch": "#5E3A7A",
+          "price_ngn": 55000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c6d22b2fd0b1353bd9e48fa4d0a523c6894bed3e.jpeg"
+          ],
+          "has_photo": false,
+          "legacy": {
+            "bumpa_product_id": 5171585,
+            "bumpa_variant_id": 9806655
+          },
+          "sku": "the-alissa-clutch-asooke-purple"
+        },
+        {
+          "options": {
+            "Finish": "Asooke",
+            "Colour": "Sanyan"
+          },
+          "swatch": "#C8A97E",
+          "price_ngn": 55000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c6d22b2fd0b1353bd9e48fa4d0a523c6894bed3e.jpeg"
+          ],
+          "has_photo": false,
+          "legacy": {
+            "bumpa_product_id": 5171585,
+            "bumpa_variant_id": 9806656
+          },
+          "sku": "the-alissa-clutch-asooke-sanyan"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Black"
+          },
+          "swatch": "#141211",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/2e3dd044b6d3f0ac3468b09a63a6bad0da90bdf8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f76528dc593824d58abab3cfe39d72efe05b830c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3e14467568974bdc37ecdf11ffd9c2d18138e6ec.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e1bf3fa259549bc888e3d6a9adcfd1b275bd6f27.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e63988e5a9a8a59cb47d11d0ab1e43b9b63f31c3.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171653,
+            "bumpa_variant_id": 9806827
+          },
+          "sku": "the-alissa-clutch-classic-smooth-leather-black"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Brown"
+          },
+          "swatch": "#6B4329",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3e14467568974bdc37ecdf11ffd9c2d18138e6ec.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f76528dc593824d58abab3cfe39d72efe05b830c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/2e3dd044b6d3f0ac3468b09a63a6bad0da90bdf8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e1bf3fa259549bc888e3d6a9adcfd1b275bd6f27.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e63988e5a9a8a59cb47d11d0ab1e43b9b63f31c3.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171653,
+            "bumpa_variant_id": 9806828
+          },
+          "sku": "the-alissa-clutch-classic-smooth-leather-brown"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Pink"
+          },
+          "swatch": "#E7A6B8",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f76528dc593824d58abab3cfe39d72efe05b830c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/2e3dd044b6d3f0ac3468b09a63a6bad0da90bdf8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3e14467568974bdc37ecdf11ffd9c2d18138e6ec.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e1bf3fa259549bc888e3d6a9adcfd1b275bd6f27.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e63988e5a9a8a59cb47d11d0ab1e43b9b63f31c3.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171653,
+            "bumpa_variant_id": 9806829
+          },
+          "sku": "the-alissa-clutch-classic-smooth-leather-pink"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Blue"
+          },
+          "swatch": "#2B4F9E",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e63988e5a9a8a59cb47d11d0ab1e43b9b63f31c3.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f76528dc593824d58abab3cfe39d72efe05b830c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/2e3dd044b6d3f0ac3468b09a63a6bad0da90bdf8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3e14467568974bdc37ecdf11ffd9c2d18138e6ec.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e1bf3fa259549bc888e3d6a9adcfd1b275bd6f27.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171653,
+            "bumpa_variant_id": 9806830
+          },
+          "sku": "the-alissa-clutch-classic-smooth-leather-blue"
+        },
+        {
+          "options": {
+            "Finish": "Classic Smooth Leather",
+            "Colour": "Purple"
+          },
+          "swatch": "#5E3A7A",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e1bf3fa259549bc888e3d6a9adcfd1b275bd6f27.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f76528dc593824d58abab3cfe39d72efe05b830c.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/2e3dd044b6d3f0ac3468b09a63a6bad0da90bdf8.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/3e14467568974bdc37ecdf11ffd9c2d18138e6ec.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e63988e5a9a8a59cb47d11d0ab1e43b9b63f31c3.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171653,
+            "bumpa_variant_id": 9806831
+          },
+          "sku": "the-alissa-clutch-classic-smooth-leather-purple"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5171585,
+          5171653
+        ],
+        "bumpa_urls": [
+          "/products/the-alissa-clutch-purse-asooke/5171585",
+          "/products/the-alissa-clutch-purse-classic-smooth-leather/5171653"
+        ]
+      },
+      "position": 9
+    },
+    {
+      "slug": "pastel-mini-scarf",
+      "name": "Pastel Mini Scarf",
+      "category": "scarf",
+      "description": "Give your bag a signature touch with this new soft satin scarf and loving yourself whilst doing so.",
+      "dimensions": null,
+      "option_names": [
+        "Design"
+      ],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a173477e356565ae030297f332334a186e67183b.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/982aa558ff0a7103dd3d311df2d0174eed09e0bb.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {
+            "Design": "Design 4"
+          },
+          "swatch": null,
+          "price_ngn": 10000,
+          "compare_at_ngn": null,
+          "stock": 2,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e9379929ec21f470556d1f78a98b2ec600270db4.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a173477e356565ae030297f332334a186e67183b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a54d01b4e7a3b816fc0a88d27ba835358e9e8bf6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17486fe8787d7aea7caa5ad88d01932bcc811762.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171356,
+            "bumpa_variant_id": 9806193
+          },
+          "sku": "pastel-mini-scarf-design-4"
+        },
+        {
+          "options": {
+            "Design": "Design 5"
+          },
+          "swatch": null,
+          "price_ngn": 10000,
+          "compare_at_ngn": null,
+          "stock": 2,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a54d01b4e7a3b816fc0a88d27ba835358e9e8bf6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a173477e356565ae030297f332334a186e67183b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e9379929ec21f470556d1f78a98b2ec600270db4.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17486fe8787d7aea7caa5ad88d01932bcc811762.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171356,
+            "bumpa_variant_id": 9806194
+          },
+          "sku": "pastel-mini-scarf-design-5"
+        },
+        {
+          "options": {
+            "Design": "Design 6"
+          },
+          "swatch": null,
+          "price_ngn": 10000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/17486fe8787d7aea7caa5ad88d01932bcc811762.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a173477e356565ae030297f332334a186e67183b.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a54d01b4e7a3b816fc0a88d27ba835358e9e8bf6.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/e9379929ec21f470556d1f78a98b2ec600270db4.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171356,
+            "bumpa_variant_id": 9806195
+          },
+          "sku": "pastel-mini-scarf-design-6"
+        },
+        {
+          "options": {
+            "Design": "Design 1"
+          },
+          "swatch": null,
+          "price_ngn": 10000,
+          "compare_at_ngn": null,
+          "stock": 2,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/982aa558ff0a7103dd3d311df2d0174eed09e0bb.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46cea78aaeb484d7d9a2b360cdf8939a42e21446.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8301792eecf68d429521bd34721eca53c251ab88.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/96cd6165ef2c799401b354ca59acfc21e3bbb644.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171426,
+            "bumpa_variant_id": 9806332
+          },
+          "sku": "pastel-mini-scarf-design-1"
+        },
+        {
+          "options": {
+            "Design": "Design 2"
+          },
+          "swatch": null,
+          "price_ngn": 10000,
+          "compare_at_ngn": null,
+          "stock": 2,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46cea78aaeb484d7d9a2b360cdf8939a42e21446.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/982aa558ff0a7103dd3d311df2d0174eed09e0bb.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8301792eecf68d429521bd34721eca53c251ab88.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/96cd6165ef2c799401b354ca59acfc21e3bbb644.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171426,
+            "bumpa_variant_id": 9806333
+          },
+          "sku": "pastel-mini-scarf-design-2"
+        },
+        {
+          "options": {
+            "Design": "Design 3"
+          },
+          "swatch": null,
+          "price_ngn": 10000,
+          "compare_at_ngn": null,
+          "stock": 2,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/96cd6165ef2c799401b354ca59acfc21e3bbb644.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/982aa558ff0a7103dd3d311df2d0174eed09e0bb.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/46cea78aaeb484d7d9a2b360cdf8939a42e21446.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/8301792eecf68d429521bd34721eca53c251ab88.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5171426,
+            "bumpa_variant_id": 9806334
+          },
+          "sku": "pastel-mini-scarf-design-3"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5171356,
+          5171426
+        ],
+        "bumpa_urls": [
+          "/products/pastel-mini-scarves/5171356",
+          "/products/pastel-mini-scarves/5171426"
+        ]
+      },
+      "position": 10
+    },
+    {
+      "slug": "ottie-shoulder-bag",
+      "name": "Ottie Shoulder Bag",
+      "category": "bag",
+      "description": "Bold structure. Distinctive hardware. Everyday versatility.",
+      "dimensions": null,
+      "option_names": [],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f6604e9afea2ef5c7993c29c03b62f2f414c9367.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/959c14223a205fd95f428236e590ce14a8fcc2ea.png",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a5a3a2228be927c2b55f78e2974538c528b1d5a9.png"
+      ],
+      "variants": [
+        {
+          "options": {},
+          "swatch": null,
+          "price_ngn": 60000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f6604e9afea2ef5c7993c29c03b62f2f414c9367.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/959c14223a205fd95f428236e590ce14a8fcc2ea.png",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/a5a3a2228be927c2b55f78e2974538c528b1d5a9.png"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 5088768,
+            "bumpa_variant_id": null
+          },
+          "sku": "ottie-shoulder-bag"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          5088768
+        ],
+        "bumpa_urls": [
+          "/products/ottie-shoulder-bag/5088768"
+        ]
+      },
+      "position": 11
+    },
+    {
+      "slug": "the-amma-shoulder-bag",
+      "name": "The Amma Shoulder Bag",
+      "category": "bag",
+      "description": "Sculptural. Striking. Unforgettable.",
+      "dimensions": null,
+      "option_names": [
+        "Finish",
+        "Colour"
+      ],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c2d13332626cace7ec8d5c86472f0fbfccbe092e.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b0f78a55a9b0ddcc34d6734dccb0b216985338bd.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6a42dd783e7290210020d1ef67d815d7cfbe5d82.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c3e9b082f225d6d0e055166a8907743c1c4c5473.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {
+            "Finish": "Croc Embossed Leather",
+            "Colour": "Blue"
+          },
+          "swatch": "#2B4F9E",
+          "price_ngn": 40000,
+          "compare_at_ngn": null,
+          "stock": 1,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c2d13332626cace7ec8d5c86472f0fbfccbe092e.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/b0f78a55a9b0ddcc34d6734dccb0b216985338bd.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/6a42dd783e7290210020d1ef67d815d7cfbe5d82.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/c3e9b082f225d6d0e055166a8907743c1c4c5473.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 4571998,
+            "bumpa_variant_id": null
+          },
+          "sku": "the-amma-shoulder-bag-croc-embossed-leather-blue"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          4571998
+        ],
+        "bumpa_urls": [
+          "/products/amma-shoulder-bag-croc-embossed-leather-blue/4571998"
+        ]
+      },
+      "position": 12
+    },
+    {
+      "slug": "the-aria-tote-bag",
+      "name": "The Aria Tote Bag",
+      "category": "bag",
+      "description": "From conquering a busy workday to packing light for a weekend escape, or adding a refined touch to your everyday style, the Aria Tote is the best for you.",
+      "dimensions": null,
+      "option_names": [
+        "Colour"
+      ],
+      "images": [
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/da97a12f8800c20d23a87f2483ac50e3836642cd.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/688e3c341a19417f2021bcfff7eb5a861e235ac9.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f4d8a85f3dadb322d97b1d4b9f750e8f77824f8d.jpeg",
+        "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/1a4f8039757e28f75bfa1aba0c23367a5cdc8722.jpeg"
+      ],
+      "variants": [
+        {
+          "options": {
+            "Colour": "Black"
+          },
+          "swatch": "#141211",
+          "price_ngn": 40000,
+          "compare_at_ngn": 45000,
+          "stock": 7,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f4d8a85f3dadb322d97b1d4b9f750e8f77824f8d.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/da97a12f8800c20d23a87f2483ac50e3836642cd.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/688e3c341a19417f2021bcfff7eb5a861e235ac9.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/1a4f8039757e28f75bfa1aba0c23367a5cdc8722.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 1187795,
+            "bumpa_variant_id": 3174949
+          },
+          "sku": "the-aria-tote-bag-black"
+        },
+        {
+          "options": {
+            "Colour": "Beige"
+          },
+          "swatch": "#D9C3A5",
+          "price_ngn": 40000,
+          "compare_at_ngn": 45000,
+          "stock": 0,
+          "images": [
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/1a4f8039757e28f75bfa1aba0c23367a5cdc8722.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/da97a12f8800c20d23a87f2483ac50e3836642cd.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/688e3c341a19417f2021bcfff7eb5a861e235ac9.jpeg",
+            "https://dodptt9f4zk9h.cloudfront.net/stores/8942/products/f4d8a85f3dadb322d97b1d4b9f750e8f77824f8d.jpeg"
+          ],
+          "has_photo": true,
+          "legacy": {
+            "bumpa_product_id": 1187795,
+            "bumpa_variant_id": 3532628
+          },
+          "sku": "the-aria-tote-bag-beige"
+        }
+      ],
+      "legacy": {
+        "bumpa_ids": [
+          1187795
+        ],
+        "bumpa_urls": [
+          "/products/the-aria-tote-bag/1187795"
+        ]
+      },
+      "position": 13
+    }
+  ]
+}

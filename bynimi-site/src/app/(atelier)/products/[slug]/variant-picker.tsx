@@ -1,0 +1,184 @@
+"use client";
+
+import Image from "next/image";
+import { useState } from "react";
+import type { Product, Variant } from "@/lib/catalog";
+import { formatNgn } from "@/lib/money";
+
+const SWATCH_OPTIONS = new Set(["Colour", "Metal"]);
+
+function matches(v: Variant, selection: Record<string, string>, names: string[]) {
+  return names.every((n) => selection[n] === undefined || v.options[n] === selection[n]);
+}
+
+/** Values for option `index`, given what's picked for the options before it. */
+function valuesFor(product: Product, selection: Record<string, string>, index: number) {
+  const before = product.option_names.slice(0, index);
+  const seen = new Map<string, { swatch: string | null; inStock: boolean }>();
+  for (const v of product.variants) {
+    if (!matches(v, selection, before)) continue;
+    const value = v.options[product.option_names[index]];
+    const prev = seen.get(value);
+    seen.set(value, { swatch: v.swatch, inStock: (prev?.inStock ?? false) || v.stock > 0 });
+  }
+  return [...seen].map(([value, info]) => ({ value, ...info }));
+}
+
+function initialVariant(product: Product) {
+  return product.variants.find((v) => v.stock > 0) ?? product.variants[0];
+}
+
+export function VariantPicker({ product }: { product: Product }) {
+  const names = product.option_names;
+  const [selection, setSelection] = useState<Record<string, string>>(() => ({ ...initialVariant(product).options }));
+  const [imageIndex, setImageIndex] = useState(0);
+
+  const variant = product.variants.find((v) => matches(v, selection, names)) ?? initialVariant(product);
+
+  function choose(index: number, value: string) {
+    const next: Record<string, string> = { ...selection, [names[index]]: value };
+    // If the later options no longer form a real variant, move them to the
+    // best match: in stock first, then anything.
+    if (!product.variants.some((v) => matches(v, next, names))) {
+      const fixed = Object.fromEntries(names.slice(0, index + 1).map((n) => [n, next[n]]));
+      const candidates = product.variants.filter((v) => matches(v, fixed, names));
+      const best = candidates.find((v) => v.stock > 0) ?? candidates[0];
+      Object.assign(next, best.options);
+    }
+    setSelection(next);
+    setImageIndex(0);
+  }
+
+  const images = variant.images.length ? variant.images : product.images;
+  const mainImage = images[Math.min(imageIndex, images.length - 1)];
+  const soldOut = variant.stock === 0;
+
+  return (
+    <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+      <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
+        <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+          {mainImage && (
+            <Image
+              key={mainImage}
+              src={mainImage}
+              alt={`${product.name}${names.length ? `, ${Object.values(variant.options).join(", ")}` : ""}`}
+              fill
+              priority
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              className="page-in object-cover"
+            />
+          )}
+          {!variant.has_photo && names.length > 0 && (
+            <p className="label absolute inset-x-3 bottom-3 rounded-full bg-surface/90 px-4 py-2 text-center">
+              Photo of {Object.values(variant.options).at(-1)} coming soon
+            </p>
+          )}
+        </div>
+        {images.length > 1 && (
+          <ul className="mt-3 flex gap-2 overflow-x-auto pb-1">
+            {images.map((src, i) => (
+              <li key={src} className="shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setImageIndex(i)}
+                  aria-label={`Show image ${i + 1}`}
+                  aria-current={i === imageIndex}
+                  className="relative block size-20 overflow-hidden bg-surface opacity-60 ring-ink transition-opacity hover:opacity-100 aria-[current=true]:opacity-100 aria-[current=true]:ring-1"
+                >
+                  <Image src={src} alt="" fill sizes="80px" className="object-cover" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="min-w-0">
+        <h1 className="font-serif text-5xl leading-none sm:text-6xl">{product.name}</h1>
+        <p className="mt-4 flex items-baseline gap-3 text-xl">
+          {formatNgn(variant.price_ngn)}
+          {variant.compare_at_ngn && (
+            <s className="text-base text-muted">{formatNgn(variant.compare_at_ngn)}</s>
+          )}
+        </p>
+
+        {names.map((name, i) => {
+          const values = valuesFor(product, selection, i);
+          if (values.length < 2 && names.length === 1) return null;
+          const swatch = SWATCH_OPTIONS.has(name);
+          return (
+            <fieldset key={name} className="mt-8">
+              <legend className="label mb-3 text-muted">
+                {name}: <span className="text-ink">{selection[name]}</span>
+              </legend>
+              <div className="flex flex-wrap gap-2">
+                {values.map(({ value, swatch: hex, inStock }) => {
+                  const selected = selection[name] === value;
+                  const common = `relative transition ${inStock ? "" : "opacity-45"}`;
+                  return swatch ? (
+                    <button
+                      key={value}
+                      type="button"
+                      title={`${value}${inStock ? "" : " (sold out)"}`}
+                      aria-label={`${value}${inStock ? "" : ", sold out"}`}
+                      aria-pressed={selected}
+                      onClick={() => choose(i, value)}
+                      className={`${common} size-9 rounded-full ring-1 ring-line ring-offset-2 ring-offset-bg aria-pressed:ring-2 aria-pressed:ring-ink`}
+                      style={{ background: hex ?? undefined }}
+                    >
+                      {!inStock && (
+                        <span aria-hidden className="absolute top-1/2 left-1/2 h-px w-[130%] -translate-1/2 -rotate-45 bg-ink" />
+                      )}
+                    </button>
+                  ) : (
+                    <button
+                      key={value}
+                      type="button"
+                      aria-pressed={selected}
+                      onClick={() => choose(i, value)}
+                      className={`${common} rounded-full border border-line px-4 py-2 text-sm hover:border-ink aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-bg ${inStock ? "" : "line-through"}`}
+                    >
+                      {value}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+          );
+        })}
+
+        <p className={`label mt-8 ${soldOut ? "text-muted" : variant.stock <= 3 ? "text-warning" : "text-success"}`}>
+          {soldOut ? "Sold out. Pre-order coming soon" : variant.stock <= 3 ? `Only ${variant.stock} left` : "In stock, ready to dispatch"}
+        </p>
+
+        {/* Bag and checkout arrive in Stage 3. */}
+        <button
+          type="button"
+          disabled
+          className="label mt-4 w-full rounded-full bg-accent px-8 py-5 text-accent-ink disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {soldOut ? "Sold out" : "Add to bag"}
+        </button>
+        <p className="mt-2 text-center text-xs text-muted">Checkout opens in a later preview.</p>
+
+        {product.description && <p className="mt-10 text-lg leading-relaxed">{product.description}</p>}
+        <dl className="mt-8 divide-y divide-line border-y border-line text-sm">
+          {product.dimensions && (
+            <div className="flex justify-between py-3">
+              <dt className="text-muted">Measurements</dt>
+              <dd>{product.dimensions}</dd>
+            </div>
+          )}
+          <div className="flex justify-between py-3">
+            <dt className="text-muted">Dispatch</dt>
+            <dd>Same or next day</dd>
+          </div>
+          <div className="flex justify-between py-3">
+            <dt className="text-muted">SKU</dt>
+            <dd className="font-mono text-xs">{variant.sku}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  );
+}
