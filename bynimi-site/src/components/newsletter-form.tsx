@@ -27,6 +27,7 @@ export function NewsletterForm() {
           required
           autoComplete="email"
           placeholder="Your email"
+          defaultValue={state.status === "error" ? state.email : undefined}
           aria-invalid={state.status === "error"}
           aria-describedby={state.status === "error" ? "newsletter-error" : undefined}
           className="min-w-0 flex-1 rounded-full border border-line bg-surface/80 px-6 py-4 text-ink backdrop-blur placeholder:text-muted focus:border-accent focus:outline-none"

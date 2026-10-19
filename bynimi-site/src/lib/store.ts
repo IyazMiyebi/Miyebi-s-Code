@@ -48,6 +48,11 @@ export const store = {
   },
 } as const;
 
+/** A WhatsApp chat with Nimi, with a message already typed. */
+export function whatsappLink(message: string) {
+  return `${store.social.whatsapp}?text=${encodeURIComponent(message)}`;
+}
+
 export const nav = [
   { href: "/shop", label: "Shop" },
   { href: "/collections/mini-bags", label: "Mini bags" },

@@ -19,9 +19,9 @@ Other checks: `npm run lint`, `npm run build`.
 | Path | Theme | What it is |
 |---|---|---|
 | `/` | noir | Home: ASCII intro, water-ripple hero, spiral gallery, testimonials, Inner Circle sign-up on the box grid |
-| `/shop` | atelier | Every product, grouped by category |
+| `/shop` | atelier | Every product, with filters (type, colour, finish, price, in stock), search and sort |
 | `/collections/[slug]` | atelier | Most Loved, The Suede Velvet Edit, Mini Bags, Shoulder Bags, Bag Accessories, Asooke Designs |
-| `/products/[slug]` | atelier | Product page with finish and colour picker, live stock, gallery |
+| `/products/[slug]` | atelier | Finish and colour picker, zoomable gallery, pre-order / notify me for sold-out colours, complete the look |
 | `/style-guide` | atelier | Colours, type and components, for Nimi to approve |
 | `/charm-bar`, `/lookbook`, `/about` | noir | Placeholders for Stage 4 |
 
@@ -61,10 +61,12 @@ To set up a fresh database, run these in the SQL editor, in order:
 
 1. `supabase/migrations/20261018000000_catalog.sql` (once)
 2. `supabase/migrations/20261019000000_newsletter.sql` (once): Inner Circle sign-ups
-3. `supabase/seed.sql` (safe to re-run; it updates, never duplicates)
+3. `supabase/migrations/20261020000000_stock_requests.sql` (once): pre-orders and "notify me"
+4. `supabase/seed.sql` (safe to re-run; it updates, never duplicates)
 
-Sign-ups land in the `newsletter_subscribers` table (Table Editor in Supabase). The public can add
-an email but can't read the list.
+Sign-ups land in `newsletter_subscribers`, and pre-orders / back-in-stock requests in
+`stock_requests` (Table Editor in Supabase; set a request's `status` to `contacted` or `fulfilled` as
+you go). The public can add rows to both but can't read either.
 
 Public visitors can only read published products and collections (row level security, verified
 against the live project). The publishable key is safe in the browser; the **secret / service_role

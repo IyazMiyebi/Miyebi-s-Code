@@ -5,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 export type NewsletterState =
   | { status: "idle" }
   | { status: "joined"; email: string }
-  | { status: "error"; message: string };
+  | { status: "error"; message: string; email: string }; // email: put back after React clears the form
 
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
@@ -14,13 +14,13 @@ export async function joinNewsletter(_prev: NewsletterState, form: FormData): Pr
   // Hidden field real people never fill in; bots usually do.
   if (form.get("company")) return { status: "joined", email };
   if (email.length > 254 || !EMAIL.test(email)) {
-    return { status: "error", message: "That email doesn't look quite right." };
+    return { status: "error", message: "That email doesn't look quite right.", email };
   }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (!url || !key) {
-    return { status: "error", message: "Sign-ups aren't open yet. Please try again soon." };
+    return { status: "error", message: "Sign-ups aren't open yet. Please try again soon.", email };
   }
 
   const db = createClient(url, key, { auth: { persistSession: false } });
@@ -30,7 +30,7 @@ export async function joinNewsletter(_prev: NewsletterState, form: FormData): Pr
   // who's subscribed.
   if (error && error.code !== "23505") {
     console.error("newsletter insert failed", error);
-    return { status: "error", message: "We couldn't add you just now. Please try again." };
+    return { status: "error", message: "We couldn't add you just now. Please try again.", email };
   }
   return { status: "joined", email };
 }

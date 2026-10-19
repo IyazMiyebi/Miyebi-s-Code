@@ -1,10 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
-import type { Product, Variant } from "@/lib/catalog";
+import type { Product, Variant } from "@/lib/product";
 import { Price } from "@/components/price";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 import { bestVariant, variantQuery } from "@/lib/variant-link";
+import { ProductGallery } from "./product-gallery";
+import { SoldOutActions } from "./sold-out-actions";
 
 const SWATCH_OPTIONS = new Set(["Colour", "Metal"]);
 
@@ -41,7 +43,6 @@ export function VariantPicker({
   const [selection, setSelection] = useState<Record<string, string>>(() => ({
     ...(bestVariant(product, initialOptions) ?? initialVariant(product)).options,
   }));
-  const [imageIndex, setImageIndex] = useState(0);
 
   const variant = product.variants.find((v) => matches(v, selection, names)) ?? initialVariant(product);
 
@@ -56,54 +57,22 @@ export function VariantPicker({
       Object.assign(next, best.options);
     }
     setSelection(next);
-    setImageIndex(0);
     // Keep the address bar on the chosen bag, so the link can be shared.
     window.history.replaceState(null, "", `?${variantQuery(next)}`);
   }
 
   const images = variant.images.length ? variant.images : product.images;
-  const mainImage = images[Math.min(imageIndex, images.length - 1)];
   const soldOut = variant.stock === 0;
+  const label = names.map((n) => variant.options[n]).join(", ");
 
   return (
     <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
-      <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-        <div className="relative aspect-[4/5] overflow-hidden bg-surface">
-          {mainImage && (
-            <Image
-              key={mainImage}
-              src={mainImage}
-              alt={`${product.name}${names.length ? `, ${Object.values(variant.options).join(", ")}` : ""}`}
-              fill
-              priority
-              sizes="(min-width: 1024px) 55vw, 100vw"
-              className="page-in object-cover"
-            />
-          )}
-          {!variant.has_photo && names.length > 0 && (
-            <p className="label absolute inset-x-3 bottom-3 rounded-full bg-surface/90 px-4 py-2 text-center">
-              Photo of {Object.values(variant.options).at(-1)} coming soon
-            </p>
-          )}
-        </div>
-        {images.length > 1 && (
-          <ul className="mt-3 flex gap-2 overflow-x-auto pb-1">
-            {images.map((src, i) => (
-              <li key={src} className="shrink-0">
-                <button
-                  type="button"
-                  onClick={() => setImageIndex(i)}
-                  aria-label={`Show image ${i + 1}`}
-                  aria-current={i === imageIndex}
-                  className="relative block size-20 overflow-hidden bg-surface opacity-60 ring-ink transition-opacity hover:opacity-100 aria-[current=true]:opacity-100 aria-[current=true]:ring-1"
-                >
-                  <Image src={src} alt="" fill sizes="80px" className="object-cover" />
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <ProductGallery
+        key={variant.sku}
+        images={images}
+        alt={`${product.name}${label ? `, ${label}` : ""}`}
+        note={!variant.has_photo && names.length > 0 ? `Photo of ${Object.values(variant.options).at(-1)} coming soon` : undefined}
+      />
 
       <div className="min-w-0">
         <h1 className="font-serif text-5xl leading-none sm:text-6xl">{product.name}</h1>
@@ -162,18 +131,33 @@ export function VariantPicker({
         })}
 
         <p className={`label mt-8 ${soldOut ? "text-muted" : variant.stock <= 3 ? "text-warning" : "text-success"}`}>
-          {soldOut ? "Sold out. Pre-order coming soon" : variant.stock <= 3 ? `Only ${variant.stock} left` : "In stock, ready to dispatch"}
+          {soldOut ? "Sold out: available to pre-order" : variant.stock <= 3 ? `Only ${variant.stock} left` : "In stock, ready to dispatch"}
         </p>
 
-        {/* Bag and checkout arrive in Stage 3. */}
-        <button
-          type="button"
-          disabled
-          className="label mt-4 w-full rounded-full bg-accent px-8 py-5 text-accent-ink disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {soldOut ? "Sold out" : "Add to bag"}
-        </button>
-        <p className="mt-2 text-center text-xs text-muted">Checkout opens in a later preview.</p>
+        {soldOut ? (
+          <SoldOutActions key={variant.sku} product={product} variant={variant} label={label} />
+        ) : (
+          <>
+            {/* Bag and checkout arrive in Stage 3. */}
+            <button
+              type="button"
+              disabled
+              className="label mt-4 w-full rounded-full bg-accent px-8 py-5 text-accent-ink disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              Add to bag
+            </button>
+            <p className="mt-2 text-center text-xs text-muted">Checkout opens in a later preview.</p>
+          </>
+        )}
+        <p className="mt-4 text-center text-sm text-muted">
+          Questions?{" "}
+          <WhatsAppLink
+            message={`Hi Nimi! A question about ${product.name}${label ? ` (${label})` : ""}:`}
+            className="underline underline-offset-4 hover:text-ink"
+          >
+            Chat with Nimi on WhatsApp
+          </WhatsAppLink>
+        </p>
 
         {product.description && <p className="mt-10 text-lg leading-relaxed">{product.description}</p>}
         <dl className="mt-8 divide-y divide-line border-y border-line text-sm">
