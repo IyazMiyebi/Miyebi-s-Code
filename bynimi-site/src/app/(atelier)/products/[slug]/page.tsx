@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { getProduct, getProducts } from "@/lib/catalog";
 import { VariantPicker } from "./variant-picker";
+import { VariantPickerFromUrl } from "./variant-picker-from-url";
 
 export async function generateStaticParams() {
   return (await getProducts()).map((p) => ({ slug: p.slug }));
@@ -31,7 +33,9 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         <span aria-hidden> / </span>
         <span className="text-ink">{product.name}</span>
       </nav>
-      <VariantPicker product={product} />
+      <Suspense fallback={<VariantPicker product={product} />}>
+        <VariantPickerFromUrl product={product} />
+      </Suspense>
     </div>
   );
 }

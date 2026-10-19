@@ -8,6 +8,7 @@ import { ProductCard } from "@/components/product-card";
 import { Testimonials } from "@/components/testimonials";
 import { getCollection, getProduct, getProducts, type Product } from "@/lib/catalog";
 import { store } from "@/lib/store";
+import { variantHref } from "@/lib/variant-link";
 
 function hue(hex: string) {
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
@@ -29,10 +30,11 @@ function dahliaRainbow(dahlia: Product | undefined): SpiralItem[] {
     .sort((a, b) => hue(a.swatch!) - hue(b.swatch!));
   const n = Math.min(SPIRAL_CARDS, sorted.length);
   return Array.from({ length: n }, (_, i) => sorted[Math.floor((i * sorted.length) / n)]).map((v) => ({
-      href: `/products/${dahlia.slug}`,
-      src: v.images[0],
-      label: `The Dahlia Mini in ${Object.values(v.options).join(", ")}`,
-    }));
+    // Opens the product on exactly this finish and colour.
+    href: variantHref(dahlia.slug, v.options),
+    src: v.images[0],
+    label: `The Dahlia Mini in ${Object.values(v.options).join(", ")}`,
+  }));
 }
 
 export default async function Home() {
@@ -44,6 +46,8 @@ export default async function Home() {
   const latest = products.filter((p) => p.category === "bag").slice(0, 4);
   const velvetImage = velvet?.image ?? dahlia?.variants.find((v) => v.options.Finish === "Suede Velvet")?.images[0];
   const rainbow = dahliaRainbow(dahlia);
+  // The edit is the Dahlia in suede velvet, so it opens straight onto that finish.
+  const velvetHref = variantHref("the-dahlia-mini", store.collectionOptions["the-suede-velvet-edit"]);
   const { heroImage, heroAlt } = store.home;
 
   return (
@@ -111,9 +115,15 @@ export default async function Home() {
       {velvet && (
         <section className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 md:grid-cols-[1.1fr_1fr]">
           {velvetImage && (
-            <div className="relative aspect-square overflow-hidden">
-              <Image src={velvetImage} alt={velvet.name} fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover" />
-            </div>
+            <Link href={velvetHref} className="group relative block aspect-square overflow-hidden">
+              <Image
+                src={velvetImage}
+                alt={`${velvet.name}: the Dahlia Mini in suede velvet`}
+                fill
+                sizes="(min-width: 768px) 55vw, 100vw"
+                className="object-cover transition-transform duration-700 ease-silk group-hover:scale-[1.03]"
+              />
+            </Link>
           )}
           <div>
             <p className="label text-gold">The edit</p>
@@ -122,8 +132,8 @@ export default async function Home() {
               An exploration of softness, depth, and quiet presence. Our signature Dahlia Mini in suede velvet, for
               evenings that linger.
             </p>
-            <Link href={`/collections/${velvet.slug}`} className="label mt-8 inline-block border-b border-current pb-1 hover:text-accent">
-              Explore the edit
+            <Link href={velvetHref} className="label mt-8 inline-block border-b border-current pb-1 hover:text-accent">
+              Shop the edit
             </Link>
           </div>
         </section>

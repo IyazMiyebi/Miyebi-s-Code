@@ -2,16 +2,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { cardImages, priceRange, swatches, totalStock, type Product } from "@/lib/catalog";
 import { formatRange } from "@/lib/money";
+import { variantHref, variantsMatching } from "@/lib/variant-link";
 import { StockBadge } from "./stock-badge";
 import { SwatchDots } from "./swatch-dots";
 
-export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
+export function ProductCard({
+  product: full,
+  options,
+  priority = false,
+}: {
+  product: Product;
+  /** Feature only these options, e.g. { Finish: "Suede Velvet" }: photo, price, colours and link. */
+  options?: Record<string, string>;
+  priority?: boolean;
+}) {
+  const featured = options ? variantsMatching(full, options) : [];
+  // Narrowed to the featured variants (and their photos), when there are any.
+  const product = featured.length ? { ...full, variants: featured, images: [] } : full;
   const [cover, hover] = cardImages(product);
   const colours = swatches(product);
   const stock = totalStock(product);
 
   return (
-    <Link href={`/products/${product.slug}`} className="group block">
+    <Link href={variantHref(full.slug, featured.length ? options : {})} className="group block">
       <div className="relative aspect-[4/5] overflow-hidden bg-surface">
         {cover && (
           <Image

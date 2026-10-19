@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import type { Product, Variant } from "@/lib/catalog";
 import { formatNgn } from "@/lib/money";
+import { bestVariant, variantQuery } from "@/lib/variant-link";
 
 const SWATCH_OPTIONS = new Set(["Colour", "Metal"]);
 
@@ -28,9 +29,18 @@ function initialVariant(product: Product) {
   return product.variants.find((v) => v.stock > 0) ?? product.variants[0];
 }
 
-export function VariantPicker({ product }: { product: Product }) {
+export function VariantPicker({
+  product,
+  initialOptions = {},
+}: {
+  product: Product;
+  /** Options chosen by the link that opened the page, e.g. ?finish=suede-velvet. */
+  initialOptions?: Record<string, string>;
+}) {
   const names = product.option_names;
-  const [selection, setSelection] = useState<Record<string, string>>(() => ({ ...initialVariant(product).options }));
+  const [selection, setSelection] = useState<Record<string, string>>(() => ({
+    ...(bestVariant(product, initialOptions) ?? initialVariant(product)).options,
+  }));
   const [imageIndex, setImageIndex] = useState(0);
 
   const variant = product.variants.find((v) => matches(v, selection, names)) ?? initialVariant(product);
@@ -47,6 +57,8 @@ export function VariantPicker({ product }: { product: Product }) {
     }
     setSelection(next);
     setImageIndex(0);
+    // Keep the address bar on the chosen bag, so the link can be shared.
+    window.history.replaceState(null, "", `?${variantQuery(next)}`);
   }
 
   const images = variant.images.length ? variant.images : product.images;
