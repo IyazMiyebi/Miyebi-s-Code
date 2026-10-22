@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Product, Variant } from "@/lib/product";
 import { Price } from "@/components/price";
 import { WhatsAppLink } from "@/components/whatsapp-link";
+import { addToCart, setCartOpen, useCart } from "@/lib/cart";
 import { bestVariant, variantQuery } from "@/lib/variant-link";
 import { ProductGallery } from "./product-gallery";
 import { SoldOutActions } from "./sold-out-actions";
@@ -40,6 +41,7 @@ export function VariantPicker({
   initialOptions?: Record<string, string>;
 }) {
   const names = product.option_names;
+  const cart = useCart();
   const [selection, setSelection] = useState<Record<string, string>>(() => ({
     ...(bestVariant(product, initialOptions) ?? initialVariant(product)).options,
   }));
@@ -64,6 +66,7 @@ export function VariantPicker({
   const images = variant.images.length ? variant.images : product.images;
   const soldOut = variant.stock === 0;
   const label = names.map((n) => variant.options[n]).join(", ");
+  const inBag = cart.find((l) => l.sku === variant.sku)?.quantity ?? 0;
 
   return (
     <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
@@ -138,15 +141,28 @@ export function VariantPicker({
           <SoldOutActions key={variant.sku} product={product} variant={variant} label={label} />
         ) : (
           <>
-            {/* Bag and checkout arrive in Stage 3. */}
             <button
               type="button"
-              disabled
-              className="label mt-4 w-full rounded-full bg-accent px-8 py-5 text-accent-ink disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={inBag >= variant.stock}
+              onClick={() => {
+                addToCart({
+                  sku: variant.sku,
+                  slug: product.slug,
+                  name: product.name,
+                  label,
+                  image: variant.has_photo ? variant.images[0] : (images[0] ?? null),
+                  priceNgn: variant.price_ngn,
+                  stock: variant.stock,
+                });
+                setCartOpen(true);
+              }}
+              className="label mt-4 w-full rounded-full bg-accent px-8 py-5 text-accent-ink transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Add to bag
+              {inBag >= variant.stock ? `All ${variant.stock} are in your bag` : "Add to bag"}
             </button>
-            <p className="mt-2 text-center text-xs text-muted">Checkout opens in a later preview.</p>
+            {inBag > 0 && inBag < variant.stock && (
+              <p className="mt-2 text-center text-xs text-muted">{inBag} already in your bag</p>
+            )}
           </>
         )}
         <p className="mt-4 text-center text-sm text-muted">

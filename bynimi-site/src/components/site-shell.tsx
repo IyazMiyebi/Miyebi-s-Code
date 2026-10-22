@@ -1,4 +1,5 @@
 import { AnnouncementBar } from "./announcement-bar";
+import { CartDrawer } from "./cart-drawer";
 import { Footer } from "./footer";
 import { Header } from "./header";
 
@@ -19,6 +20,7 @@ export function SiteShell({ theme, children }: { theme: Theme; children: React.R
         {children}
       </main>
       <Footer />
+      <CartDrawer />
     </div>
   );
 }

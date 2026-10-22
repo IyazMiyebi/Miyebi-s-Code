@@ -38,6 +38,16 @@ export type Collection = {
 
 export type Currency = { code: string; symbol: string; rate: number };
 
+export type ShippingZone = {
+  id: string;
+  name: string;
+  description: string | null;
+  countries: string[];
+  price_ngn: number;
+  free_orders_left: number;
+  is_pickup: boolean;
+};
+
 // ---------------------------------------------------------------------------
 // Derived values used across product cards and pages.
 

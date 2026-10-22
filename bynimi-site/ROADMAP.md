@@ -184,17 +184,29 @@ Reviews with photos, customer accounts with loyalty points, "build your bag" (ba
   - [x] Follow @by.nimiie strip
   - [x] PageSpeed Insights on the live site (mobile): **performance 94**, accessibility 96–100, best practices 100, SEO 100
   - Moved: "quick add" on product cards needs the bag, so it ships with Stage 3. A live Instagram feed needs Meta access, so for now it's a link strip
-- [ ] Stage 2: Shop and product pages (built; waiting on the SQL below)
+- [x] Stage 2: Shop and product pages (live 22 Oct 2026)
   - [x] Links open a product on a chosen finish/colour (`?finish=…&colour=…`); spiral cards, the Suede Velvet Edit and finish collections use them; picking options updates the address bar for sharing
   - [x] **Regional prices** (agreed 19 Oct): ₦35,500 shows as ₦35,499 in Nigeria and 34.99 in $, £, € and C$ (thousands of naira, rounded down, less a cent). Currency picked from the visitor's country, changeable in the header, remembered; no flash of the wrong price
   - [x] Shop filters (type, colour family, finish, price cap, in stock) with live counts, search, sort; cards show and open the matching colour; filters live in the URL and survive back/forward
   - [x] Product page: hover zoom and a full-screen photo viewer (swipe, arrows, pinch-zoom)
   - [x] Sold-out colours: **pre-order** (name, WhatsApp, quantity, note; Nimi confirms on WhatsApp) or **notify me**, saved privately to Supabase
   - [x] "Chat with Nimi on WhatsApp" with the bag and colour pre-typed; "Complete the look" pairings
-  - [ ] You: run `supabase/migrations/20261020000000_stock_requests.sql` in Supabase so requests save
-  - [ ] Email Nimi when a pre-order arrives (needs the email service, Stage 3)
+  - [x] `stock_requests` table created in Supabase
+  - [ ] Email Nimi when a pre-order arrives (needs the email key, see Stage 3)
   - Note for Stage 3: Paystack charges in naira (USD only with a Zenith dom account), so a £34.99 order is charged as its naira equivalent at the day's rate and the checkout says so
-- [ ] Stage 3: Cart, checkout and payments
+- [ ] Stage 3: Cart, checkout and payments (built; waiting on the items below)
+  - [x] Bag in the browser: slide-out drawer, quantities capped at stock, "Add to bag" on product pages
+  - [x] Checkout: contact, country, all 23 of Nimi's delivery zones and fees (Lagos areas, pick-ups, states, international), address, discount codes (WELCOME10, first orders only), live totals in the visitor's currency
+  - [x] Paystack hosted payment (card, bank transfer, USSD) in Naira; overseas totals converted at the day's rate and shown before paying
+  - [x] Stock reserved at checkout, released after 30 minutes unpaid; payment confirmed on return and by webhook, recorded once; underpayments and late payments flagged for Nimi
+  - [x] UK launch offer: free delivery on the first 5 UK orders, counted down automatically
+  - [x] Order confirmation page; customer receipt and new-order alert to Nimi (sent once the email key is set)
+  - [x] Tested end to end against a private copy of the database and a Paystack stand-in (no real money, no live data)
+  - [ ] You: run `supabase/migrations/20261022000000_orders.sql` in Supabase
+  - [ ] You: add `SUPABASE_SECRET_KEY` and `PAYSTACK_SECRET_KEY` (test key first) to Vercel as Secret; set the Paystack webhook URL
+  - [ ] You: a real test order with Paystack's test card on the preview
+  - [ ] Optional: Resend account + key for emails (and verify bynimiie.com in Resend at launch)
+  - [ ] Later: "quick add" on product cards
 - [ ] Stage 4: Brand and content pages
 - [ ] Stage 5: Back office
 - [ ] Stage 6: Polish, speed, SEO, testing

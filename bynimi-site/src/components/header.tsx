@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav } from "@/lib/store";
+import { CartButton } from "./cart-drawer";
 import { CurrencySwitcher } from "./currency-switcher";
 import { Wordmark } from "./wordmark";
 
@@ -56,10 +57,7 @@ export function Header() {
   
           <div className="flex items-center gap-5 md:ml-6">
             <CurrencySwitcher className="hidden md:inline-flex" />
-            {/* The bag (cart) arrives in Stage 3. */}
-            <span className="label" aria-label="Bag, 0 items">
-              Bag (0)
-            </span>
+            <CartButton />
           </div>
         </div>
       </header>
