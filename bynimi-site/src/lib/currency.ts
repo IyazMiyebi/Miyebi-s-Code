@@ -69,5 +69,11 @@ export function formatPrice(code: CurrencyCode, ngn: number) {
   return `${symbol}${code === "NGN" ? whole.format(amount) : cents.format(amount)}`;
 }
 
+/** An amount already in `code` (e.g. an order total): ₦38,949 · £57.43 */
+export function formatAmount(code: CurrencyCode, amount: number) {
+  const symbol = CURRENCIES.find((c) => c.code === code)!.symbol;
+  return `${symbol}${code === "NGN" ? whole.format(amount) : cents.format(amount)}`;
+}
+
 /** Inline <head> script: show the saved currency's prices before first paint. */
 export const currencyGuard = `try{var m=document.cookie.match(/(?:^|; )${CURRENCY_COOKIE}=([A-Z]{3})/);if(m)document.documentElement.dataset.currency=m[1]}catch(e){}`;

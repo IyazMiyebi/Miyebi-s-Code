@@ -21,7 +21,8 @@ Other checks: `npm run lint`, `npm run build`.
 | `/` | noir | Home: ASCII intro, water-ripple hero, spiral gallery, testimonials, Inner Circle sign-up on the box grid |
 | `/shop` | atelier | Every product, with filters (type, colour, finish, price, in stock), search and sort |
 | `/collections/[slug]` | atelier | Most Loved, The Suede Velvet Edit, Mini Bags, Shoulder Bags, Bag Accessories, Asooke Designs |
-| `/products/[slug]` | atelier | Finish and colour picker, zoomable gallery, pre-order / notify me for sold-out colours, complete the look |
+| `/products/[slug]` | atelier | Finish and colour picker, zoomable gallery, add to bag, pre-order / notify me for sold-out colours, complete the look |
+| `/checkout`, `/checkout/complete` | atelier | Contact, delivery zone, address, discount code, live totals, Paystack payment and confirmation |
 | `/style-guide` | atelier | Colours, type and components, for Nimi to approve |
 | `/charm-bar`, `/lookbook`, `/about` | noir | Placeholders for Stage 4 |
 
@@ -62,7 +63,8 @@ To set up a fresh database, run these in the SQL editor, in order:
 1. `supabase/migrations/20261018000000_catalog.sql` (once)
 2. `supabase/migrations/20261019000000_newsletter.sql` (once): Inner Circle sign-ups
 3. `supabase/migrations/20261020000000_stock_requests.sql` (once): pre-orders and "notify me"
-4. `supabase/seed.sql` (safe to re-run; it updates, never duplicates)
+4. `supabase/migrations/20261022000000_orders.sql` (once): delivery zones, discount codes, orders
+5. `supabase/seed.sql` (safe to re-run; it updates, never duplicates)
 
 Sign-ups land in `newsletter_subscribers`, and pre-orders / back-in-stock requests in
 `stock_requests` (Table Editor in Supabase; set a request's `status` to `contacted` or `fulfilled` as
@@ -71,6 +73,31 @@ you go). The public can add rows to both but can't read either.
 Public visitors can only read published products and collections (row level security, verified
 against the live project). The publishable key is safe in the browser; the **secret / service_role
 key must never go in this repo or in a `NEXT_PUBLIC_` variable**.
+
+## Checkout and payments (Stage 3)
+
+The bag lives in the browser; checkout re-prices everything on the server from the database before
+charging. Paystack's hosted page takes the payment (card, bank transfer, USSD), always in Naira:
+overseas totals are converted at the day's rate (open.er-api.com, falling back to the `currencies`
+table).
+
+Stock is reserved when checkout starts and released if payment isn't completed within 30 minutes.
+Payment is confirmed twice over: when the customer returns (`/checkout/complete`) and by Paystack's
+webhook (`/api/paystack/webhook`), whichever comes first; emails go out once.
+
+**Server-only settings** (Vercel → Environment Variables, type **Secret**, never `NEXT_PUBLIC_`):
+
+| Name | Where to find it |
+|---|---|
+| `SUPABASE_SECRET_KEY` | Supabase → Project Settings → API Keys → Secret key (`sb_secret_…`) |
+| `PAYSTACK_SECRET_KEY` | Paystack → Settings → API Keys & Webhooks → Test secret key (`sk_test_…`); the live key at launch |
+| `RESEND_API_KEY` | Optional, for order emails: resend.com → API Keys. Without it, emails are skipped |
+| `ORDER_NOTIFY_EMAIL` | Optional: where new-order alerts go (default by.nimiie@gmail.com) |
+
+In Paystack, set the **Webhook URL** to `https://<your site>/api/paystack/webhook`.
+
+Orders are in Supabase → Table Editor → `orders` (with `order_items`). Delivery fees, the UK
+launch offer (`free_orders_left`) and discount codes are in `shipping_zones` and `discount_codes`.
 
 ## Deploying a preview (Vercel)
 

@@ -9,7 +9,7 @@ import { createClient } from "@supabase/supabase-js";
 import { cacheLife, cacheTag } from "next/cache";
 import fallback from "../../data/catalog.json";
 
-import type { Collection, Currency, Product, Variant } from "./product";
+import type { Collection, Currency, Product, ShippingZone, Variant } from "./product";
 
 export * from "./product";
 
@@ -17,6 +17,7 @@ type Catalog = {
   products: Product[];
   collections: Collection[];
   currencies: Currency[];
+  zones: ShippingZone[];
 };
 
 /** Cache tag for the whole catalog; call updateTag(CATALOG_TAG) after writes. */
@@ -33,10 +34,10 @@ async function loadCatalog(): Promise<Catalog> {
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  if (!url || !key) return fallback as unknown as Catalog;
+  if (!url || !key) return { zones: [], ...(fallback as unknown as Omit<Catalog, "zones">) };
 
   const db = createClient(url, key, { auth: { persistSession: false } });
-  const [products, collections, currencies] = await Promise.all([
+  const [products, collections, currencies, zones] = await Promise.all([
     db
       .from("products")
       .select(
@@ -47,6 +48,10 @@ async function loadCatalog(): Promise<Catalog> {
       .from("collections")
       .select("slug, name, description, image, position, collection_products (position, products (slug))"),
     db.from("currencies").select("code, symbol, ngn_per_unit, position"),
+    db
+      .from("shipping_zones")
+      .select("id, name, description, countries, price_ngn, free_orders_left, is_pickup")
+      .order("position"),
   ]);
   for (const r of [products, collections, currencies]) {
     if (r.error) throw new Error(`Supabase: ${r.error.message}`);
@@ -77,6 +82,8 @@ async function loadCatalog(): Promise<Catalog> {
     currencies: (currencies.data as CurrencyRow[])
       .sort(byPosition)
       .map((c) => ({ code: c.code, symbol: c.symbol, rate: Number(c.ngn_per_unit) })),
+    // Missing until the orders migration has run; checkout then stays closed.
+    zones: zones.error ? [] : ((zones.data ?? []) as ShippingZone[]),
   };
 }
 
@@ -100,6 +107,10 @@ export async function getCollection(slug: string) {
     ...collection,
     products: collection.products.flatMap((s) => products.filter((p) => p.slug === s)),
   };
+}
+
+export async function getShippingZones(): Promise<ShippingZone[]> {
+  return (await loadCatalog()).zones;
 }
 
 export async function getCurrencies(): Promise<Currency[]> {
