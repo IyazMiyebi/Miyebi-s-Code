@@ -1,0 +1,11 @@
+{
+  "name": "Ultimate Games Night",
+  "short_name": "Games Night",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0c0809",
+  "theme_color": "#0c0809",
+  "icons": [{ "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
