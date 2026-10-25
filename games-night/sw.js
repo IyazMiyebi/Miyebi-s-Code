@@ -1,9 +1,9 @@
 /*
  * Offline support. The first visit saves every file of the show in the browser;
- * after that it opens with no internet at all. Bump VERSION whenever files change
- * so everyone gets the new copy.
+ * after that it opens with no internet at all. When online it always loads the
+ * latest files. Bump VERSION when the file list changes.
  */
-const VERSION = "gn-stage2-1";
+const VERSION = "gn-stage2-2";
 const FILES = [
   "./",
   "index.html",
@@ -34,8 +34,14 @@ const FILES = [
   "js/app.js"
 ];
 
+// Always save fresh copies (skip the browser's 10-minute file cache), so the saved
+// files can never be a mix of old and new versions.
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));
+  e.waitUntil(
+    caches.open(VERSION)
+      .then((c) => c.addAll(FILES.map((f) => new Request(f, { cache: "reload" }))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener("activate", (e) => {
@@ -46,20 +52,19 @@ self.addEventListener("activate", (e) => {
   );
 });
 
-// Our own files: answer from the saved copy straight away (fast, works offline), and
-// quietly fetch a fresh copy for next time. Anything else (e.g. music previews): network.
+// Our own files: get the latest from the internet and save it. If there's no internet
+// (or it takes more than 3 seconds), use the saved copy instead.
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
   e.respondWith(
-    caches.open(VERSION).then((cache) =>
-      cache.match(e.request, { ignoreSearch: true }).then((hit) => {
-        const fresh = fetch(e.request)
-          .then((res) => { if (res.ok) cache.put(e.request, res.clone()); return res; })
-          .catch(() => hit);
-        if (hit) { e.waitUntil(fresh); return hit; }
-        return fresh;
-      })
-    )
+    caches.open(VERSION).then((cache) => {
+      const fresh = (e.request.mode === "navigate" ? fetch(e.request) : fetch(e.request.url, { cache: "no-cache" }))
+        .then((res) => { if (res.ok) cache.put(e.request, res.clone()); return res; });
+      const saved = () => cache.match(e.request, { ignoreSearch: true });
+      const slow = new Promise((resolve) => setTimeout(resolve, 3000)).then(saved);
+      return Promise.race([fresh.catch(saved), slow.then((hit) => hit || fresh)])
+        .then((res) => res || fresh);
+    })
   );
 });

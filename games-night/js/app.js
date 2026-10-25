@@ -89,8 +89,13 @@
   // Host controls open in their own window, to keep on the laptop while the TV shows the game.
   function openHost() {
     let w = null;
-    try { w = window.open(location.pathname + location.search + "#host", "gn-host", "width=1200,height=860"); } catch (e) { /* blocked */ }
-    if (!w) GN.ui.toast("Your browser blocked the new window. Open this page again in a new tab and add #host to the end of the address.");
+    try { w = window.open(location.pathname + location.search + "#host", "gn-host", "popup,width=1200,height=860"); } catch (e) { /* blocked */ }
+    if (w) {
+      try { w.focus(); } catch (e) { /* ignore */ }
+      GN.ui.toast("Host controls opened in a new window. If you can't see it, check behind this window or on the laptop screen.", 6000);
+    } else {
+      GN.ui.toast("Your browser blocked the new window. Allow pop-ups for this site, or open this page in a new tab and add #host to the end of the address.", 9000);
+    }
   }
   document.getElementById("btn-host").addEventListener("click", openHost);
 
