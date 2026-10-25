@@ -113,7 +113,7 @@
           <p class="title__ask">Are you ready?</p>
           <button class="btn btn--big" type="button" data-autofocus data-start>Start the show
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-          <p class="title__hint"><kbd>Space</kbd> next · <kbd>F</kbd> full screen · <kbd>S</kbd> settings</p>
+          <p class="title__hint"><kbd>Space</kbd> next · <kbd>F</kbd> full screen · <kbd>H</kbd> host controls · <kbd>S</kbd> settings</p>
         </div>`;
       root.querySelector("[data-start]").addEventListener("click", () => nav.go("teams"));
 

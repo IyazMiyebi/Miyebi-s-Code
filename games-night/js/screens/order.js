@@ -29,7 +29,8 @@
   GN.screens.order = {
     label: "Running order",
     mount(root, nav) {
-      const { pack, rules: r } = GN.store.get();
+      const { pack, rules: r, played } = GN.store.get();
+      const first = GN.game.firstUnplayed();
       const esc = GN.esc;
       root.innerHTML = `
         <div class="order__grid" aria-hidden="true"></div>
@@ -40,8 +41,8 @@
           </header>
           <div class="rounds" role="list">
             ${pack.rounds.map((round, i) => `
-              <button type="button" class="round${round.number ? "" : " round--extra"}" role="listitem" data-round="${i}" ${i === 0 ? "data-autofocus" : ""}>
-                <span class="round__no">${round.number ? "Round " + round.number : "Extra time"}</span>
+              <button type="button" class="round${round.number ? "" : " round--extra"}${played.includes(round.id) ? " is-played" : ""}" role="listitem" data-round="${i}" ${i === first ? "data-autofocus" : ""}>
+                <span class="round__no">${round.number ? "Round " + round.number : "Extra time"}${played.includes(round.id) ? ' <span class="round__done">· played</span>' : ""}</span>
                 <span class="round__name">${esc(round.name)}</span>
                 ${round.subtitle ? `<span class="round__sub">${esc(round.subtitle)}</span>` : ""}
                 <span class="round__meta">${detail(round, r)}</span>
@@ -51,7 +52,9 @@
           <aside class="order__detail" data-detail aria-live="polite"></aside>
           <div class="teams__actions">
             <button class="btn btn--ghost" type="button" data-back>Back</button>
-            <p class="order__note">The rounds start playing in the next update (Stage 2).</p>
+            <button class="btn" type="button" data-play="${first}">Start ${pack.rounds[first].number ? "Round " + pack.rounds[first].number : esc(pack.rounds[first].name)}
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            <p class="order__note"><kbd>H</kbd> opens the host controls in a second window, with the answers.</p>
           </div>
         </div>`;
 
@@ -65,13 +68,16 @@
         detailEl.innerHTML = `
           <p class="order__detail-k">${round.number ? "Round " + round.number : "Extra time"} · ${points(round, r)}</p>
           <p class="order__detail-name">${esc(round.name)}${round.subtitle ? " <em>" + esc(round.subtitle) + "</em>" : ""}</p>
-          <ul>${round.howTo.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
+          <ul>${round.howTo.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+          <button class="btn btn--small" type="button" data-play="${i}">${played.includes(round.id) ? "Play it again" : "Play this round"}</button>`;
       }
       root.addEventListener("focusin", (e) => {
         const b = e.target.closest(".round");
         if (b) { grid.focus(b); show(Number(b.dataset.round)); }
       });
       root.addEventListener("click", (e) => {
+        const p = e.target.closest("[data-play]");
+        if (p) { GN.game.startRound(Number(p.dataset.play)); return; }
         const b = e.target.closest(".round");
         if (b) { grid.focus(b); show(Number(b.dataset.round)); }
       });
@@ -80,7 +86,7 @@
         if (b) grid.focus(b);
       });
       root.querySelector("[data-back]").addEventListener("click", nav.back);
-      show(0);
+      show(first);
       const unsub = GN.store.subscribe(() => grid.play());
       return () => { clearTimeout(settle); unsub(); grid.destroy(); };
     }
