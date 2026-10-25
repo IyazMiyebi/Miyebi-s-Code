@@ -37,8 +37,9 @@
       for (let i = 0; i < tiles.length; i++) {
         const c = centres[i];
         const d = Math.hypot(c.x - light.x, c.y - light.y) / reach;
-        const g = Math.max(0, 1 - d * d);
-        tiles[i].style.setProperty("--g", g.toFixed(3));
+        const g = Math.round(Math.max(0, 1 - d * d) * 50) / 50;
+        // Only touch tiles whose glow actually changed.
+        if (tiles[i]._g !== g) { tiles[i]._g = g; tiles[i].style.setProperty("--g", g); }
       }
       raf = requestAnimationFrame(frame);
     }

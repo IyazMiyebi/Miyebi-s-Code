@@ -3,12 +3,16 @@
  * after that it opens with no internet at all. When online it always loads the
  * latest files. Bump VERSION when the file list changes.
  */
-const VERSION = "gn-stage8-1";
+const VERSION = "gn-stage9-1";
 const FILES = [
   "./",
   "index.html",
+  "cheatsheet.html",
   "manifest.webmanifest",
   "icons/icon.svg",
+  "icons/icon-192.png",
+  "icons/icon-512.png",
+  "icons/icon-512-maskable.png",
   "css/app.css",
   "fonts/instrument-serif-latin-400-italic.woff2",
   "fonts/instrument-serif-latin-400-normal.woff2",

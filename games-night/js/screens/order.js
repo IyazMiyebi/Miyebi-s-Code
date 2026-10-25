@@ -39,9 +39,9 @@
             <p class="eyebrow">Tonight’s running order</p>
             <h2 class="display">Five rounds. <em>One crown.</em></h2>
           </header>
-          <div class="rounds" role="list">
+          <div class="rounds">
             ${pack.rounds.map((round, i) => `
-              <button type="button" class="round${round.number ? "" : " round--extra"}${played.includes(round.id) ? " is-played" : ""}" role="listitem" data-round="${i}" ${i === first ? "data-autofocus" : ""}>
+              <button type="button" class="round${round.number ? "" : " round--extra"}${played.includes(round.id) ? " is-played" : ""}" data-round="${i}" ${i === first ? "data-autofocus" : ""}>
                 <span class="round__no">${round.number ? "Round " + round.number : "Extra time"}${played.includes(round.id) ? ' <span class="round__done">· played</span>' : ""}</span>
                 <span class="round__name">${esc(round.name)}</span>
                 ${round.subtitle ? `<span class="round__sub">${esc(round.subtitle)}</span>` : ""}
@@ -49,7 +49,7 @@
                 <span class="round__pts">${points(round, r)}</span>
               </button>`).join("")}
           </div>
-          <aside class="order__detail" data-detail aria-live="polite"></aside>
+          <div class="order__detail" data-detail aria-live="polite"></div>
           <div class="teams__actions">
             <button class="btn btn--ghost" type="button" data-back>Back</button>
             <button class="btn" type="button" data-play="${first}">Start ${pack.rounds[first].number ? "Round " + pack.rounds[first].number : esc(pack.rounds[first].name)}
@@ -59,7 +59,7 @@
           </div>
         </div>`;
 
-      const grid = GN.fx.boxGrid(root.querySelector(".order__grid"), { cols: 11, rows: 11 });
+      const grid = GN.fx.boxGrid(root.querySelector(".order__grid"), { cols: 9, rows: 9 });
       const detailEl = root.querySelector("[data-detail]");
       const settle = setTimeout(() => grid.play(), 800);
 

@@ -32,9 +32,10 @@
       stage.innerHTML = `
         <div class="host">
           <header class="host__top">
-            <div><p class="eyebrow">Host controls</p><p class="host__where" data-where></p></div>
+            <div><p class="eyebrow">Host controls</p><h1 class="host__where" data-where></h1></div>
             <p class="host__tip">Keep this window on your laptop. The TV shows the other window, and follows every button you press here.
-              <button type="button" class="hbtn host__edit" data-act="edit">Edit questions</button></p>
+              <button type="button" class="hbtn host__edit" data-act="edit">Edit questions</button>
+              <a class="hbtn host__edit" href="cheatsheet.html" target="_blank" rel="noopener">Cheat sheet</a></p>
             <p class="host__warn" data-tv-sound hidden>The TV window can’t make sound yet (ticks, buzzer, applause). Click it once: it shows a “Click to turn on sound” button. Music clips play from this window, so they’re fine.</p>
           </header>
           <div class="host__grid">

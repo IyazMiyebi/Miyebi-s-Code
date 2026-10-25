@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Host Cheat Sheet · Games Night</title>
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <style>
+    /* A plain, printable page: light paper, the show's fonts, two columns on A4. */
+    @font-face { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; src: url("fonts/instrument-serif-latin-400-italic.woff2") format("woff2"); }
+    @font-face { font-family: "Archivo"; font-weight: 100 900; font-stretch: 62% 125%; src: url("fonts/archivo-latin-standard-normal.woff2") format("woff2"); }
+    @font-face { font-family: "JetBrains Mono"; font-weight: 500; src: url("fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2"); }
+    :root { color-scheme: light; --ink: #1a1214; --muted: #5e514e; --line: #e2d8d0; --paper: #fbf7f2; --ember: #a92a08; --chip: #f1e9e1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.45 "Archivo", "Helvetica Neue", Arial, sans-serif; }
+    .page { max-width: 1060px; margin: 0 auto; padding: 28px max(16px, env(safe-area-inset-left, 0px)) 48px; }
+    header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 10px 24px; border-bottom: 3px solid var(--ink); padding-bottom: 10px; margin-bottom: 18px; }
+    h1 { margin: 0; font-weight: 900; font-stretch: 70%; font-size: 2.6rem; line-height: 0.95; text-transform: uppercase; }
+    h1 em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-stretch: normal; text-transform: none; color: var(--ember); }
+    .link { font-family: "JetBrains Mono", monospace; font-size: 0.8rem; color: var(--muted); }
+    .cols { columns: 2 330px; column-gap: 28px; }
+    section { break-inside: avoid; margin: 0 0 16px; }
+    h2 { margin: 0 0 6px; font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ember); }
+    ol, ul { margin: 0; padding-left: 1.2em; }
+    li { margin: 0 0 3px; }
+    .check { list-style: none; padding: 0; }
+    .check li { padding-left: 1.6em; position: relative; }
+    .check li::before { content: ""; position: absolute; left: 0; top: 0.2em; width: 0.95em; height: 0.95em; border: 1.5px solid var(--ink); border-radius: 3px; }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 3px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+    td:first-child { width: 8.2em; padding-right: 8px; }
+    kbd { display: inline-block; min-width: 1.6em; padding: 0 0.4em; border: 1px solid #c9bbb0; border-bottom-width: 2px; border-radius: 5px; background: var(--chip); font: 0.82rem "JetBrains Mono", monospace; text-align: center; }
+    b { font-weight: 800; }
+    .round { margin: 0 0 6px; }
+    .round b { display: block; }
+    .actions { display: flex; gap: 8px; }
+    button { padding: 0.55em 1.1em; border: 0; border-radius: 999px; background: var(--ink); color: var(--paper); font: 700 0.95rem "Archivo", sans-serif; cursor: pointer; }
+    button:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      @page { size: A4; margin: 9mm; }
+      body { background: #fff; font-size: 8.6pt; line-height: 1.32; }
+      .page { padding: 0; max-width: none; }
+      .actions { display: none; }
+      header { margin-bottom: 8px; padding-bottom: 6px; }
+      h1 { font-size: 18pt; }
+      .cols { column-gap: 18px; }
+      section { margin-bottom: 8px; }
+      li, .round { margin-bottom: 1px; }
+      td { padding: 1px 0; }
+      kbd { font-size: 7.5pt; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div><h1>Host <em>cheat sheet</em></h1><p class="link" id="link"></p></div>
+      <div class="actions"><button type="button" onclick="window.print()">Print</button></div>
+    </header>
+
+    <div class="cols">
+      <section>
+        <h2>Before the night</h2>
+        <ul class="check">
+          <li>Open the show on the laptop you'll use, then press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> once for the latest version.</li>
+          <li>Set up <b>Teams</b>: names, colours, captains.</li>
+          <li>Press <kbd>H</kbd> for the host controls → <b>Get clips ready</b>. Wait for “10 of 10 saved for offline”.</li>
+          <li>Check the questions: <b>Settings → Edit questions and packs</b>.</li>
+          <li>Memory Tray: 12 household items on a tray, plus a cloth to cover them.</li>
+          <li>Paper and pens for every team.</li>
+          <li>Optional: switch on the <b>phone remote</b> in the host controls and scan the QR code.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Setting up the TV</h2>
+        <ol>
+          <li>Connect the laptop to the TV and choose <b>Extend</b>, not mirror (Windows: <kbd>Win</kbd>+<kbd>P</kbd>; Mac: Displays → untick Mirror).</li>
+          <li>Drag the show window onto the TV and press <kbd>F</kbd> for full screen.</li>
+          <li><b>Click the TV window once</b> so it's allowed to make sound (it shows “Click to turn on sound” until you do).</li>
+          <li>Press <kbd>H</kbd>: the host controls open on the laptop. They show the answers; the TV doesn't.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>The one key: Space</h2>
+        <p>Space (or the big button in the host controls) always does the next thing: intro → question → start timer → time's up → reveal → next question → standings → next round → winner. The host controls say what it will do.</p>
+      </section>
+
+      <section>
+        <h2>Keys on the big screen</h2>
+        <table>
+          <tr><td><kbd>Space</kbd> <kbd>→</kbd></td><td>Next step (a presentation clicker works too)</td></tr>
+          <tr><td><kbd>←</kbd></td><td>Back a step</td></tr>
+          <tr><td><kbd>1</kbd>–<kbd>4</kbd></td><td>Give that team the round's points (<kbd>Shift</kbd> takes them away)</td></tr>
+          <tr><td><kbd>U</kbd></td><td>Undo the last score change</td></tr>
+          <tr><td><kbd>P</kbd> / <kbd>T</kbd></td><td>Pause the timer / restart it</td></tr>
+          <tr><td><kbd>R</kbd></td><td>Reveal the answer now</td></tr>
+          <tr><td><kbd>G</kbd></td><td>Show or hide the scoreboard</td></tr>
+          <tr><td><kbd>X</kbd></td><td>Nauseous: shuffle letters · Category Bank: team is out</td></tr>
+          <tr><td><kbd>A</kbd></td><td>Music: play the clip again</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Leave the round (back to the running order)</td></tr>
+          <tr><td><kbd>F</kbd> <kbd>M</kbd> <kbd>H</kbd> <kbd>S</kbd></td><td>Full screen · sound · host controls · settings</td></tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>Round by round</h2>
+        <p class="round"><b>1 · Music</b>Space plays the clip on the TV; the timer starts when it ends. Space during a clip cuts it short. <kbd>A</kbd> replays. Wrong version? Change it in the host controls.</p>
+        <p class="round"><b>2 · Nauseous</b>Space starts the timer. <kbd>X</kbd> shuffles the letters if teams are stuck. The reveal spells the word.</p>
+        <p class="round"><b>3 · Brain Games</b>Space starts the timer, then reveals. Score with <kbd>1</kbd>–<kbd>4</kbd>.</p>
+        <p class="round"><b>4 · Mini Games</b>Turn-by-turn races: Space starts a team's turn, Space again when they finish. Last one standing: number key when a team is out. Memory Tray: Space to look, Space to write. Charades prompts are only in the host controls. Pick the winner on the result screen.</p>
+        <p class="round"><b>5 · Category Bank</b>Space starts. Space = valid answer (points, next team). <kbd>X</kbd> = repeat or wrong (out). Out of time = out. Last team standing gets the bonus.</p>
+        <p class="round"><b>Tie-breaker</b>Only if the top two are level. Type each guess in the host controls; the reveal ranks them; give the tie-break to the closest.</p>
+        <p class="round"><b>Finale</b>“And the winner is…”, confetti and final scores. Play again, new teams, or replay the reveal.</p>
+      </section>
+
+      <section>
+        <h2>If something goes wrong</h2>
+        <table>
+          <tr><td>No sound</td><td>Click the TV window once, and check <kbd>M</kbd> (mute) and the laptop's volume.</td></tr>
+          <tr><td>Clip won't play</td><td>Play the song from your phone, then press Space for the timer.</td></tr>
+          <tr><td>Wrong score</td><td><kbd>U</kbd> undoes the last change; click a team's score for custom points.</td></tr>
+          <tr><td>Looks out of date</td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> on each window. The game and scores are kept.</td></tr>
+          <tr><td>No internet</td><td>Everything still works, except songs not saved in advance and the phone remote.</td></tr>
+          <tr><td>Phone dropped</td><td>It reconnects by itself; keep the TV window open.</td></tr>
+          <tr><td>Wrong screen</td><td><kbd>←</kbd> goes back a step; <kbd>Esc</kbd> returns to the running order.</td></tr>
+        </table>
+      </section>
+    </div>
+  </main>
+  <script>
+    document.getElementById("link").textContent = location.href.replace(/cheatsheet\.html.*$/, "");
+  </script>
+</body>
+</html>

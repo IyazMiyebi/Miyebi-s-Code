@@ -5,6 +5,8 @@
 (function () {
   const KEY = "gn.state.v1";
 
+  GN.VERSION = "1.0";
+
   GN.TEAM_COLOURS = [
     { id: "ember", name: "Ember Red", hex: "#ff4a1c" },
     { id: "iris", name: "Iris Violet", hex: "#8b5cff" },

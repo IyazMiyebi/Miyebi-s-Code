@@ -3,6 +3,19 @@
 A game-show website for hosting games night on a TV. It runs in any modern browser,
 needs no sign-up, and works offline after the first visit.
 
+## Game night in five minutes
+
+1. Open the show on the laptop, connect the TV and set the display to **Extend**.
+2. Drag the show onto the TV, press **F**, and **click it once** (so it can make sound).
+3. Press **H** for the host controls on the laptop, then **Get clips ready**.
+4. Set up the teams, then keep pressing **Space**.
+
+The printable **host cheat sheet** (`cheatsheet.html`, also under Settings and in the host
+controls) has the keys, the setup and a "before the night" checklist on one A4 page.
+
+**Install it as an app** (optional): in Chrome or Edge, use the install icon at the right of
+the address bar. It then opens full screen from the desktop or Start menu, and works offline.
+
 ## Running it
 
 - **Online:** open the published link (GitHub Pages, see below) on the laptop that's
@@ -168,6 +181,8 @@ Plain HTML, CSS and JavaScript. No build step, nothing to install.
 - `js/fx/`: the visual effects (liquid ripple, hanging cards, box grid, ASCII text)
 - `js/ui/`: the score strip and pop-up messages
 - `sw.js`: offline support. Add any new file to its list.
+- `cheatsheet.html`: the printable one-page host cheat sheet
+- `vendor/`: third-party libraries (see `vendor/README.md`)
 - `tools/build-single.mjs`: bundles everything into one HTML file
   (`node tools/build-single.mjs games-night.html`)
 

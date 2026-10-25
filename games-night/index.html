@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#0c0809">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -16,7 +17,7 @@
 
   <nav class="steps" id="steps" aria-label="Show progress"></nav>
 
-  <div class="bar" id="bar" role="toolbar" aria-label="Show controls">
+  <nav class="bar" id="bar" aria-label="Show controls">
     <button class="bar__btn" id="btn-host" type="button" title="Host controls in a new window (H)">
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="12" height="9" rx="1.5"/><path d="M7 17h4M9 13v4"/><rect x="17" y="8" width="5" height="11" rx="1.2"/></svg>
       <span class="sr">Host controls</span>
@@ -33,7 +34,7 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
       <span class="sr">Settings</span>
     </button>
-  </div>
+  </nav>
 
   <dialog class="settings" id="settings" aria-labelledby="settings-title"></dialog>
 
