@@ -252,7 +252,7 @@
     },
     secondsLeft() {
       const t = S().timer;
-      return t.running ? Math.max(0, (t.endsAt - Date.now()) / 1000) : t.left;
+      return t.running ? Math.max(0, (t.endsAt - GN.now()) / 1000) : t.left;
     },
 
     /* ---------- Scoring ---------- */
@@ -283,6 +283,7 @@
 
   // When the clock runs out, mark time's up. Both windows check; the change is the same.
   setInterval(() => {
+    if (GN.role === "remote") return; // the laptop keeps time; a phone only shows it
     const t = S().timer;
     if (!t.running || Date.now() < t.endsAt) return;
     // Category bank: running out of time puts the team out. Only the big screen does

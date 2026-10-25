@@ -73,6 +73,10 @@
               <div class="hrounds" data-rounds></div>
               <div class="host__reset" data-reset-wrap><button type="button" class="hbtn" data-act="reset">Reset scores to zero…</button></div>
             </section>
+            <section class="hcard" aria-label="Phone remote" data-remote-card>
+              <h2 class="hcard__h">Phone remote</h2>
+              <div data-remote-panel></div>
+            </section>
             <section class="hcard hcard--clips" aria-label="Music clips">
               <h2 class="hcard__h">Music clips</h2>
               <p class="host__muted" data-clips-sum></p>
@@ -83,6 +87,12 @@
         </div>`;
 
       const $ = (sel) => stage.querySelector(sel);
+      // On the phone itself, this box just says it's connected.
+      if (GN.role === "remote") {
+        $("[data-remote-card]").innerHTML = `<h2 class="hcard__h">Phone remote</h2><p class="host__muted">This phone controls the show on the TV. Keep the TV window open on the laptop.</p>`;
+        stage.querySelector(".host__tip").textContent = "This phone is the remote. Every button here runs on the TV straight away.";
+        $("[data-tv-sound]").textContent = "The TV window can’t make sound yet. Click it once on the laptop (it shows a “Click to turn on sound” button), or the music clips, ticks and buzzer stay silent.";
+      } else GN.remote.panel($("[data-remote-panel]"));
       let clipKey = "", clipsKey = "";
 
       // The current song: which version plays, where it starts, play / stop.

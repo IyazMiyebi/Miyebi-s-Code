@@ -44,6 +44,8 @@
       music: {},    // song clips found for the music round (see js/music.js)
       tvSound: null, // false while the big screen can't make sound yet (nobody has clicked it)
       finaleAt: 0,   // when the finale was last started (the host can replay it)
+      // Phone remote (js/remote.js): the TV window runs it while enabled.
+      remote: { enabled: false, code: "", status: "off", phones: 0 },
       log: [],      // every score change, newest last, so it can be undone
       played: []    // round ids that reached their standings
     };
@@ -63,21 +65,33 @@
           rules: { ...base.rules, ...saved.rules },
           settings: { ...base.settings, ...saved.settings },
           show: { ...base.show, ...saved.show, clip: { ...base.show.clip, ...(saved.show && saved.show.clip), playing: false, pending: false } },
-          timer: { ...base.timer, ...saved.timer }
+          timer: { ...base.timer, ...saved.timer },
+          remote: { ...base.remote, ...saved.remote, status: "off", phones: 0 }
         };
       }
     } catch (e) { /* storage blocked or corrupt: start fresh */ }
     return fresh();
   }
 
+  /* Which window is this?  show = the big screen (TV) · host = #host on the laptop
+     · remote = ?remote=CODE on a phone (js/remote.js). */
+  const params = new URLSearchParams(location.search);
+  GN.remoteCode = params.get("remote") || "";
+  GN.role = GN.remoteCode ? "remote" : location.hash === "#host" ? "host" : "show";
+  const isRemote = GN.role === "remote";
+
+  // The phone's clock can differ from the laptop's; timers read the time through this.
+  GN.clockOffset = 0;
+  GN.now = () => Date.now() + GN.clockOffset;
+
   const listeners = new Set();
-  let state = load();
+  // A phone starts empty and is filled in by the laptop.
+  let state = isRemote ? fresh() : load();
 
   /* The big screen and the host window share one game. Every change is sent to the
      other window straight away (BroadcastChannel), with a localStorage fallback. */
-  GN.role = location.hash === "#host" ? "host" : "show";
   let channel = null;
-  try { channel = new BroadcastChannel("gn-sync"); } catch (e) { /* older browser */ }
+  try { if (!isRemote) channel = new BroadcastChannel("gn-sync"); } catch (e) { /* older browser */ }
   function receive(next) {
     if (!next || next.version !== 1) return;
     const prev = state;
@@ -85,7 +99,7 @@
     listeners.forEach((fn) => fn(state, prev));
   }
   if (channel) channel.onmessage = (e) => receive(e.data);
-  else window.addEventListener("storage", (e) => {
+  else if (!isRemote) window.addEventListener("storage", (e) => {
     if (e.key === KEY && e.newValue) { try { receive(JSON.parse(e.newValue)); } catch (err) { /* ignore */ } }
   });
 
@@ -94,11 +108,13 @@
     set(patch) {
       const prev = state;
       state = { ...state, ...(typeof patch === "function" ? patch(state) : patch) };
-      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
+      if (!isRemote) { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ } }
       try { channel && channel.postMessage(state); } catch (e) { /* ignore */ }
       listeners.forEach((fn) => fn(state, prev));
     },
     subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); },
+    // The phone remote replaces its whole copy with the laptop's.
+    _replace: receive,
     reset() { const keep = state.settings; state = fresh(); state.settings = keep; GN.store.set({}); },
     // A new game with the same teams: scores, log and progress back to zero.
     resetScores() {

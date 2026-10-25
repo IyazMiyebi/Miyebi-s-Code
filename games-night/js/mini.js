@@ -17,7 +17,7 @@
     state() { return S().show.mini || fresh(); },
     mode() { const it = G().item(); return (it && it.mode) || "stopwatch"; },
     // The race clock is stored as a start time, so both windows show the same time.
-    elapsed() { const m = M.state(); return m.acc + (m.start ? Date.now() - m.start : 0); },
+    elapsed() { const m = M.state(); return m.acc + (m.start ? GN.now() - m.start : 0); },
     running() { return !!M.state().start; },
     patch(p) {
       set((s) => {
