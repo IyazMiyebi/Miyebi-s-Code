@@ -16,6 +16,8 @@
       const lead = top[0];
       const colours = draw ? top.map((t) => GN.colourHex(t.colour)) : [GN.colourHex(lead.colour), "#f3ebe1", "#ff3fd0"];
       const winnerName = draw ? top.map((t) => t.name).join(" & ") : lead.name;
+      // The headline is sized so the longest word always fits on one line.
+      const longest = Math.max(4, ...winnerName.split(/\s+/).map((w) => w.length));
 
       root.innerHTML = `
         <canvas class="fin__confetti" aria-hidden="true"></canvas>
@@ -23,7 +25,7 @@
           <p class="fin__ask" data-ask>And the winner is…</p>
           <div class="fin__reveal" data-reveal hidden>
             <p class="eyebrow">${draw ? "It’s a draw" : "Champions of " + esc(s.pack.title)}</p>
-            <h2 class="fin__name" data-name>${esc(winnerName)}</h2>
+            <h2 class="fin__name" data-name style="--len:${longest}">${esc(winnerName)}</h2>
             <p class="fin__pts">${lead.score} points</p>
           </div>
           <div class="fin__cards" data-cards hidden>

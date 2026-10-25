@@ -21,11 +21,13 @@
     uniform float aspect;
     uniform float time;
     uniform vec3 drops[${MAX_DROPS}];
+    uniform float count;
     void main() {
       vec2 disp = vec2(0.0);
       float energy = 0.0;
       vec2 a = vec2(aspect, 1.0);
       for (int i = 0; i < ${MAX_DROPS}; i++) {
+        if (float(i) >= count) break; // only the ripples still moving (sent first)
         vec3 d = drops[i];
         float age = time - d.z;
         if (age < 0.0 || age > 3.2) continue;
@@ -61,7 +63,7 @@
   GN.fx.liquid = function (canvas, paint) {
     const src = document.createElement("canvas");
     const sctx = src.getContext("2d");
-    let gl = null, prog, texture, uDrops, uTime, uAspect;
+    let gl = null, prog, texture, uDrops, uTime, uAspect, uCount;
     try {
       gl = canvas.getContext("webgl", { antialias: false, premultipliedAlpha: false });
       if (gl) {
@@ -86,6 +88,7 @@
         uDrops = gl.getUniformLocation(prog, "drops");
         uTime = gl.getUniformLocation(prog, "time");
         uAspect = gl.getUniformLocation(prog, "aspect");
+        uCount = gl.getUniformLocation(prog, "count");
       }
     } catch (e) {
       gl = null;
@@ -103,10 +106,14 @@
       drops[next * 3 + 1] = y;
       drops[next * 3 + 2] = now();
       next = (next + 1) % MAX_DROPS;
+      moving = 1;
     }
 
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      // Keep the work down on big or sharp screens (a 4K TV): at most about 3 million pixels.
+      let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const area = canvas.clientWidth * canvas.clientHeight * dpr * dpr;
+      if (area > 3.2e6) dpr *= Math.sqrt(3.2e6 / area);
       const w = Math.max(1, Math.round(canvas.clientWidth * dpr));
       const h = Math.max(1, Math.round(canvas.clientHeight * dpr));
       canvas.width = src.width = w;
@@ -124,15 +131,28 @@
       render();
     }
 
+    // Pass only the ripples that are still spreading, so quiet frames cost almost nothing.
+    const active = new Float32Array(MAX_DROPS * 3);
     function render() {
-      if (!gl) return;
-      gl.uniform1f(uTime, now());
-      gl.uniform3fv(uDrops, drops);
+      if (!gl) return 0;
+      const t = now();
+      let n = 0;
+      for (let i = 0; i < MAX_DROPS; i++) {
+        const age = t - drops[i * 3 + 2];
+        if (age >= 0 && age <= 3.2) { active.set(drops.subarray(i * 3, i * 3 + 3), n * 3); n++; }
+      }
+      gl.uniform1f(uTime, t);
+      gl.uniform1f(uCount, n);
+      gl.uniform3fv(uDrops, active);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      return n;
     }
 
+    // With no ripples moving, only the slow swell is left: half the frame rate is plenty.
+    let odd = false, moving = 0;
     function loop() {
-      render();
+      odd = !odd;
+      if (odd || moving > 0) moving = render();
       raf = requestAnimationFrame(loop);
     }
 
