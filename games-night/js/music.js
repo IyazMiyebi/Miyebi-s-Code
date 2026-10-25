@@ -153,8 +153,12 @@
     localUrl
   });
 
-  /* ---------- Playing a clip (big screen only) ---------- */
-  let ac = null, gain = null, analyser = null, audio = null, stopTimer = 0, bins = null;
+  /* ---------- Playing a clip (big screen only) ----------
+     Only one clip ever plays. Every audio element we create is remembered until it's
+     stopped, so a second press of Play (or Stop) always silences the one before,
+     even if it was still loading. */
+  let ac = null, gain = null, analyser = null, audio = null, bins = null, gen = 0;
+  const live = new Set();
 
   function graph() {
     if (ac) return true;
@@ -170,39 +174,64 @@
     return true;
   }
 
+  function kill(el, why) {
+    clearTimeout(el._timer);
+    clearTimeout(el._fade);
+    try { el.pause(); } catch (e) { /* ignore */ }
+    try { el._src && el._src.disconnect(); } catch (e) { /* ignore */ }
+    live.delete(el);
+    if (audio === el) audio = null;
+    if (el._done) { const d = el._done; el._done = null; d(why); }
+  }
+
   M.player = {
     playing: () => !!(audio && !audio.paused),
+    // How many clips are loaded or playing right now (should only ever be 0 or 1).
+    count: () => [...live].filter((el) => !el.paused || el.readyState < 3).length,
     // Play `seconds` of the clip from `start`, fading out at the end. Resolves when it ends.
     async play(opt, start, seconds, { onStart } = {}) {
       M.player.stop(true);
       if (!opt || !graph()) return "missing";
-      if (ac.state === "suspended") { try { await ac.resume(); } catch (e) { /* ignore */ } }
+      const my = ++gen;
       const el = new Audio();
       el.crossOrigin = "anonymous";
       el.preload = "auto";
-      el.src = await localUrl(opt.url);
+      live.add(el);
       audio = el;
-      const src = ac.createMediaElementSource(el);
-      src.connect(gain);
-      const vol = GN.store.get().settings.sound ? 1 : 0;
+      const stale = () => my !== gen;
+      if (ac.state === "suspended") { try { await ac.resume(); } catch (e) { /* ignore */ } }
+      if (stale()) { kill(el, "replaced"); return "replaced"; }
+      el.src = await localUrl(opt.url);
+      if (stale()) { kill(el, "replaced"); return "replaced"; }
+      el._src = ac.createMediaElementSource(el);
+      el._src.connect(gain);
       gain.gain.cancelScheduledValues(ac.currentTime);
       gain.gain.setValueAtTime(0.0001, ac.currentTime);
-      gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, vol), ac.currentTime + 0.25);
-      await new Promise((ok) => { if (el.readyState >= 1) ok(); else el.addEventListener("loadedmetadata", ok, { once: true }); el.addEventListener("error", ok, { once: true }); });
-      if (el.error) return "error";
+      gain.gain.exponentialRampToValueAtTime(GN.store.get().settings.sound ? 1 : 0.0001, ac.currentTime + 0.25);
+      await new Promise((ok) => {
+        if (el.readyState >= 1) return ok();
+        el.addEventListener("loadedmetadata", ok, { once: true });
+        el.addEventListener("error", ok, { once: true });
+        setTimeout(ok, 8000);
+      });
+      if (stale()) { kill(el, "replaced"); return "replaced"; }
+      if (el.error || el.readyState < 1) { kill(el, "error"); return "error"; }
       try { el.currentTime = Math.min(start || 0, Math.max(0, (el.duration || 30) - 1)); } catch (e) { /* ignore */ }
-      try { await el.play(); } catch (e) { return "blocked"; }
-      if (audio !== el) return "stopped";
+      try { await el.play(); } catch (e) { kill(el, "blocked"); return "blocked"; }
+      if (stale() || !live.has(el)) { kill(el, "replaced"); return "replaced"; }
       onStart && onStart();
       return new Promise((done) => {
-        const end = () => { clearTimeout(stopTimer); if (audio === el) audio = null; done("ended"); };
-        el.addEventListener("ended", end, { once: true });
         el._done = done;
-        stopTimer = setTimeout(() => {
-          if (audio !== el) return;
-          gain.gain.setValueAtTime(gain.gain.value, ac.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.6);
-          setTimeout(() => { el.pause(); end(); }, 650);
+        el.addEventListener("ended", () => kill(el, "ended"), { once: true });
+        // After `seconds`, fade out over 0.6s, then stop.
+        el._timer = setTimeout(() => {
+          if (!live.has(el)) return;
+          if (audio === el) {
+            gain.gain.cancelScheduledValues(ac.currentTime);
+            gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value), ac.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.6);
+          }
+          el._fade = setTimeout(() => kill(el, "ended"), 650);
         }, Math.max(1, seconds) * 1000);
       });
     },
@@ -211,13 +240,11 @@
       gain.gain.cancelScheduledValues(ac.currentTime);
       gain.gain.setValueAtTime(on ? 1 : 0.0001, ac.currentTime);
     },
+    // Silence everything: the current clip and any still loading.
     stop(quiet) {
-      clearTimeout(stopTimer);
-      if (!audio) return;
-      const el = audio;
+      gen++;
+      [...live].forEach((el) => kill(el, quiet ? "replaced" : "stopped"));
       audio = null;
-      try { el.pause(); } catch (e) { /* ignore */ }
-      if (el._done) el._done(quiet ? "replaced" : "stopped");
     },
     // Loudness of a few frequency bands, 0–1, for the sound bars.
     levels(n) {

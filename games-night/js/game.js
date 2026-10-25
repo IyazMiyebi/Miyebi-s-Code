@@ -63,7 +63,7 @@
           if (t.running) return G.timeUp();
           if (t.left < t.duration) return G.resume();
           // Music: play the clip first; the timer starts by itself when it ends.
-          if (round.kind === "music" && sh.clip.playing) return G.stopClip(true);
+          if (round.kind === "music" && (sh.clip.playing || sh.clip.pending)) return G.stopClip(true);
           if (round.kind === "music" && !sh.clip.played && G.hasClip()) return G.playClip();
           return G.startTimer();
         case "reveal":
@@ -86,7 +86,7 @@
           if (sh.timesUp) return "Reveal the answer";
           if (t.running) return "Stop the clock";
           if (t.left < t.duration) return "Resume the timer";
-          if (round.kind === "music" && sh.clip.playing) return "Stop the clip and start the timer";
+          if (round.kind === "music" && (sh.clip.playing || sh.clip.pending)) return "Stop the clip and start the timer";
           if (round.kind === "music" && !sh.clip.played && G.hasClip()) return `Play clip ${sh.item + 1}`;
           return "Start the timer";
         case "reveal":
@@ -157,18 +157,20 @@
     playClip() {
       const round = G.round();
       if (!round || round.kind !== "music" || !["question", "reveal"].includes(S().show.phase)) return;
-      set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, n: s.show.clip.n + 1, item: s.show.item } } }));
+      set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, n: s.show.clip.n + 1, item: s.show.item, pending: true, error: null } } }));
     },
     // thenTimer: start the answer timer straight away (Space during a clip).
     stopClip(thenTimer) {
-      set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, stop: s.show.clip.stop + 1, playing: false, played: true } } }));
+      set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, stop: s.show.clip.stop + 1, playing: false, pending: false, played: true } } }));
       if (thenTimer && S().show.phase === "question" && !S().timer.running && !S().show.timesUp) G.startTimer();
     },
-    clipStarted() { set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, playing: true, played: true } } })); },
+    clipStarted() { set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, playing: true, pending: false, played: true, error: null } } })); },
+    // The big screen couldn't play it ("blocked", "error" or "missing").
+    clipFailed(error) { set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, playing: false, pending: false, error } } })); },
     // Called by the big screen when a clip finishes on its own.
     clipEnded() {
       const s = S();
-      set({ show: { ...s.show, clip: { ...s.show.clip, playing: false } } });
+      set({ show: { ...s.show, clip: { ...s.show.clip, playing: false, pending: false } } });
       const t = S().timer;
       if (S().show.phase === "question" && !S().show.timesUp && !t.running && t.left >= t.duration) G.startTimer();
     },

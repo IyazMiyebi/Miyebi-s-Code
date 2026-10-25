@@ -102,11 +102,14 @@
             </div>`;
         }
         const status = !opt ? (e.status === "searching" ? "Looking for this song…" : "No clip found for this song. Play it from your phone, or search again under Music clips.")
-          : `${s.show.clip.playing ? "▶ Playing on the TV: " : ""}${opt.track} · ${opt.artist}${e.ready ? " · saved for offline" : " · plays from the internet"}`;
+          : s.show.clip.error === "blocked" ? "The TV window blocked the sound. Click once anywhere on the TV window, then press Play again."
+          : s.show.clip.error ? "The clip wouldn't play. Check the internet (or press Get clips ready), or play the song from your phone."
+          : `${s.show.clip.pending ? "Starting the clip on the TV… " : s.show.clip.playing ? "▶ Playing on the TV: " : ""}${opt.track} · ${opt.artist}${e.ready ? " · saved for offline" : " · plays from the internet"}`;
         $("[data-clip-info]").textContent = status;
         $("[data-act=clip-play]").textContent = s.show.clip.played ? "Play again" : "Play clip";
         $("[data-act=clip-play]").disabled = !opt;
-        $("[data-act=clip-stop]").disabled = !s.show.clip.playing;
+        $("[data-act=clip-stop]").disabled = !(s.show.clip.playing || s.show.clip.pending);
+        $("[data-clip-info]").classList.toggle("is-warn", !!s.show.clip.error);
       }
 
       // Every song in the round: found, saved, or missing (with a search box).
