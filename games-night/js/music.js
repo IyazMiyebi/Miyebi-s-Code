@@ -199,8 +199,10 @@
       live.add(el);
       audio = el;
       const stale = () => my !== gen;
-      if (ac.state === "suspended") { try { await ac.resume(); } catch (e) { /* ignore */ } }
+      // A window nobody has clicked can't make sound; don't wait for it forever.
+      if (ac.state !== "running") await Promise.race([ac.resume().catch(() => {}), new Promise((r) => setTimeout(r, 1500))]);
       if (stale()) { kill(el, "replaced"); return "replaced"; }
+      if (ac.state !== "running") { kill(el, "blocked"); return "blocked"; }
       el.src = await localUrl(opt.url);
       if (stale()) { kill(el, "replaced"); return "replaced"; }
       el._src = ac.createMediaElementSource(el);
@@ -246,9 +248,12 @@
       [...live].forEach((el) => kill(el, quiet ? "replaced" : "stopped"));
       audio = null;
     },
-    // Loudness of a few frequency bands, 0–1, for the sound bars.
+    // Loudness of a few frequency bands, 0–1, for the sound bars. If the clip is playing
+    // in the other window, use the levels it sends across.
     levels(n) {
-      if (!analyser || !audio || audio.paused) return null;
+      if (!analyser || !audio || audio.paused) {
+        return remote && performance.now() - remote.at < 300 ? remote.lv.slice(0, n) : null;
+      }
       analyser.getByteFrequencyData(bins);
       const out = [];
       const per = Math.floor(bins.length * 0.7 / n) || 1;
@@ -260,4 +265,49 @@
       return out;
     }
   };
+
+  /* Send the sound-bar levels to the other window while a clip plays here. */
+  let levelsChannel = null, remote = null, sendRaf = 0;
+  try { levelsChannel = new BroadcastChannel("gn-levels"); } catch (e) { /* older browser */ }
+  if (levelsChannel) levelsChannel.onmessage = (e) => { remote = { lv: e.data, at: performance.now() }; };
+  function sendLevels() {
+    cancelAnimationFrame(sendRaf);
+    if (!levelsChannel || !audio || audio.paused) return;
+    const lv = M.player.levels(9);
+    if (lv) levelsChannel.postMessage(lv);
+    sendRaf = requestAnimationFrame(sendLevels);
+  }
+
+  /* ---------- Which window plays the clip ----------
+     The window where Play was pressed (or Space, or A) plays it: that press is the
+     browser's permission to make sound. Sound comes out of the laptop's speakers or the
+     TV either way. Every window stops its clip when told to, or when the show moves on. */
+  let token = 0;
+  M.playHere = async function () {
+    const G = GN.game, s = S(), round = G.round();
+    if (!round || round.kind !== "music") return;
+    const i = s.show.clip.item, opt = M.option(round, i), entry = M.entry(round, i) || {};
+    const my = ++token;
+    if (!opt) {
+      G.clipFailed("missing");
+      GN.ui.toast("No clip found for this song. Play it from your phone, then start the timer.");
+      return;
+    }
+    const result = await M.player.play(opt, entry.start || 0, s.rules.musicClipSeconds || 10, {
+      onStart: () => { if (my === token) { G.clipStarted(); sendLevels(); } }
+    });
+    if (my !== token) return;
+    if (result === "ended") G.clipEnded();
+    else if (result === "blocked") { G.clipFailed("blocked"); GN.ui.toast("This window isn't allowed to make sound yet. Click anywhere in it once, then press Play again.", 8000); }
+    else if (result === "error" || result === "missing") { G.clipFailed("error"); GN.ui.toast("That clip wouldn't play. Check the internet, or play the song from your phone."); }
+  };
+  M.stopHere = function () { token++; M.player.stop(); };
+
+  GN.store.subscribe((s, prev) => {
+    if (!prev) return;
+    const sh = s.show, ph = prev.show;
+    if (sh.clip.stop !== ph.clip.stop) M.stopHere();
+    else if (live.size && (ph.item !== sh.item || ph.round !== sh.round || !["question", "reveal"].includes(sh.phase))) M.stopHere();
+    if (prev.settings.sound !== s.settings.sound) M.player.setVolume(s.settings.sound);
+  });
 })();

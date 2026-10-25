@@ -34,6 +34,7 @@
           <header class="host__top">
             <div><p class="eyebrow">Host controls</p><p class="host__where" data-where></p></div>
             <p class="host__tip">Keep this window on your laptop. The TV shows the other window, and follows every button you press here.</p>
+            <p class="host__warn" data-tv-sound hidden>The TV window can’t make sound yet (ticks, buzzer, applause). Click it once: it shows a “Click to turn on sound” button. Music clips play from this window, so they’re fine.</p>
           </header>
           <div class="host__grid">
             <section class="hcard hcard--now" aria-label="Now playing">
@@ -102,9 +103,9 @@
             </div>`;
         }
         const status = !opt ? (e.status === "searching" ? "Looking for this song…" : "No clip found for this song. Play it from your phone, or search again under Music clips.")
-          : s.show.clip.error === "blocked" ? "The TV window blocked the sound. Click once anywhere on the TV window, then press Play again."
+          : s.show.clip.error === "blocked" ? "The browser blocked the sound. Click once anywhere in the window you pressed Play in, then press Play again."
           : s.show.clip.error ? "The clip wouldn't play. Check the internet (or press Get clips ready), or play the song from your phone."
-          : `${s.show.clip.pending ? "Starting the clip on the TV… " : s.show.clip.playing ? "▶ Playing on the TV: " : ""}${opt.track} · ${opt.artist}${e.ready ? " · saved for offline" : " · plays from the internet"}`;
+          : `${s.show.clip.pending ? "Starting the clip… " : s.show.clip.playing ? "▶ Playing: " : ""}${opt.track} · ${opt.artist}${e.ready ? " · saved for offline" : " · plays from the internet"}`;
         $("[data-clip-info]").textContent = status;
         $("[data-act=clip-play]").textContent = s.show.clip.played ? "Play again" : "Play clip";
         $("[data-act=clip-play]").disabled = !opt;
@@ -140,6 +141,7 @@
       let teamsKey = "", raf = 0;
 
       function render(s) {
+        $("[data-tv-sound]").hidden = !(s.tvSound === false && s.settings.sound);
         renderClip(s);
         renderClips(s);
         const sh = s.show, round = G().round(), item = G().item();

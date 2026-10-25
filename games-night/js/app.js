@@ -129,6 +129,30 @@
   ["pointermove", "pointerdown", "keydown"].forEach((ev) => window.addEventListener(ev, wake, { passive: true }));
   wake();
 
+  /* Browsers keep a window silent until someone clicks or presses a key in it. Until
+     then, show a "turn on sound" button, and tell the host window. */
+  const gate = document.createElement("button");
+  gate.type = "button";
+  gate.className = "sound-gate";
+  gate.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM16 9.5l5 5M21 9.5l-5 5"/></svg> Click to turn on sound`;
+  document.body.appendChild(gate);
+  let unlocked = !!(navigator.userActivation && navigator.userActivation.hasBeenActive);
+  function syncGate() {
+    const want = GN.store.get().settings.sound;
+    gate.hidden = unlocked || !want;
+    if (GN.store.get().tvSound !== unlocked) GN.store.set({ tvSound: unlocked });
+  }
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
+    GN.sound.play("start");
+    syncGate();
+  }
+  ["pointerdown", "keydown"].forEach((ev) => window.addEventListener(ev, unlock, { capture: true }));
+  gate.addEventListener("click", () => GN.ui.toast("Sound is on."));
+  GN.store.subscribe(() => { gate.hidden = unlocked || !GN.store.get().settings.sound; });
+  syncGate();
+
   /* Motion setting changes take effect straight away. */
   function syncMotion() { document.documentElement.classList.toggle("calm", !GN.motionOK()); }
   GN.store.subscribe(syncMotion);
