@@ -50,6 +50,8 @@
                   `<label><input type="radio" name="motion" value="${v}" ${settings.motion === v ? "checked" : ""} data-setting="motion"><span>${l}</span></label>`).join("")}
               </div>
             </fieldset>
+            <h3 class="settings__h">Questions</h3>
+            <div class="set-reset"><button type="button" class="btn btn--ghost btn--small" data-edit-open>Edit questions and packs</button></div>
             <h3 class="settings__h">Game</h3>
             <div class="set-reset" data-reset-wrap>
               <button type="button" class="btn btn--ghost btn--small" data-reset>Start a new game…</button>
@@ -97,7 +99,16 @@
     document.dispatchEvent(new CustomEvent("gn:settings-closed"));
   });
 
+  // The editor opens in its own tab, away from the TV.
+  GN.openEditor = function () {
+    let w = null;
+    try { w = window.open(location.pathname + "#edit", "gn-edit"); } catch (e) { /* blocked */ }
+    if (!w) GN.ui.toast("Your browser blocked the new tab. Open this page in a new tab and add #edit to the end of the address.", 9000);
+  };
+  dlg.addEventListener("click", (e) => { if (e.target.closest("[data-edit-open]")) GN.openEditor(); });
+
   GN.settings = {
+    FIELDS: { POINTS, TIMERS },
     open() {
       render();
       const rp = dlg.querySelector("[data-remote-panel]");

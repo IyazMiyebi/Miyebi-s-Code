@@ -77,7 +77,7 @@
      · remote = ?remote=CODE on a phone (js/remote.js). */
   const params = new URLSearchParams(location.search);
   GN.remoteCode = params.get("remote") || "";
-  GN.role = GN.remoteCode ? "remote" : location.hash === "#host" ? "host" : "show";
+  GN.role = GN.remoteCode ? "remote" : location.hash === "#host" ? "host" : location.hash === "#edit" ? "edit" : "show";
   const isRemote = GN.role === "remote";
 
   // The phone's clock can differ from the laptop's; timers read the time through this.

@@ -121,6 +121,25 @@ Run the show from your phone: answers, timer, scoring and every round.
 - Anyone with the code can control the show and see the answers. **New code**
   disconnects every phone. The remote stays on (with the same code) until you turn it off.
 
+## Changing the questions (content editor)
+
+Open **Settings → Edit questions and packs** (or *Edit questions* in the host controls).
+The editor opens in its own tab; the address ends in `#edit`.
+
+- Edit the show title, house rules, each round's name and intro rules, every song, word,
+  question, challenge and category, the tie-breaker, and the points and timers. Add,
+  remove (tap *Remove* twice) and reorder items.
+- Problems are listed at the top and outlined in orange. For example, an empty answer,
+  or a scramble that doesn't use the word's letters. *Shuffle* makes a fresh scramble;
+  leave the scramble empty and the show shuffles the word itself.
+- **Use this pack for the show** sends your changes to the TV. If a round is being
+  played, it asks first and returns the TV to the running order (scores are kept).
+  Music clips are kept for songs you didn't change.
+- **Save to this browser** keeps named packs on this laptop (listed under *Game packs*).
+  **Download file** saves a `.gamesnight.json` file to back up or share, and
+  **Open file…** loads one. **Load the original questions** brings back the built-in game.
+- Unsaved edits are kept as you type, even if you close the tab.
+
 ## Decisions (from the deck)
 
 The deck contradicted itself in a few places. This is what the show uses. Points and
@@ -139,7 +158,8 @@ timers can be changed in **Settings**.
 Plain HTML, CSS and JavaScript. No build step, nothing to install.
 
 - `index.html`: the page, which loads everything else
-- `data/default-pack.js`: all the questions, songs, categories and points (the "game pack")
+- `data/default-pack.js`: the built-in questions, songs, categories and points (the "game pack")
+- `js/packs.js`, `js/editor.js`: checking, saving and switching packs, and the editor page
 - `js/store.js`: teams, scores and settings, saved in the browser and shared with the host window
 - `js/game.js`: the show's steps, the countdown and scoring
 - `js/host.js`: the host controls window

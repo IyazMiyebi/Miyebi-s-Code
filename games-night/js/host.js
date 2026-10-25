@@ -33,7 +33,8 @@
         <div class="host">
           <header class="host__top">
             <div><p class="eyebrow">Host controls</p><p class="host__where" data-where></p></div>
-            <p class="host__tip">Keep this window on your laptop. The TV shows the other window, and follows every button you press here.</p>
+            <p class="host__tip">Keep this window on your laptop. The TV shows the other window, and follows every button you press here.
+              <button type="button" class="hbtn host__edit" data-act="edit">Edit questions</button></p>
             <p class="host__warn" data-tv-sound hidden>The TV window can’t make sound yet (ticks, buzzer, applause). Click it once: it shows a “Click to turn on sound” button. Music clips play from this window, so they’re fine.</p>
           </header>
           <div class="host__grid">
@@ -90,7 +91,7 @@
       // On the phone itself, this box just says it's connected.
       if (GN.role === "remote") {
         $("[data-remote-card]").innerHTML = `<h2 class="hcard__h">Phone remote</h2><p class="host__muted">This phone controls the show on the TV. Keep the TV window open on the laptop.</p>`;
-        stage.querySelector(".host__tip").textContent = "This phone is the remote. Every button here runs on the TV straight away.";
+        stage.querySelector(".host__tip").textContent = "This phone is the remote. Every button here runs on the TV straight away. (Edit questions on the laptop.)";
         $("[data-tv-sound]").textContent = "The TV window can’t make sound yet. Click it once on the laptop (it shows a “Click to turn on sound” button), or the music clips, ticks and buzzer stay silent.";
       } else GN.remote.panel($("[data-remote-panel]"));
       let clipKey = "", clipsKey = "";
@@ -380,6 +381,7 @@
           if (a === "reveal") g.reveal();
           if (a === "board") g.toggleBoard();
           if (a === "shuffle") g.shuffle();
+          if (a === "edit") GN.openEditor();
           if (a === "clip-play") g.playClip();
           if (a === "cat-valid") GN.category.valid();
           if (a === "cat-out") GN.category.out();
