@@ -3,7 +3,7 @@
  * after that it opens with no internet at all. Bump VERSION whenever files change
  * so everyone gets the new copy.
  */
-const VERSION = "gn-stage1-1";
+const VERSION = "gn-stage2-1";
 const FILES = [
   "./",
   "index.html",
@@ -19,11 +19,18 @@ const FILES = [
   "js/fx/liquid.js",
   "js/fx/hanging.js",
   "js/fx/boxgrid.js",
+  "js/fx/ascii.js",
+  "js/sound.js",
+  "js/game.js",
+  "js/ui/toast.js",
+  "js/ui/scores.js",
   "js/screens/title.js",
   "js/screens/teams.js",
   "js/screens/rules.js",
   "js/screens/order.js",
+  "js/screens/play.js",
   "js/settings.js",
+  "js/host.js",
   "js/app.js"
 ];
 

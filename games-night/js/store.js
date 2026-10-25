@@ -36,7 +36,12 @@
       rules: { ...GN.defaultPack.rules },
       teams: [makeTeam(0), makeTeam(1)],
       settings: { sound: true, motion: "auto" },
-      screen: "title"
+      screen: "title",
+      // Where we are in the live show (see js/game.js).
+      show: { round: null, item: 0, phase: "intro", timesUp: false, board: false },
+      timer: { duration: 0, left: 0, endsAt: null, running: false },
+      log: [],      // every score change, newest last, so it can be undone
+      played: []    // round ids that reached their standings
     };
   }
 
@@ -49,7 +54,9 @@
           ...base,
           ...saved,
           rules: { ...base.rules, ...saved.rules },
-          settings: { ...base.settings, ...saved.settings }
+          settings: { ...base.settings, ...saved.settings },
+          show: { ...base.show, ...saved.show },
+          timer: { ...base.timer, ...saved.timer }
         };
       }
     } catch (e) { /* storage blocked or corrupt: start fresh */ }
@@ -59,15 +66,38 @@
   const listeners = new Set();
   let state = load();
 
+  /* The big screen and the host window share one game. Every change is sent to the
+     other window straight away (BroadcastChannel), with a localStorage fallback. */
+  GN.role = location.hash === "#host" ? "host" : "show";
+  let channel = null;
+  try { channel = new BroadcastChannel("gn-sync"); } catch (e) { /* older browser */ }
+  function receive(next) {
+    if (!next || next.version !== 1) return;
+    const prev = state;
+    state = next;
+    listeners.forEach((fn) => fn(state, prev));
+  }
+  if (channel) channel.onmessage = (e) => receive(e.data);
+  else window.addEventListener("storage", (e) => {
+    if (e.key === KEY && e.newValue) { try { receive(JSON.parse(e.newValue)); } catch (err) { /* ignore */ } }
+  });
+
   GN.store = {
     get: () => state,
     set(patch) {
+      const prev = state;
       state = { ...state, ...(typeof patch === "function" ? patch(state) : patch) };
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
-      listeners.forEach((fn) => fn(state));
+      try { channel && channel.postMessage(state); } catch (e) { /* ignore */ }
+      listeners.forEach((fn) => fn(state, prev));
     },
     subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); },
     reset() { const keep = state.settings; state = fresh(); state.settings = keep; GN.store.set({}); },
+    // A new game with the same teams: scores, log and progress back to zero.
+    resetScores() {
+      const base = fresh();
+      GN.store.set((s) => ({ teams: s.teams.map((t) => ({ ...t, score: 0 })), log: [], played: [], show: base.show, timer: base.timer }));
+    },
 
     setTeamCount(n) {
       GN.store.set((s) => {

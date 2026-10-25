@@ -2,27 +2,33 @@
  * The show runner: moves between screens, handles keyboard shortcuts and the host bar.
  *
  * Keys: Space / → / Page Down = next · ← / Page Up = back · F = full screen
- *       M = sound on/off · S = settings · Esc = close settings
+ *       M = sound on/off · S = settings · H = host controls · Esc = close settings
+ * During a round the play screen adds its own keys (see js/screens/play.js).
  * (Page Up/Down means a cheap presentation clicker works as a remote.)
+ *
+ * Opening the page with #host on the end shows the host controls instead (js/host.js).
  */
 (function () {
-  const ORDER = ["title", "teams", "rules", "order"];
+  if (GN.role === "host") { GN.host.start(); return; }
+
+  const ORDER = ["title", "teams", "rules", "order", "play"];
   const stage = document.getElementById("stage");
   const steps = document.getElementById("steps");
   let current = null; // { id, el, cleanup }
 
   function go(id, force) {
     if (!GN.screens[id] || (current && current.id === id && !force)) return;
+    // The live show needs a round: start with the first one not played yet.
+    if (id === "play" && GN.store.get().show.round == null) { GN.game.startRound(GN.game.firstUnplayed()); return; }
     const calm = !GN.motionOK();
     const el = document.createElement("section");
     el.className = "screen screen--" + id + " is-entering";
     el.setAttribute("aria-label", GN.screens[id].label);
     stage.appendChild(el);
-    const cleanup = GN.screens[id].mount(el, { go, next, back }) || (() => {});
-
     const old = current;
-    current = { id, el, cleanup };
-    GN.store.set({ screen: id });
+    current = { id, el, cleanup: () => {} };
+    current.cleanup = GN.screens[id].mount(el, { go, next, back }) || (() => {});
+    if (GN.store.get().screen !== id) GN.store.set({ screen: id });
     renderSteps();
 
     requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove("is-entering")));
@@ -38,6 +44,9 @@
 
   function next() { const i = ORDER.indexOf(current.id); if (i > -1 && i < ORDER.length - 1) go(ORDER[i + 1]); }
   function back() { const i = ORDER.indexOf(current.id); if (i > 0) go(ORDER[i - 1]); }
+
+  // The host window (or the play screen) changes state.screen: follow it.
+  GN.store.subscribe((s) => { if (current && s.screen !== current.id && GN.screens[s.screen]) go(s.screen); });
 
   function renderSteps() {
     steps.innerHTML = ORDER.map((id, i) => {
@@ -64,9 +73,9 @@
   function toggleSound() {
     const s = GN.store.get().settings;
     GN.store.set({ settings: { ...s, sound: !s.sound } });
-    syncSound();
   }
   btnSound.addEventListener("click", toggleSound);
+  GN.store.subscribe(syncSound);
 
   function toggleFull() {
     try {
@@ -77,22 +86,30 @@
   document.getElementById("btn-full").addEventListener("click", toggleFull);
   document.getElementById("btn-settings").addEventListener("click", () => GN.settings.open());
 
+  // Host controls open in their own window, to keep on the laptop while the TV shows the game.
+  function openHost() {
+    let w = null;
+    try { w = window.open(location.pathname + location.search + "#host", "gn-host", "width=1200,height=860"); } catch (e) { /* blocked */ }
+    if (!w) GN.ui.toast("Your browser blocked the new window. Open this page again in a new tab and add #host to the end of the address.");
+  }
+  document.getElementById("btn-host").addEventListener("click", openHost);
+
   /* Keyboard */
   document.addEventListener("keydown", (e) => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (GN.settings.isOpen()) return;
     const t = e.target;
-    const typing = t.matches("input, textarea, select, [contenteditable]");
-    if (typing) return;
-    const onControl = t.matches("button, a, summary, [role=button]");
+    if (t.matches("input, textarea, select, [contenteditable]")) return;
+    // Space and Enter on a focused button press that button instead.
+    if ((e.key === " " || e.key === "Enter") && t.matches("button, a, summary, [role=button]")) return;
+    const screen = current && GN.screens[current.id];
+    if (screen && screen.onKey && screen.onKey(e)) { e.preventDefault(); return; }
     switch (e.key) {
-      case " ":
-        if (onControl) return;
-        e.preventDefault(); next(); break;
-      case "ArrowRight": case "PageDown": e.preventDefault(); next(); break;
+      case " ": case "ArrowRight": case "PageDown": e.preventDefault(); next(); break;
       case "ArrowLeft": case "PageUp": e.preventDefault(); back(); break;
       case "f": case "F": toggleFull(); break;
       case "m": case "M": toggleSound(); break;
+      case "h": case "H": openHost(); break;
       case "s": case "S": e.preventDefault(); GN.settings.open(); break;
     }
   });

@@ -10,17 +10,39 @@ needs no sign-up, and works offline after the first visit.
 - **On your own computer:** in this folder, run `python3 -m http.server 8000`, then open
   <http://localhost:8000>.
 
-### Keys for the host
+### Setting up the TV
+
+The show runs in two windows:
+
+- **The big screen** (the normal link) goes on the TV. Press **F** for full screen.
+- **Host controls** (press **H**, or add `#host` to the end of the link) stay on the
+  laptop. They show the answer before it's revealed, the timer, scoring and every round.
+  Each press updates the TV straight away.
+
+For the host window to stay private, set the laptop to **extend** the display to the TV,
+not mirror it (Windows: <kbd>Win</kbd>+<kbd>P</kbd> → Extend. Mac: System Settings →
+Displays → untick Mirror). If you mirror, run everything from the keyboard on the big
+screen instead: it never shows an answer until you reveal it.
+
+### Keys on the big screen
 
 | Key | What it does |
 |---|---|
-| Space, →, Page Down | Next screen |
-| ←, Page Up | Previous screen |
+| Space, →, Page Down, Enter | Next step (start timer → time's up → reveal → next question) |
+| ←, Page Up | Back a step |
+| P | Pause / resume the timer |
+| T | Restart the timer |
+| R | Reveal the answer now |
+| 1–4 | Give team 1–4 this round's points (Shift + number takes them away) |
+| U | Undo the last score change |
+| G | Show / hide the scoreboard |
+| Esc | Leave the round, back to the running order |
 | F | Full screen |
 | M | Sound on/off |
+| H | Open host controls |
 | S | Settings (points, timers, animation, new game) |
-| Esc | Close settings |
 
+Click a team's score at the bottom of the screen for +points, a custom amount or undo.
 A presentation clicker sends Page Up/Page Down, so it works as a simple remote.
 The buttons in the corners hide themselves after 3 seconds without mouse movement.
 
@@ -43,9 +65,13 @@ Plain HTML, CSS and JavaScript. No build step, nothing to install.
 
 - `index.html`: the page, which loads everything else
 - `data/default-pack.js`: all the questions, songs, categories and points (the "game pack")
-- `js/store.js`: teams, scores and settings, saved in the browser
+- `js/store.js`: teams, scores and settings, saved in the browser and shared with the host window
+- `js/game.js`: the show's steps, the countdown and scoring
+- `js/host.js`: the host controls window
+- `js/sound.js`: sound effects (synthesised, no audio files)
 - `js/screens/`: one file per screen
-- `js/fx/`: the visual effects (liquid ripple, hanging cards, box grid)
+- `js/fx/`: the visual effects (liquid ripple, hanging cards, box grid, ASCII text)
+- `js/ui/`: the score strip and pop-up messages
 - `sw.js`: offline support. Add any new file to its list.
 - `tools/build-single.mjs`: bundles everything into one HTML file
   (`node tools/build-single.mjs games-night.html`)
