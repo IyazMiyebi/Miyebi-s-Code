@@ -55,6 +55,9 @@
               </div>
               <div class="hclip" data-clip hidden></div>
               <div class="hmini" data-mini hidden></div>
+              <div class="hmini" data-cat hidden></div>
+              <div class="hmini" data-tb hidden></div>
+              <div class="hmini" data-fin hidden></div>
               <div class="host__q"><p class="host__k" data-q-k>On the TV</p><p class="host__qtext" data-q></p></div>
               <div class="host__a"><p class="host__k">Answer · only you can see this</p><p class="host__atext" data-a></p></div>
               <p class="host__nextup" data-nextup></p>
@@ -129,7 +132,7 @@
         const sug = GN.mini.suggestion();
         const clockBtns = mode === "memory" ? "" : `
           <div class="hclip__row">
-            <button type="button" class="hbtn hbtn--big" data-act="mini-clock">${GN.mini.running() ? "Stop the clock" : GN.mini.elapsed() ? "Resume the clock" : "Start the clock"}</button>
+            <button type="button" class="hbtn hbtn--big" data-act="mini-clock">${GN.mini.running() ? "Pause the clock" : GN.mini.turns() && !m.turn ? (GN.mini.upNext() ? `Start ${esc(GN.mini.upNext().name)}’s turn` : "Everyone has played") : GN.mini.elapsed() ? "Resume the clock" : "Start the clock"}</button>
             <button type="button" class="hbtn" data-act="mini-reset" ${GN.mini.elapsed() ? "" : "disabled"}>Reset clock and times</button>
           </div>`;
         const teamRows = mode === "memory" || s.show.phase === "reveal" ? "" : `<div class="hmini__teams">${s.teams.map((t, i) => {
@@ -138,7 +141,7 @@
             <span class="hteam__key">${i + 1}</span><span class="hmini__name">${esc(t.name)}</span>
             <span class="hmini__val">${done != null ? (mode === "stopwatch" ? "finished " : "out at ") + fmt(done) : ""}</span>
             ${done != null ? `<button type="button" class="hbtn" data-act="mini-unmark" data-team="${t.id}">Undo</button>`
-              : `<button type="button" class="hbtn hbtn--add" data-act="mini-mark" data-team="${t.id}" ${GN.mini.running() ? "" : "disabled"}>${mode === "stopwatch" ? "Finished" : "Out"}</button>`}
+              : `<button type="button" class="hbtn hbtn--add" data-act="mini-mark" data-team="${t.id}" ${GN.mini.running() && (!GN.mini.turns() || m.turn === t.id) ? "" : "disabled"}>${mode === "stopwatch" ? "Finished" : "Out"}</button>`}
           </div>`;
         }).join("")}</div>`;
         const prompts = item.prompts || [];
@@ -155,6 +158,70 @@
             <div class="hclip__row">${s.teams.map((t) => `<button type="button" class="hbtn ${m.winner === t.id ? "is-on" : ""}" style="--team:${GN.colourHex(t.colour)}" data-act="mini-win" data-team="${t.id}" aria-pressed="${m.winner === t.id}">${esc(t.name)}</button>`).join("")}
               ${m.winner ? `<button type="button" class="hbtn" data-act="mini-win" data-team="">No winner</button>` : ""}</div></div>`;
         box.innerHTML = clockBtns + teamRows + charades + winner;
+      }
+
+      // Category bank: valid / out, and each team's state.
+      let catKey = "";
+      function renderCat(s) {
+        const box = $("[data-cat]"), round = G().round();
+        const on = round && round.kind === "category" && s.show.phase === "question";
+        box.hidden = !on;
+        if (!on) { catKey = ""; return; }
+        const c = GN.category.state(), r = s.rules;
+        const k = JSON.stringify([s.show.item, c, s.teams.map((t) => [t.id, t.name, t.colour])]);
+        if (k === catKey) return;
+        catKey = k;
+        const name = (id) => esc((GN.category.team(id) || {}).name || "");
+        const live = c.started && !c.winner && c.turn;
+        box.innerHTML = `
+          <p class="host__k">${c.winner ? `Last team standing: ${name(c.winner)} (+${r.categoryBonus} given)` : live ? `${name(c.turn)}’s turn` : c.started ? "Category over" : "Press Start: the first team’s turn begins"}</p>
+          <div class="hclip__row">
+            <button type="button" class="hbtn hbtn--big hbtn--ok" data-act="cat-valid" ${live ? "" : "disabled"}>✓ Valid answer (+${r.categoryAnswer})</button>
+            <button type="button" class="hbtn hbtn--big hbtn--danger" data-act="cat-out" ${live ? "" : "disabled"}>✗ Out: repeat, wrong or too slow</button>
+            <button type="button" class="hbtn" data-act="cat-skip" ${live ? "" : "disabled"}>Skip to next team</button>
+          </div>
+          <div class="hmini__teams">${GN.category.order().map((t) => {
+            const n = c.answers[t.id] || 0;
+            return `<div class="hmini__team" style="--team:${GN.colourHex(t.colour)}">
+              <span class="hmini__name">${esc(t.name)}${c.turn === t.id ? " ◀ turn" : ""}</span>
+              <span class="hmini__val">${n} ${n === 1 ? "answer" : "answers"}${c.out[t.id] ? " · out" : ""}</span>
+              ${c.out[t.id] ? `<button type="button" class="hbtn" data-act="cat-back" data-team="${t.id}">Bring back</button>` : ""}
+            </div>`;
+          }).join("")}</div>
+          <p class="host__muted">The timer runs out on the TV: that team is out automatically.</p>`;
+      }
+
+      // Tie-breaker: type each team's guess; give the tie-break on the reveal.
+      let tbKey = "";
+      function renderTb(s) {
+        const box = $("[data-tb]"), round = G().round();
+        const on = round && round.kind === "tiebreak" && ["question", "reveal"].includes(s.show.phase);
+        box.hidden = !on;
+        if (!on) { tbKey = ""; return; }
+        const tb = GN.tiebreak.state(), sug = GN.tiebreak.suggestion();
+        const k = JSON.stringify([s.show.item, s.show.phase, tb.winner, sug, s.teams.map((t) => [t.id, t.name, t.colour])]);
+        if (k !== tbKey) {
+          tbKey = k;
+          box.innerHTML = `
+            <p class="host__k">Each team’s guess</p>
+            <div class="hmini__teams">${s.teams.map((t) => `
+              <label class="hmini__team" style="--team:${GN.colourHex(t.colour)}"><span class="hmini__name">${esc(t.name)}</span>
+                <input id="tb-${t.id}" class="hmini__input" inputmode="numeric" data-tb-guess="${t.id}" value="${tb.guesses[t.id] != null ? tb.guesses[t.id] : ""}" placeholder="guess"></label>`).join("")}</div>
+            ${s.show.phase === "reveal" ? `<div class="hmini__win"><p class="host__k">Give the tie-break (+${GN.tiebreak.POINTS} point)${sug && !tb.winner ? ` · closest: ${esc((s.teams.find((t) => t.id === sug) || {}).name)}` : ""}</p>
+              <div class="hclip__row">${s.teams.map((t) => `<button type="button" class="hbtn ${tb.winner === t.id ? "is-on" : ""}" style="--team:${GN.colourHex(t.colour)}" data-act="tb-win" data-team="${t.id}">${esc(t.name)}</button>`).join("")}</div></div>`
+              : `<p class="host__muted">The guesses appear on the TV when you reveal the answer.</p>`}`;
+        }
+      }
+
+      // Finale controls.
+      function renderFin(s) {
+        const box = $("[data-fin]");
+        box.hidden = s.screen !== "finale";
+        if (box.hidden || box.dataset.done) return;
+        box.dataset.done = "1";
+        box.innerHTML = `<p class="host__k">Finale</p><div class="hclip__row">
+          <button type="button" class="hbtn hbtn--big" data-act="fin-replay">Replay the reveal</button>
+          <button type="button" class="hbtn" data-act="fin-again">Play again with these teams</button></div>`;
       }
 
       // Every song in the round: found, saved, or missing (with a search box).
@@ -188,6 +255,10 @@
         $("[data-tv-sound]").hidden = !(s.tvSound === false && s.settings.sound);
         renderClip(s);
         renderMini(s);
+        renderCat(s);
+        renderTb(s);
+        renderFin(s);
+        if (s.screen !== "finale") delete $("[data-fin]").dataset.done;
         renderClips(s);
         const sh = s.show, round = G().round(), item = G().item();
         // Where are we?
@@ -197,6 +268,7 @@
             { intro: "Round intro", question: G().itemLabel(round, sh.item), reveal: G().itemLabel(round, sh.item) + " · revealed", standings: "Standings" }[sh.phase];
         $("[data-next-label]").textContent = G().nextLabel();
         $("[data-act=back]").disabled = !round;
+        if (s.screen === "finale") $("[data-where]").textContent = "Finale: the winner is on the TV";
 
         // What's on the TV, and the answer.
         let q = "", a = "";
@@ -210,11 +282,12 @@
             ? `Music clip ${sh.item + 1}. Press “Play clip”: it plays on the TV, then the timer starts by itself.`
             : `Music clip ${sh.item + 1}. No clip found: play it from your phone, then start the timer.`;
           else if (round.kind === "mini") { q = `${item.name}: ${item.text}`; a = item.note || ""; }
+          else if (round.kind === "category") { q = `Category: ${typeof item === "string" ? item : item.name}`; a = ""; }
           else q = item.q || "";
         }
         $("[data-q]").textContent = q;
         $("[data-a]").textContent = a || "–";
-        $("[data-a]").closest(".host__a").hidden = !!(round && round.kind === "mini" && !a);
+        $("[data-a]").closest(".host__a").hidden = !!(round && (round.kind === "mini" || round.kind === "category") && !a);
         $("[data-a]").closest(".host__a").classList.toggle("is-shown", sh.phase === "reveal");
 
         // Coming up next, so the host can get ready.
@@ -257,7 +330,11 @@
             <span class="hround__no">${r.number ? "R" + r.number : "TB"}</span>
             <span class="hround__name">${esc(r.name)}</span>
             <span class="hround__tag">${sh.round === i ? "Now" : s.played.includes(r.id) ? "Played" : "Start"}</span>
-          </button>`).join("");
+          </button>`).join("") + `
+          <button type="button" class="hround${s.screen === "finale" ? " is-on" : ""}" data-act="finale">
+            <span class="hround__no">★</span><span class="hround__name">Finale: reveal the winner</span>
+            <span class="hround__tag">${s.screen === "finale" ? "Now" : "Show"}</span>
+          </button>`;
       }
 
       function clock() {
@@ -294,6 +371,13 @@
           if (a === "board") g.toggleBoard();
           if (a === "shuffle") g.shuffle();
           if (a === "clip-play") g.playClip();
+          if (a === "cat-valid") GN.category.valid();
+          if (a === "cat-out") GN.category.out();
+          if (a === "cat-skip") GN.category.skip();
+          if (a === "cat-back") GN.category.bringBack(act.dataset.team);
+          if (a === "tb-win") GN.tiebreak.setWinner(act.dataset.team);
+          if (a === "fin-replay" || a === "finale") g.finale();
+          if (a === "fin-again") { GN.store.resetScores(); GN.store.set({ screen: "order" }); }
           if (a === "mini-clock") GN.mini.toggleClock();
           if (a === "mini-reset") GN.mini.resetClock();
           if (a === "mini-mark") GN.mini.mark(act.dataset.team);
@@ -325,6 +409,9 @@
         if (add) { g.award(add.closest("[data-team]").dataset.team, Number(add.dataset.add)); return; }
         const r = e.target.closest("[data-round]");
         if (r) g.startRound(Number(r.dataset.round));
+      });
+      stage.addEventListener("input", (e) => {
+        if (e.target.matches("[data-tb-guess]")) GN.tiebreak.setGuess(e.target.dataset.tbGuess, e.target.value);
       });
       stage.addEventListener("change", (e) => {
         const round = G().round();

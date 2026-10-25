@@ -10,7 +10,7 @@
   const S = () => GN.store.get();
   const set = (p) => GN.store.set(p);
   const G = () => GN.game;
-  const fresh = () => ({ start: null, acc: 0, times: {}, out: {}, winner: null, stage: "ready", guessed: 0 });
+  const fresh = () => ({ start: null, acc: 0, times: {}, out: {}, winner: null, stage: "ready", guessed: 0, turn: null });
 
   const M = (GN.mini = {
     fresh,
@@ -28,14 +28,34 @@
 
     startClock() { if (!M.running()) M.patch({ start: Date.now() }); },
     pauseClock() { if (M.running()) M.patch((m) => ({ acc: m.acc + Date.now() - m.start, start: null })); },
-    toggleClock() { M.running() ? M.pauseClock() : M.startClock(); },
-    resetClock() { M.patch({ start: null, acc: 0, times: {}, out: {} }); },
+    toggleClock() {
+      if (M.running()) return M.pauseClock();
+      if (M.turns() && !M.state().turn) return M.startTurn();
+      M.startClock();
+    },
+    resetClock() { M.patch({ start: null, acc: 0, times: {}, out: {}, turn: null }); },
+
+    /* Turn-by-turn races (one team at a time): each team gets its own clock. */
+    turns() { const it = G().item(); return !!(it && it.turns && (it.mode || "stopwatch") === "stopwatch"); },
+    // The next team still to play.
+    upNext() { const m = M.state(); return S().teams.find((t) => m.times[t.id] == null) || null; },
+    startTurn() {
+      const up = M.upNext();
+      if (!up) return;
+      M.patch({ start: Date.now(), acc: 0, turn: up.id, guessed: 0 });
+    },
 
     // Stopwatch: this team has finished. Last standing: this team is out.
     mark(teamId) {
       const mode = M.mode(), m = M.state();
       if (!M.running() || !S().teams.some((t) => t.id === teamId)) return;
       const at = M.elapsed();
+      if (M.turns()) {
+        // The team on the clock has finished: record their time and stop for the next team.
+        if (m.times[teamId] != null || teamId !== m.turn) return;
+        M.patch((x) => ({ times: { ...x.times, [teamId]: at }, start: null, acc: at, turn: null }));
+        return;
+      }
       if (mode === "stopwatch" && m.times[teamId] == null) M.patch((x) => ({ times: { ...x.times, [teamId]: at } }));
       else if (mode === "last-standing" && m.out[teamId] == null) M.patch((x) => ({ out: { ...x.out, [teamId]: at } }));
       else return;
@@ -89,6 +109,12 @@
         if (t.left < t.duration && !sh.timesUp) return G().resume();
         return G().reveal();
       }
+      if (M.turns()) {
+        if (M.running()) return M.mark(m.turn);
+        if (m.turn) return M.startClock();
+        if (M.upNext()) return M.startTurn();
+        return G().reveal();
+      }
       if (M.running()) return M.pauseClock();
       if (M.elapsed() === 0) return M.startClock();
       return G().reveal();
@@ -101,6 +127,13 @@
         if (m.stage === "look" && sh.timesUp) return `Start writing (${r.memoryWriteSeconds}s)`;
         if (t.left < t.duration && !sh.timesUp) return "Resume the timer";
         return "Show the result";
+      }
+      if (M.turns()) {
+        const name = (id) => (S().teams.find((t) => t.id === id) || {}).name || "Team";
+        if (M.running()) return `${name(m.turn)} finished`;
+        if (m.turn) return "Resume the clock";
+        const up = M.upNext();
+        return up ? `Start ${up.name}’s turn` : "Show the result";
       }
       if (M.running()) return "Stop the clock";
       if (M.elapsed() === 0) return "Start the clock";

@@ -8,9 +8,8 @@
   const S = () => GN.store.get();
   const set = (p) => GN.store.set(p);
 
-  // Rounds that run item by item. The category bank (Stage 6) shows its intro, then
-  // the standings.
-  const PLAYABLE = ["quiz", "tiebreak", "music", "scramble", "mini"];
+  // Rounds that run item by item (all of them, now).
+  const PLAYABLE = ["quiz", "tiebreak", "music", "scramble", "mini", "category"];
 
   const G = (GN.game = {
     round() { const s = S(); return s.show.round == null ? null : s.pack.rounds[s.show.round]; },
@@ -46,20 +45,21 @@
     },
     goQuestion(item, { timesUp = false } = {}) {
       set((s) => ({ show: { ...s.show, item, phase: "question", timesUp, shuffle: 0,
-        clip: { ...s.show.clip, item, playing: false, played: timesUp }, mini: GN.mini.fresh() } }));
+        clip: { ...s.show.clip, item, playing: false, played: timesUp }, mini: GN.mini.fresh(), cat: GN.category.fresh(), tb: { guesses: {}, winner: null } } }));
       G.resetTimer(timesUp);
     },
 
     // The one "do the next thing" button (Space on the big screen).
     advance() {
       const s = S(), sh = s.show, round = G.round(), t = s.timer;
-      if (!round) return;
+      if (!round) return s.screen === "finale" ? G.finale() : G.startRound(G.firstUnplayed());
       if (sh.board) return G.toggleBoard(false);
       switch (sh.phase) {
         case "intro":
           return G.playable(round) ? G.goQuestion(0) : G.toStandings();
         case "question":
           if (round.kind === "mini") return GN.mini.advance();
+          if (round.kind === "category") return GN.category.advance();
           if (sh.timesUp) return G.reveal();
           if (t.running) return G.timeUp();
           if (t.left < t.duration) return G.resume();
@@ -68,23 +68,31 @@
           if (round.kind === "music" && !sh.clip.played && G.hasClip()) return G.playClip();
           return G.startTimer();
         case "reveal":
+          // Tie-breaker: the backup question is only needed if nobody has won it yet.
+          if (round.kind === "tiebreak" && GN.tiebreak.state().winner) return G.toStandings();
           return sh.item < round.items.length - 1 ? G.goQuestion(sh.item + 1) : G.toStandings();
         case "standings": {
-          const next = sh.round + 1;
-          if (next < s.pack.rounds.length) return G.startRound(next);
-          return set({ screen: "order", show: { ...sh, round: null } });
+          // The tie-breaker is only played if the top teams are level; then the finale.
+          const next = s.pack.rounds[sh.round + 1];
+          if (next && (next.kind !== "tiebreak" || G.needsTiebreak())) return G.startRound(sh.round + 1);
+          return G.finale();
         }
       }
     },
     // What advance() will do next, in words for the host.
     nextLabel() {
       const s = S(), sh = s.show, round = G.round(), t = s.timer;
-      if (!round) return "Start the show";
+      if (!round) {
+        if (s.screen === "finale") return "Replay the reveal";
+        const r = s.pack.rounds[G.firstUnplayed()];
+        return r.number ? `Start Round ${r.number}` : `Start the ${r.name.toLowerCase()}`;
+      }
       if (sh.board) return "Hide the scoreboard";
       switch (sh.phase) {
-        case "intro": return !G.playable(round) ? "Show the standings" : round.kind === "mini" ? "Show challenge 1" : "Show question 1";
+        case "intro": return !G.playable(round) ? "Show the standings" : round.kind === "mini" ? "Show challenge 1" : round.kind === "category" ? "Show category 1" : "Show question 1";
         case "question":
           if (round.kind === "mini") return GN.mini.nextLabel();
+          if (round.kind === "category") return GN.category.nextLabel();
           if (sh.timesUp) return "Reveal the answer";
           if (t.running) return "Stop the clock";
           if (t.left < t.duration) return "Resume the timer";
@@ -92,10 +100,12 @@
           if (round.kind === "music" && !sh.clip.played && G.hasClip()) return `Play clip ${sh.item + 1}`;
           return "Start the timer";
         case "reveal":
-          return sh.item < round.items.length - 1 ? `${round.kind === "mini" ? "Challenge" : "Question"} ${sh.item + 2}` : "Show the standings";
+          if (round.kind === "tiebreak") return GN.tiebreak.state().winner ? "Show the standings" : sh.item < round.items.length - 1 ? "Still level: backup question" : "Show the standings";
+          return sh.item < round.items.length - 1 ? `${{ mini: "Challenge", category: "Category" }[round.kind] || "Question"} ${sh.item + 2}` : "Show the standings";
         case "standings": {
           const next = s.pack.rounds[sh.round + 1];
-          return next ? (next.number ? `Start Round ${next.number}` : `Start the ${next.name.toLowerCase()}`) : "Back to running order";
+          if (next && (next.kind !== "tiebreak" || G.needsTiebreak())) return next.number ? `Start Round ${next.number}` : `Start the ${next.name.toLowerCase()} (scores are level)`;
+          return "Reveal the winner";
         }
       }
       return "";
@@ -197,6 +207,17 @@
     toggleBoard(force) {
       set((s) => ({ show: { ...s.show, board: typeof force === "boolean" ? force : !s.show.board } }));
     },
+    // The top two teams are on the same score.
+    needsTiebreak() {
+      const list = G.standings();
+      return list.length > 1 && list[0].score === list[1].score;
+    },
+    // "And the winner is…"
+    finale() {
+      G.pause();
+      GN.music && GN.music.stopHere();
+      set((s) => ({ screen: "finale", finaleAt: Date.now(), show: { ...s.show, round: null, board: false } }));
+    },
     exit() {
       G.pause();
       set((s) => ({ screen: "order", show: { ...s.show, round: null, board: false } }));
@@ -263,6 +284,14 @@
   // When the clock runs out, mark time's up. Both windows check; the change is the same.
   setInterval(() => {
     const t = S().timer;
-    if (t.running && Date.now() >= t.endsAt) G.timeUp();
+    if (!t.running || Date.now() < t.endsAt) return;
+    // Category bank: running out of time puts the team out. Only the big screen does
+    // this, so the two windows can't both do it at once.
+    const round = G.round();
+    if (round && round.kind === "category" && S().show.phase === "question") {
+      if (GN.role === "show") GN.category.out();
+      return;
+    }
+    G.timeUp();
   }, 100);
 })();
