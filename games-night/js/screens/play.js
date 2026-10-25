@@ -22,7 +22,7 @@
   }
   const STAGE_FOR = { mini: 5, category: 6 };
   const NOTE = {
-    music: "For now, play each song from your own phone or playlist, then start the timer. Stage 4 adds a built-in clip player.",
+    music: "Clips are official 30-second previews from Apple Music. Each plays on the TV, then the timer starts.",
     scramble: "Stage 3 adds animated letter tiles."
   };
 
@@ -44,35 +44,64 @@
   }
 
   // What the players see for each kind of question.
-  function promptHTML(round, item) {
+  function promptHTML(round, item, reveal) {
     if (round.kind === "scramble") {
-      const letters = [...GN.scramble(item.answer, item.scrambled)];
-      return `<div class="tiles" aria-label="Letters: ${esc(letters.join(" "))}">${letters.map((c, j) =>
-        `<span class="tile" style="--j:${j}">${esc(c)}</span>`).join("")}</div>`;
+      const letters = [...G().letters(round, item)];
+      return `<div class="tiles${reveal ? " is-solved" : ""}" aria-label="${reveal ? "Answer" : "Letters"}: ${esc(letters.join(" "))}">${letters.map((c, j) =>
+        `<span class="tile" data-ch="${esc(c)}" style="--j:${j};--k:${j}"><b>${esc(c)}</b></span>`).join("")}</div>`;
     }
     if (round.kind === "music") {
-      return `<div class="clip"><span class="eq" aria-hidden="true">${"<i></i>".repeat(5)}</span>
-        <p class="q__text">Name the <em>song</em> and the <em>artist</em>.</p></div>`;
+      return `<div class="clip"><span class="eq" aria-hidden="true">${"<i></i>".repeat(9)}</span>
+        <p class="q__text">Name the <em>song</em> and the <em>artist</em>.</p>
+        <p class="clip__status" data-clip-status></p></div>`;
     }
+    // Questions arrive a word at a time.
     const q = item.q || "";
-    return `<p class="q__text${q.length > 90 ? " is-long" : ""}">${esc(q)}</p>`;
+    const words = q.split(/\s+/).map((w, i) => `<span class="w" style="--w:${i}">${esc(w)}</span>`).join(" ");
+    return `<p class="q__text${q.length > 90 ? " is-long" : ""}${reveal ? "" : " is-arriving"}">${words}</p>`;
+  }
+
+  // Slide the scramble tiles into a new order (a reshuffle, or the answer).
+  function arrange(view, letters, solved) {
+    const box = view && view.querySelector(".tiles");
+    if (!box) return;
+    const tiles = [...box.children];
+    const first = new Map(tiles.map((t) => [t, t.getBoundingClientRect()]));
+    const used = new Set();
+    const order = [...letters].map((ch) => {
+      const t = tiles.find((x) => !used.has(x) && x.dataset.ch === ch) || tiles.find((x) => !used.has(x));
+      used.add(t);
+      return t;
+    });
+    order.forEach((t, i) => { box.appendChild(t); t.style.setProperty("--k", i); });
+    box.classList.toggle("is-solved", solved);
+    box.setAttribute("aria-label", (solved ? "Answer: " : "Letters: ") + [...letters].join(" "));
+    if (!GN.motionOK()) return;
+    order.forEach((t, i) => {
+      const a = first.get(t), b = t.getBoundingClientRect();
+      t.animate([
+        { transform: `translate(${a.left - b.left}px, ${a.top - b.top}px) scale(${a.width / b.width})` },
+        { transform: "none" }
+      ], { duration: 750, delay: i * 55, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" });
+    });
   }
 
   function questionHTML(round, i, item, reveal) {
     return `
-      <div class="q${reveal ? " is-reveal" : ""}">
+      <div class="q${reveal ? " is-reveal" : ""}${round.kind === "music" ? " q--music" : ""}">
         <canvas class="q__ascii" aria-hidden="true"></canvas>
+        ${round.kind === "music" ? '<div class="q__spiral" aria-hidden="true"></div>' : ""}
         <header class="q__head">
           <p class="eyebrow">${esc(G().itemLabel(round, i))}</p>
           <p class="q__round">${esc(round.name)}</p>
         </header>
-        <div class="q__prompt">${promptHTML(round, item)}</div>
+        <div class="q__prompt">${promptHTML(round, item, reveal)}</div>
         <div class="timer" data-timer>
           <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="timer__track" cx="60" cy="60" r="54"/><circle class="timer__ring" cx="60" cy="60" r="54" style="stroke-dasharray:${RING}"/></svg>
           <span class="timer__num" data-num></span>
           <span class="timer__state" data-state></span>
         </div>
-        <div class="answer" data-answer ${reveal ? "" : "hidden"}>
+        <div class="answer" data-answer ${reveal && round.kind !== "scramble" ? "" : "hidden"}>
           <p class="answer__k">Answer</p>
           <p class="answer__v" data-answer-text></p>
         </div>
@@ -134,15 +163,16 @@
         const prevPhase = key.split("-")[2];
         const sameQuestion = key && key.split("-").slice(0, 2).join("-") === `${sh.round}-${sh.item}`;
         key = k;
-        clear(cleanups);
-        Object.values(hangers).forEach((h) => h.destroy());
-        hangers = {};
 
         // Question → reveal on the same item keeps the screen and adds the answer.
         if (sameQuestion && prevPhase === "question" && sh.phase === "reveal") {
           showAnswer(round, viewEl.querySelector(".view:last-child"), true);
           return;
         }
+        clear(cleanups);
+        Object.values(hangers).forEach((h) => h.destroy());
+        hangers = {};
+        spiral = null;
 
         const total = s.pack.rounds.filter((r) => r.number).length;
         let html = "";
@@ -174,22 +204,88 @@
             hangers[el.dataset.hang] = GN.fx.hang(el, { startAngle: i % 2 ? 0.3 : -0.28, length: 1.3 + i * 0.12 });
           });
         }
+        if (round.kind === "music" && (sh.phase === "question" || sh.phase === "reveal")) mountSpiral(round, next, sh.phase === "reveal");
+        if (sh.phase === "intro" && round.kind === "music") GN.music.prepare();
         if (sh.phase === "reveal") showAnswer(round, next, false);
         if (sh.phase === "question" || sh.phase === "reveal") { lastWhole = null; tickTimer(); }
       }
+
+      /* ---------- Music: spiral of covers, clip playback, sound bars ---------- */
+      let spiral = null, clipToken = 0, eqRaf = 0;
+      function mountSpiral(round, view, revealed) {
+        const host = view.querySelector(".q__spiral");
+        if (!host) return;
+        const item = GN.store.get().show.item;
+        spiral = GN.fx.spiral(host, round.items.map(() => ({ art: null })));
+        const sp = spiral;
+        cleanups.push(() => sp.destroy());
+        spiral.focus(item);
+        // Covers of songs already revealed (never the ones still to come).
+        round.items.forEach((_, i) => {
+          if (i < item || (i === item && revealed)) coverFor(round, i).then((u) => u && sp.reveal(i, u, true));
+        });
+        eqLoop();
+      }
+      async function coverFor(round, i) {
+        const opt = GN.music.option(round, i);
+        return opt && opt.art ? GN.music.localUrl(opt.art) : null;
+      }
+      function eqLoop() {
+        cancelAnimationFrame(eqRaf);
+        const bars = root.querySelectorAll(".view:last-child .eq i");
+        if (!bars.length) return;
+        const lv = GN.music.player.levels(bars.length);
+        bars.forEach((b, i) => { b.style.height = lv ? Math.max(8, Math.round(lv[i] * 100)) + "%" : ""; });
+        root.querySelector(".view:last-child .eq").classList.toggle("is-live", !!lv);
+        eqRaf = requestAnimationFrame(eqLoop);
+      }
+      function clipStatus() {
+        const el = root.querySelector(".view:last-child [data-clip-status]");
+        if (!el) return;
+        const s = GN.store.get(), sh = s.show, round = G().round();
+        if (sh.phase !== "question") { el.textContent = ""; return; }
+        el.textContent = sh.clip.playing ? "Listen…" : G().hasClip() ? (sh.clip.played ? "" : "Get ready…") : "The host will play this one.";
+      }
+      async function startClip() {
+        const s = GN.store.get(), round = G().round();
+        if (!round || round.kind !== "music") return;
+        const i = s.show.clip.item, opt = GN.music.option(round, i);
+        const entry = GN.music.entry(round, i) || {};
+        const token = ++clipToken;
+        if (!opt) { GN.ui.toast("No clip found for this song. Play it from your phone, then start the timer."); return; }
+        const result = await GN.music.player.play(opt, entry.start || 0, s.rules.musicClipSeconds || 10, {
+          onStart: () => { if (token === clipToken) G().clipStarted(); }
+        });
+        if (token !== clipToken) return;
+        if (result === "ended") G().clipEnded();
+        else if (result === "blocked") GN.ui.toast("The browser wants a click first: click anywhere on this screen once, then press Play again.", 8000);
+        else if (result === "error") { GN.ui.toast("That clip wouldn't play. Check the internet, or play the song from your phone."); G().clipEnded(); }
+      }
+      function stopClip() { clipToken++; GN.music.player.stop(); }
 
       function showAnswer(round, view, withSound) {
         const box = view.querySelector("[data-answer]");
         const text = G().answerOf(round, G().item());
         view.querySelector(".q").classList.add("is-reveal");
+        if (withSound) GN.sound.play("reveal");
+        // Music: the song's cover turns over in the spiral, and the clip plays again.
+        if (round.kind === "music") {
+          const i = GN.store.get().show.item;
+          if (spiral) { const sp = spiral; coverFor(round, i).then((u) => u && sp.reveal(i, u)); }
+          if (withSound && G().hasClip()) setTimeout(() => G().playClip(), 700);
+        }
+        // Word scramble: the tiles themselves fly into the answer.
+        if (round.kind === "scramble") {
+          if (withSound) arrange(view, G().letters(round, G().item()), true);
+          return;
+        }
         box.hidden = false;
         cleanups.push(GN.fx.decode(box.querySelector("[data-answer-text]"), text, 900));
         // Short answers are also written large in ASCII behind the question.
-        if (text.length <= 12) {
+        if (text.length <= 12 && round.kind !== "music") {
           const fx = GN.fx.asciiField(view.querySelector(".q__ascii"), { text: text.toUpperCase(), formMs: 1100, alpha: 0.32, fill: 0.7 });
           cleanups.push(() => fx.destroy());
         }
-        if (withSound) GN.sound.play("reveal");
       }
 
       function renderBoard() {
@@ -244,6 +340,8 @@
         el.classList.toggle("is-urgent", t.running && whole <= 5);
         el.classList.toggle("is-done", sh.timesUp);
         el.classList.toggle("is-idle", !t.running && !sh.timesUp);
+        const q = el.closest(".q");
+        if (q) q.classList.toggle("is-urgent", t.running && whole <= 5);
         if (t.running && lastWhole !== null && whole !== lastWhole && whole > 0) {
           GN.sound.play(whole <= 5 ? "tickUrgent" : "tick");
           if (whole <= 5) { el.classList.remove("is-beat"); void el.offsetWidth; el.classList.add("is-beat"); }
@@ -260,7 +358,8 @@
       }
 
       function renderHint() {
-        hintEl.innerHTML = `<kbd>Space</kbd> ${esc(G().nextLabel())} <span class="play__keys">· <kbd>←</kbd> back · <kbd>P</kbd> pause · <kbd>1</kbd>–<kbd>${GN.store.get().teams.length}</kbd> score · <kbd>U</kbd> undo · <kbd>G</kbd> scoreboard · <kbd>Esc</kbd> rounds</span>`;
+        const r = G().round();
+        hintEl.innerHTML = `<kbd>Space</kbd> ${esc(G().nextLabel())} <span class="play__keys">· <kbd>←</kbd> back ${r && r.kind === "scramble" ? "· <kbd>X</kbd> shuffle " : ""}${r && r.kind === "music" ? "· <kbd>A</kbd> play again " : ""}· <kbd>P</kbd> pause · <kbd>1</kbd>–<kbd>${GN.store.get().teams.length}</kbd> score · <kbd>U</kbd> undo · <kbd>G</kbd> scoreboard · <kbd>Esc</kbd> rounds</span>`;
       }
 
       function onChange(s, prev) {
@@ -268,12 +367,22 @@
         renderView();
         renderBoard();
         renderHint();
+        clipStatus();
         if (prev) {
           if (prev.teams !== s.teams) scoresChanged(prev);
           const sh = s.show, ph = prev.show;
           if (!ph.timesUp && sh.timesUp && ph.phase === "question" && sh.phase === "question" && ph.item === sh.item && ph.round === sh.round) slam();
           if (!prev.timer.running && s.timer.running && s.timer.left === s.timer.duration) GN.sound.play("start");
           if (prev.timer !== s.timer || prev.show !== s.show) { lastWhole = null; tickTimer(); }
+          // Music clips: the host asks, this screen plays.
+          if (sh.clip.n !== ph.clip.n) startClip();
+          if (sh.clip.stop !== ph.clip.stop) stopClip();
+          if (ph.item !== sh.item || ph.round !== sh.round || !["question", "reveal"].includes(sh.phase)) { if (GN.music.player.playing()) stopClip(); }
+          if (prev.settings.sound !== s.settings.sound) GN.music.player.setVolume(s.settings.sound);
+          if ((prev.show.shuffle || 0) !== (sh.shuffle || 0) && sh.phase === "question" && ph.item === sh.item && ph.round === sh.round) {
+            arrange(viewEl.querySelector(".view:last-child"), G().letters(G().round(), G().item()), false);
+            GN.sound.play("whoosh");
+          }
         }
       }
 
@@ -283,6 +392,8 @@
       return () => {
         unsub();
         cancelAnimationFrame(raf);
+        cancelAnimationFrame(eqRaf);
+        stopClip();
         clear(cleanups);
         clear(boardCleanups);
         Object.values(hangers).forEach((h) => h.destroy());
@@ -314,6 +425,8 @@
         case "t": g.restartTimer(); return true;
         case "r": if (GN.store.get().show.phase === "question") g.reveal(); return true;
         case "g": g.toggleBoard(); return true;
+        case "x": g.shuffle(); return true;
+        case "a": g.playClip(); return true;
         case "u": g.undo(); return true;
         case "escape": g.exit(); return true;
       }

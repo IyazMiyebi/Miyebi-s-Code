@@ -33,6 +33,8 @@ screen instead: it never shows an answer until you reveal it.
 | P | Pause / resume the timer |
 | T | Restart the timer |
 | R | Reveal the answer now |
+| X | Word scramble: shuffle the letters into a new order |
+| A | Music: play the clip again |
 | 1–4 | Give team 1–4 this round's points (Shift + number takes them away) |
 | U | Undo the last score change |
 | G | Show / hide the scoreboard |
@@ -45,6 +47,24 @@ screen instead: it never shows an answer until you reveal it.
 Click a team's score at the bottom of the screen for +points, a custom amount or undo.
 A presentation clicker sends Page Up/Page Down, so it works as a simple remote.
 The buttons in the corners hide themselves after 3 seconds without mouse movement.
+
+## Music clips
+
+The music round plays official 30-second previews from Apple Music, found
+automatically through Apple's free iTunes search. Nothing is hosted on this site.
+
+- **Before the night:** open the host controls (press **H**) and press **Get clips ready**
+  under *Music clips*. Every clip and album cover is saved in the browser, so the round
+  still plays if the Wi-Fi drops. Use the same laptop and browser on the night.
+- **During the round:** press Space (or *Play clip*). The clip plays on the TV for the
+  "Music: clip length" set in Settings (10 seconds), then the answer timer starts by itself.
+  Press Space during a clip to cut it short and start the timer. **A** plays it again.
+  On the reveal, the album cover turns over in the spiral and the clip plays once more.
+- **Wrong version or wrong part of the song?** In the host controls, pick another
+  *Version*, or set *Start at* to skip into the clip. Apple chooses which 30 seconds the
+  preview covers, often the chorus.
+- **Song not found?** Type a different search under *Music clips*, or play the song from
+  your own phone. The round works the same either way.
 
 ## Decisions (from the deck)
 

@@ -29,6 +29,7 @@ GN.defaultPack = {
     categoryAnswer: 10,     // each valid answer
     categoryBonus: 20,      // last team standing
     musicSeconds: 10,
+    musicClipSeconds: 10,   // how much of each song to play
     scrambleSeconds: 20,
     brainSeconds: 30,
     categoryTurnSeconds: 5,

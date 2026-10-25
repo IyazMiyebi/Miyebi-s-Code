@@ -14,6 +14,7 @@
     ["categoryBonus", "Category Bank: last team standing"]
   ];
   const TIMERS = [
+    ["musicClipSeconds", "Music: clip length"],
     ["musicSeconds", "Music: time to answer"],
     ["scrambleSeconds", "Nauseous: per word"],
     ["brainSeconds", "Brain Games: per question"],
