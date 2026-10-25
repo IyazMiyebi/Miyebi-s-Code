@@ -40,11 +40,11 @@
 
     /* ---------- Moving through the show ---------- */
     startRound(index) {
-      set((s) => ({ screen: "play", show: { ...s.show, round: index, item: 0, phase: "intro", timesUp: false, board: false } }));
+      set((s) => ({ screen: "play", show: { ...s.show, round: index, item: 0, phase: "intro", timesUp: false, board: false, shuffle: 0 } }));
       G.resetTimer();
     },
     goQuestion(item, { timesUp = false } = {}) {
-      set((s) => ({ show: { ...s.show, item, phase: "question", timesUp } }));
+      set((s) => ({ show: { ...s.show, item, phase: "question", timesUp, shuffle: 0 } }));
       G.resetTimer(timesUp);
     },
 
@@ -140,6 +140,18 @@
     reveal() {
       G.pause();
       set((s) => ({ show: { ...s.show, phase: "reveal", timesUp: true } }));
+    },
+    // Word scramble: show the same letters in a new order.
+    shuffle() {
+      const round = G.round();
+      if (!round || round.kind !== "scramble" || S().show.phase !== "question") return;
+      set((s) => ({ show: { ...s.show, shuffle: (s.show.shuffle || 0) + 1 } }));
+    },
+    // The letters currently on screen for a scramble question.
+    letters(round, item) {
+      const sh = S().show;
+      if (sh.phase === "reveal") return item.answer.toUpperCase().replace(/\s/g, "");
+      return GN.scramble(item.answer, item.scrambled, sh.shuffle || 0);
     },
     toggleBoard(force) {
       set((s) => ({ show: { ...s.show, board: typeof force === "boolean" ? force : !s.show.board } }));

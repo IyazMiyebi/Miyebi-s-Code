@@ -38,7 +38,7 @@
       settings: { sound: true, motion: "auto" },
       screen: "title",
       // Where we are in the live show (see js/game.js).
-      show: { round: null, item: 0, phase: "intro", timesUp: false, board: false },
+      show: { round: null, item: 0, phase: "intro", timesUp: false, board: false, shuffle: 0 },
       timer: { duration: 0, left: 0, endsAt: null, running: false },
       log: [],      // every score change, newest last, so it can be undone
       played: []    // round ids that reached their standings
@@ -135,13 +135,15 @@
     const s = (scrambled || "").toUpperCase().replace(/\s/g, "");
     return !!s && s !== a && [...s].sort().join("") === [...a].sort().join("");
   };
-  GN.scramble = (answer, scrambled) => {
-    if (GN.isValidScramble(answer, scrambled)) return scrambled.toUpperCase().replace(/\s/g, "");
+  // `variant` 0 is the pack's own scramble; 1, 2, 3… are reshuffles (the host's
+  // "shuffle letters" button). Each is the same in every window.
+  GN.scramble = (answer, scrambled, variant = 0) => {
+    if (!variant && GN.isValidScramble(answer, scrambled)) return scrambled.toUpperCase().replace(/\s/g, "");
     const a = answer.toUpperCase().replace(/\s/g, "");
     if (new Set(a).size < 2) return a; // "AAA" cannot be scrambled
     // Shuffle with a random sequence seeded by the word itself, so the big screen and
     // the host window always show the same scramble.
-    let seed = [...a].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+    let seed = ([...a].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) + variant * 7919) >>> 0;
     const rand = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
     let s = a;
     while (s === a) {

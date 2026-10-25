@@ -49,6 +49,7 @@
                 <button type="button" class="hbtn" data-act="pause">Pause timer</button>
                 <button type="button" class="hbtn" data-act="restart">Restart timer</button>
                 <button type="button" class="hbtn" data-act="reveal">Reveal now</button>
+                <button type="button" class="hbtn" data-act="shuffle" hidden>Shuffle letters</button>
                 <button type="button" class="hbtn" data-act="board" aria-pressed="false">Scoreboard on TV</button>
               </div>
               <div class="host__q"><p class="host__k" data-q-k>On the TV</p><p class="host__qtext" data-q></p></div>
@@ -89,7 +90,7 @@
         else if (sh.phase === "standings") q = "Standings between rounds.";
         else {
           a = G().answerOf(round, item);
-          if (round.kind === "scramble") q = "Letters on screen: " + GN.scramble(item.answer, item.scrambled).split("").join(" ");
+          if (round.kind === "scramble") q = "Letters on screen: " + G().letters(round, item).split("").join(" ");
           else if (round.kind === "music") q = `Play clip ${sh.item + 1} now (${item.title} by ${item.artist}), then start the timer.`;
           else q = item.q || "";
         }
@@ -108,6 +109,8 @@
 
         $("[data-act=board]").setAttribute("aria-pressed", String(!!sh.board));
         $("[data-act=reveal]").disabled = !(round && sh.phase === "question");
+        $("[data-act=shuffle]").hidden = !(round && round.kind === "scramble");
+        $("[data-act=shuffle]").disabled = !(round && round.kind === "scramble" && sh.phase === "question");
         const timed = round && sh.phase === "question";
         ["pause", "restart"].forEach((a) => ($(`[data-act=${a}]`).disabled = !timed));
         $("[data-act=pause]").textContent = s.timer.running ? "Pause timer" : "Resume timer";
@@ -165,6 +168,7 @@
           if (a === "restart") g.restartTimer();
           if (a === "reveal") g.reveal();
           if (a === "board") g.toggleBoard();
+          if (a === "shuffle") g.shuffle();
           if (a === "undo") g.undo();
           if (a === "reset") {
             const wrap = $("[data-reset-wrap]");

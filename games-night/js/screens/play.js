@@ -44,18 +44,45 @@
   }
 
   // What the players see for each kind of question.
-  function promptHTML(round, item) {
+  function promptHTML(round, item, reveal) {
     if (round.kind === "scramble") {
-      const letters = [...GN.scramble(item.answer, item.scrambled)];
-      return `<div class="tiles" aria-label="Letters: ${esc(letters.join(" "))}">${letters.map((c, j) =>
-        `<span class="tile" style="--j:${j}">${esc(c)}</span>`).join("")}</div>`;
+      const letters = [...G().letters(round, item)];
+      return `<div class="tiles${reveal ? " is-solved" : ""}" aria-label="${reveal ? "Answer" : "Letters"}: ${esc(letters.join(" "))}">${letters.map((c, j) =>
+        `<span class="tile" data-ch="${esc(c)}" style="--j:${j};--k:${j}"><b>${esc(c)}</b></span>`).join("")}</div>`;
     }
     if (round.kind === "music") {
       return `<div class="clip"><span class="eq" aria-hidden="true">${"<i></i>".repeat(5)}</span>
         <p class="q__text">Name the <em>song</em> and the <em>artist</em>.</p></div>`;
     }
+    // Questions arrive a word at a time.
     const q = item.q || "";
-    return `<p class="q__text${q.length > 90 ? " is-long" : ""}">${esc(q)}</p>`;
+    const words = q.split(/\s+/).map((w, i) => `<span class="w" style="--w:${i}">${esc(w)}</span>`).join(" ");
+    return `<p class="q__text${q.length > 90 ? " is-long" : ""}${reveal ? "" : " is-arriving"}">${words}</p>`;
+  }
+
+  // Slide the scramble tiles into a new order (a reshuffle, or the answer).
+  function arrange(view, letters, solved) {
+    const box = view && view.querySelector(".tiles");
+    if (!box) return;
+    const tiles = [...box.children];
+    const first = new Map(tiles.map((t) => [t, t.getBoundingClientRect()]));
+    const used = new Set();
+    const order = [...letters].map((ch) => {
+      const t = tiles.find((x) => !used.has(x) && x.dataset.ch === ch) || tiles.find((x) => !used.has(x));
+      used.add(t);
+      return t;
+    });
+    order.forEach((t, i) => { box.appendChild(t); t.style.setProperty("--k", i); });
+    box.classList.toggle("is-solved", solved);
+    box.setAttribute("aria-label", (solved ? "Answer: " : "Letters: ") + [...letters].join(" "));
+    if (!GN.motionOK()) return;
+    order.forEach((t, i) => {
+      const a = first.get(t), b = t.getBoundingClientRect();
+      t.animate([
+        { transform: `translate(${a.left - b.left}px, ${a.top - b.top}px) scale(${a.width / b.width})` },
+        { transform: "none" }
+      ], { duration: 750, delay: i * 55, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" });
+    });
   }
 
   function questionHTML(round, i, item, reveal) {
@@ -66,13 +93,13 @@
           <p class="eyebrow">${esc(G().itemLabel(round, i))}</p>
           <p class="q__round">${esc(round.name)}</p>
         </header>
-        <div class="q__prompt">${promptHTML(round, item)}</div>
+        <div class="q__prompt">${promptHTML(round, item, reveal)}</div>
         <div class="timer" data-timer>
           <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="timer__track" cx="60" cy="60" r="54"/><circle class="timer__ring" cx="60" cy="60" r="54" style="stroke-dasharray:${RING}"/></svg>
           <span class="timer__num" data-num></span>
           <span class="timer__state" data-state></span>
         </div>
-        <div class="answer" data-answer ${reveal ? "" : "hidden"}>
+        <div class="answer" data-answer ${reveal && round.kind !== "scramble" ? "" : "hidden"}>
           <p class="answer__k">Answer</p>
           <p class="answer__v" data-answer-text></p>
         </div>
@@ -182,6 +209,12 @@
         const box = view.querySelector("[data-answer]");
         const text = G().answerOf(round, G().item());
         view.querySelector(".q").classList.add("is-reveal");
+        if (withSound) GN.sound.play("reveal");
+        // Word scramble: the tiles themselves fly into the answer.
+        if (round.kind === "scramble") {
+          if (withSound) arrange(view, G().letters(round, G().item()), true);
+          return;
+        }
         box.hidden = false;
         cleanups.push(GN.fx.decode(box.querySelector("[data-answer-text]"), text, 900));
         // Short answers are also written large in ASCII behind the question.
@@ -189,7 +222,6 @@
           const fx = GN.fx.asciiField(view.querySelector(".q__ascii"), { text: text.toUpperCase(), formMs: 1100, alpha: 0.32, fill: 0.7 });
           cleanups.push(() => fx.destroy());
         }
-        if (withSound) GN.sound.play("reveal");
       }
 
       function renderBoard() {
@@ -244,6 +276,8 @@
         el.classList.toggle("is-urgent", t.running && whole <= 5);
         el.classList.toggle("is-done", sh.timesUp);
         el.classList.toggle("is-idle", !t.running && !sh.timesUp);
+        const q = el.closest(".q");
+        if (q) q.classList.toggle("is-urgent", t.running && whole <= 5);
         if (t.running && lastWhole !== null && whole !== lastWhole && whole > 0) {
           GN.sound.play(whole <= 5 ? "tickUrgent" : "tick");
           if (whole <= 5) { el.classList.remove("is-beat"); void el.offsetWidth; el.classList.add("is-beat"); }
@@ -260,7 +294,8 @@
       }
 
       function renderHint() {
-        hintEl.innerHTML = `<kbd>Space</kbd> ${esc(G().nextLabel())} <span class="play__keys">· <kbd>←</kbd> back · <kbd>P</kbd> pause · <kbd>1</kbd>–<kbd>${GN.store.get().teams.length}</kbd> score · <kbd>U</kbd> undo · <kbd>G</kbd> scoreboard · <kbd>Esc</kbd> rounds</span>`;
+        const r = G().round();
+        hintEl.innerHTML = `<kbd>Space</kbd> ${esc(G().nextLabel())} <span class="play__keys">· <kbd>←</kbd> back ${r && r.kind === "scramble" ? "· <kbd>X</kbd> shuffle " : ""}· <kbd>P</kbd> pause · <kbd>1</kbd>–<kbd>${GN.store.get().teams.length}</kbd> score · <kbd>U</kbd> undo · <kbd>G</kbd> scoreboard · <kbd>Esc</kbd> rounds</span>`;
       }
 
       function onChange(s, prev) {
@@ -274,6 +309,10 @@
           if (!ph.timesUp && sh.timesUp && ph.phase === "question" && sh.phase === "question" && ph.item === sh.item && ph.round === sh.round) slam();
           if (!prev.timer.running && s.timer.running && s.timer.left === s.timer.duration) GN.sound.play("start");
           if (prev.timer !== s.timer || prev.show !== s.show) { lastWhole = null; tickTimer(); }
+          if ((prev.show.shuffle || 0) !== (sh.shuffle || 0) && sh.phase === "question" && ph.item === sh.item && ph.round === sh.round) {
+            arrange(viewEl.querySelector(".view:last-child"), G().letters(G().round(), G().item()), false);
+            GN.sound.play("whoosh");
+          }
         }
       }
 
@@ -314,6 +353,7 @@
         case "t": g.restartTimer(); return true;
         case "r": if (GN.store.get().show.phase === "question") g.reveal(); return true;
         case "g": g.toggleBoard(); return true;
+        case "x": g.shuffle(); return true;
         case "u": g.undo(); return true;
         case "escape": g.exit(); return true;
       }

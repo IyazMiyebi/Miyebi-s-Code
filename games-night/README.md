@@ -33,6 +33,7 @@ screen instead: it never shows an answer until you reveal it.
 | P | Pause / resume the timer |
 | T | Restart the timer |
 | R | Reveal the answer now |
+| X | Word scramble: shuffle the letters into a new order |
 | 1–4 | Give team 1–4 this round's points (Shift + number takes them away) |
 | U | Undo the last score change |
 | G | Show / hide the scoreboard |
