@@ -8,8 +8,9 @@
   const S = () => GN.store.get();
   const set = (p) => GN.store.set(p);
 
-  // Rounds whose screens are built so far. The others show their intro, then standings.
-  const PLAYABLE = ["quiz", "tiebreak"];
+  // Rounds that run question by question with the timer. The others (mini games and
+  // category bank, coming in Stages 5–6) show their intro, then the standings.
+  const PLAYABLE = ["quiz", "tiebreak", "music", "scramble"];
 
   const G = (GN.game = {
     round() { const s = S(); return s.show.round == null ? null : s.pack.rounds[s.show.round]; },
