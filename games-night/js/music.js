@@ -252,7 +252,7 @@
     // in the other window, use the levels it sends across.
     levels(n) {
       if (!analyser || !audio || audio.paused) {
-        return remote && performance.now() - remote.at < 300 ? remote.lv.slice(0, n) : null;
+        return remote && performance.now() - remote.at < 400 ? remote.lv.slice(0, n) : null;
       }
       analyser.getByteFrequencyData(bins);
       const out = [];
@@ -267,15 +267,18 @@
   };
 
   /* Send the sound-bar levels to the other window while a clip plays here. */
-  let levelsChannel = null, remote = null, sendRaf = 0;
+  let levelsChannel = null, remote = null, sendTimer = 0;
   try { levelsChannel = new BroadcastChannel("gn-levels"); } catch (e) { /* older browser */ }
   if (levelsChannel) levelsChannel.onmessage = (e) => { remote = { lv: e.data, at: performance.now() }; };
+  // A plain timer, not animation frames: those pause when this window isn't in front.
   function sendLevels() {
-    cancelAnimationFrame(sendRaf);
-    if (!levelsChannel || !audio || audio.paused) return;
-    const lv = M.player.levels(9);
-    if (lv) levelsChannel.postMessage(lv);
-    sendRaf = requestAnimationFrame(sendLevels);
+    clearInterval(sendTimer);
+    if (!levelsChannel) return;
+    sendTimer = setInterval(() => {
+      if (!audio || audio.paused) { clearInterval(sendTimer); return; }
+      const lv = M.player.levels(9);
+      if (lv) levelsChannel.postMessage(lv);
+    }, 50);
   }
 
   /* ---------- Which window plays the clip ----------
