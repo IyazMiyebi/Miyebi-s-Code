@@ -54,6 +54,7 @@
                 <button type="button" class="hbtn" data-act="board" aria-pressed="false">Scoreboard on TV</button>
               </div>
               <div class="hclip" data-clip hidden></div>
+              <div class="hmini" data-mini hidden></div>
               <div class="host__q"><p class="host__k" data-q-k>On the TV</p><p class="host__qtext" data-q></p></div>
               <div class="host__a"><p class="host__k">Answer · only you can see this</p><p class="host__atext" data-a></p></div>
               <p class="host__nextup" data-nextup></p>
@@ -113,6 +114,49 @@
         $("[data-clip-info]").classList.toggle("is-warn", !!s.show.clip.error);
       }
 
+      // Mini games: the race clock, a button per team, charades prompts and the winner.
+      let miniKey = "";
+      function renderMini(s) {
+        const box = $("[data-mini]");
+        const round = G().round(), item = G().item();
+        const on = round && round.kind === "mini" && ["question", "reveal"].includes(s.show.phase);
+        box.hidden = !on;
+        if (!on) { miniKey = ""; return; }
+        const m = GN.mini.state(), mode = item.mode || "stopwatch", fmt = GN.mini.fmt;
+        const k = JSON.stringify([s.show.item, s.show.phase, m, s.teams.map((t) => [t.id, t.name, t.colour])]);
+        if (k === miniKey) return;
+        miniKey = k;
+        const sug = GN.mini.suggestion();
+        const clockBtns = mode === "memory" ? "" : `
+          <div class="hclip__row">
+            <button type="button" class="hbtn hbtn--big" data-act="mini-clock">${GN.mini.running() ? "Stop the clock" : GN.mini.elapsed() ? "Resume the clock" : "Start the clock"}</button>
+            <button type="button" class="hbtn" data-act="mini-reset" ${GN.mini.elapsed() ? "" : "disabled"}>Reset clock and times</button>
+          </div>`;
+        const teamRows = mode === "memory" || s.show.phase === "reveal" ? "" : `<div class="hmini__teams">${s.teams.map((t, i) => {
+          const done = mode === "stopwatch" ? m.times[t.id] : m.out[t.id];
+          return `<div class="hmini__team" style="--team:${GN.colourHex(t.colour)}">
+            <span class="hteam__key">${i + 1}</span><span class="hmini__name">${esc(t.name)}</span>
+            <span class="hmini__val">${done != null ? (mode === "stopwatch" ? "finished " : "out at ") + fmt(done) : ""}</span>
+            ${done != null ? `<button type="button" class="hbtn" data-act="mini-unmark" data-team="${t.id}">Undo</button>`
+              : `<button type="button" class="hbtn hbtn--add" data-act="mini-mark" data-team="${t.id}" ${GN.mini.running() ? "" : "disabled"}>${mode === "stopwatch" ? "Finished" : "Out"}</button>`}
+          </div>`;
+        }).join("")}</div>`;
+        const prompts = item.prompts || [];
+        const charades = prompts.length ? `
+          <div class="hmini__prompts"><p class="host__k">Charades prompts · show only the actor</p>
+            <ol>${prompts.map((p, i) => `<li class="${i < m.guessed ? "is-done" : i === m.guessed ? "is-next" : ""}">${esc(p)}</li>`).join("")}</ol>
+            <div class="hclip__row">
+              <button type="button" class="hbtn hbtn--big" data-act="mini-guess" ${m.guessed >= prompts.length ? "disabled" : ""}>Guessed! (${m.guessed}/${prompts.length})</button>
+              <button type="button" class="hbtn" data-act="mini-unguess" ${m.guessed ? "" : "disabled"}>Undo</button>
+              <button type="button" class="hbtn" data-act="mini-reguess" ${m.guessed ? "" : "disabled"}>Reset for the next team</button>
+            </div></div>` : "";
+        const winner = `
+          <div class="hmini__win"><p class="host__k">Winner · +${s.rules.mini} points${sug && !m.winner ? ` · suggested: ${esc((s.teams.find((t) => t.id === sug) || {}).name)}` : ""}</p>
+            <div class="hclip__row">${s.teams.map((t) => `<button type="button" class="hbtn ${m.winner === t.id ? "is-on" : ""}" style="--team:${GN.colourHex(t.colour)}" data-act="mini-win" data-team="${t.id}" aria-pressed="${m.winner === t.id}">${esc(t.name)}</button>`).join("")}
+              ${m.winner ? `<button type="button" class="hbtn" data-act="mini-win" data-team="">No winner</button>` : ""}</div></div>`;
+        box.innerHTML = clockBtns + teamRows + charades + winner;
+      }
+
       // Every song in the round: found, saved, or missing (with a search box).
       function renderClips(s) {
         const round = GN.music.musicRound();
@@ -143,6 +187,7 @@
       function render(s) {
         $("[data-tv-sound]").hidden = !(s.tvSound === false && s.settings.sound);
         renderClip(s);
+        renderMini(s);
         renderClips(s);
         const sh = s.show, round = G().round(), item = G().item();
         // Where are we?
@@ -164,10 +209,12 @@
           else if (round.kind === "music") q = G().hasClip()
             ? `Music clip ${sh.item + 1}. Press “Play clip”: it plays on the TV, then the timer starts by itself.`
             : `Music clip ${sh.item + 1}. No clip found: play it from your phone, then start the timer.`;
+          else if (round.kind === "mini") { q = `${item.name}: ${item.text}`; a = item.note || ""; }
           else q = item.q || "";
         }
         $("[data-q]").textContent = q;
         $("[data-a]").textContent = a || "–";
+        $("[data-a]").closest(".host__a").hidden = !!(round && round.kind === "mini" && !a);
         $("[data-a]").closest(".host__a").classList.toggle("is-shown", sh.phase === "reveal");
 
         // Coming up next, so the host can get ready.
@@ -175,7 +222,7 @@
         if (round && G().playable(round)) {
           const ni = sh.phase === "intro" ? 0 : sh.item + 1;
           const n = round.items[ni];
-          if (n && sh.phase !== "standings") nextUp = `Next: ${n.q ? n.q + "  →  " : ""}${G().answerOf(round, n)}`;
+          if (n && sh.phase !== "standings") nextUp = round.kind === "mini" ? `Next: ${n.name}` : `Next: ${n.q ? n.q + "  →  " : ""}${G().answerOf(round, n)}`;
         }
         $("[data-nextup]").textContent = nextUp;
 
@@ -183,7 +230,8 @@
         $("[data-act=reveal]").disabled = !(round && sh.phase === "question");
         $("[data-act=shuffle]").hidden = !(round && round.kind === "scramble");
         $("[data-act=shuffle]").disabled = !(round && round.kind === "scramble" && sh.phase === "question");
-        const timed = round && sh.phase === "question";
+        // The race clock in mini games has its own buttons; the countdown ones don't apply.
+        const timed = round && sh.phase === "question" && !(round.kind === "mini" && item && item.mode !== "memory");
         ["pause", "restart"].forEach((a) => ($(`[data-act=${a}]`).disabled = !timed));
         $("[data-act=pause]").textContent = s.timer.running ? "Pause timer" : "Resume timer";
         $("[data-act=pause]").disabled = !timed || sh.timesUp || (!s.timer.running && s.timer.left >= s.timer.duration);
@@ -220,6 +268,10 @@
           st.textContent = !round ? "the timer appears when a question is on screen"
             : !G().playable(round) ? "no timer in this round yet"
             : s.show.phase === "intro" ? "the timer starts with question 1" : "";
+        } else if (round.kind === "mini" && G().item().mode !== "memory") {
+          el.textContent = GN.mini.fmt(GN.mini.elapsed());
+          st.textContent = GN.mini.running() ? "on the clock" : GN.mini.elapsed() ? "stopped" : "ready";
+          el.parentElement.classList.remove("is-urgent");
         } else {
           const left = G().secondsLeft();
           el.textContent = s.show.timesUp ? "0" : Math.ceil(left - 0.001);
@@ -242,6 +294,14 @@
           if (a === "board") g.toggleBoard();
           if (a === "shuffle") g.shuffle();
           if (a === "clip-play") g.playClip();
+          if (a === "mini-clock") GN.mini.toggleClock();
+          if (a === "mini-reset") GN.mini.resetClock();
+          if (a === "mini-mark") GN.mini.mark(act.dataset.team);
+          if (a === "mini-unmark") GN.mini.unmark(act.dataset.team);
+          if (a === "mini-win") GN.mini.setWinner(act.dataset.team || null);
+          if (a === "mini-guess") GN.mini.guess(GN.mini.state().guessed + 1);
+          if (a === "mini-unguess") GN.mini.guess(GN.mini.state().guessed - 1);
+          if (a === "mini-reguess") GN.mini.guess(0);
           if (a === "clip-stop") g.stopClip(false);
           if (a === "clips-ready") {
             act.disabled = true;

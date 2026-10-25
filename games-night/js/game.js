@@ -8,9 +8,9 @@
   const S = () => GN.store.get();
   const set = (p) => GN.store.set(p);
 
-  // Rounds that run question by question with the timer. The others (mini games and
-  // category bank, coming in Stages 5–6) show their intro, then the standings.
-  const PLAYABLE = ["quiz", "tiebreak", "music", "scramble"];
+  // Rounds that run item by item. The category bank (Stage 6) shows its intro, then
+  // the standings.
+  const PLAYABLE = ["quiz", "tiebreak", "music", "scramble", "mini"];
 
   const G = (GN.game = {
     round() { const s = S(); return s.show.round == null ? null : s.pack.rounds[s.show.round]; },
@@ -21,7 +21,7 @@
     seconds(round) {
       const r = S().rules;
       return { music: r.musicSeconds, scramble: r.scrambleSeconds, quiz: r.brainSeconds, tiebreak: r.brainSeconds,
-        category: r.categoryTurnSeconds }[round.kind] || 30;
+        category: r.categoryTurnSeconds, mini: r.memoryShowSeconds }[round.kind] || 30;
     },
     // The points a correct answer is worth in this round (the one-tap button).
     points(round) {
@@ -46,7 +46,7 @@
     },
     goQuestion(item, { timesUp = false } = {}) {
       set((s) => ({ show: { ...s.show, item, phase: "question", timesUp, shuffle: 0,
-        clip: { ...s.show.clip, item, playing: false, played: timesUp } } }));
+        clip: { ...s.show.clip, item, playing: false, played: timesUp }, mini: GN.mini.fresh() } }));
       G.resetTimer(timesUp);
     },
 
@@ -59,6 +59,7 @@
         case "intro":
           return G.playable(round) ? G.goQuestion(0) : G.toStandings();
         case "question":
+          if (round.kind === "mini") return GN.mini.advance();
           if (sh.timesUp) return G.reveal();
           if (t.running) return G.timeUp();
           if (t.left < t.duration) return G.resume();
@@ -81,8 +82,9 @@
       if (!round) return "Start the show";
       if (sh.board) return "Hide the scoreboard";
       switch (sh.phase) {
-        case "intro": return G.playable(round) ? "Show question 1" : "Show the standings";
+        case "intro": return !G.playable(round) ? "Show the standings" : round.kind === "mini" ? "Show challenge 1" : "Show question 1";
         case "question":
+          if (round.kind === "mini") return GN.mini.nextLabel();
           if (sh.timesUp) return "Reveal the answer";
           if (t.running) return "Stop the clock";
           if (t.left < t.duration) return "Resume the timer";
@@ -90,7 +92,7 @@
           if (round.kind === "music" && !sh.clip.played && G.hasClip()) return `Play clip ${sh.item + 1}`;
           return "Start the timer";
         case "reveal":
-          return sh.item < round.items.length - 1 ? `Question ${sh.item + 2}` : "Show the standings";
+          return sh.item < round.items.length - 1 ? `${round.kind === "mini" ? "Challenge" : "Question"} ${sh.item + 2}` : "Show the standings";
         case "standings": {
           const next = s.pack.rounds[sh.round + 1];
           return next ? (next.number ? `Start Round ${next.number}` : `Start the ${next.name.toLowerCase()}`) : "Back to running order";

@@ -70,6 +70,27 @@ automatically through Apple's free iTunes search. Nothing is hosted on this site
 - **Song not found?** Type a different search under *Music clips*, or play the song from
   your own phone. The round works the same either way.
 
+## Mini games
+
+Each challenge has its own screen. The winner gets the points (20) with one tap: in the
+host controls under *Winner*, or a number key on the result screen.
+
+- **Cup Stack Sprint, Charades Relay (race clock):** Space starts the clock. When a team
+  finishes, press its *Finished* button (or its number key). The clock stops when every
+  team is done, and the result suggests the fastest. For turn-by-turn play, *Reset clock
+  and times* between teams, or just stop and restart the clock.
+- **Wall Sit, One-Leg Stand (last one standing):** Space starts the clock. Press a team's
+  *Out* button (or number key) as each one drops. When one team is left, the clock stops
+  and that team is suggested as the winner.
+- **Charades prompts** show only in the host controls: let the actor read them there.
+  Press *Guessed!* as each one is guessed and it turns over on the TV.
+  *Reset for the next team* starts again.
+- **Memory Tray:** Space starts 20 seconds of looking (the tiles glow), then "Cover it!".
+  Space again starts 45 seconds of writing. Choose and set out the 12 items yourself.
+
+During a challenge, number keys mark a team finished or out (Shift + number undoes it), and
+**P** starts or stops the race clock. On the result screen, a number key picks the winner.
+
 ## Decisions (from the deck)
 
 The deck contradicted itself in a few places. This is what the show uses. Points and
