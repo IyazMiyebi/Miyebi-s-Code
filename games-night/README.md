@@ -104,6 +104,23 @@ During a challenge, number keys mark a team finished or out (Shift + number undo
   the final scores. *Play again with these teams* resets the scores. The host controls
   can replay the reveal any time, or show it early from the Rounds list.
 
+## Phone remote
+
+Run the show from your phone: answers, timer, scoring and every round.
+
+1. In the host controls (or **Settings** on the TV), press **Turn on phone remote**.
+2. Scan the QR code with your phone's camera (or open the link shown).
+3. The phone shows the host controls. Every button runs on the TV straight away.
+
+- It needs the internet to connect (it uses PeerJS, a free connection service).
+  Without internet, the laptop and keyboard work as always.
+- Keep the TV window open: it's what the phone talks to. If the TV window reloads,
+  the phone reconnects by itself within a few seconds. The phone stays awake while open.
+- Click the TV window once before playing, so it's allowed to make sound (music clips
+  started from the phone play there).
+- Anyone with the code can control the show and see the answers. **New code**
+  disconnects every phone. The remote stays on (with the same code) until you turn it off.
+
 ## Decisions (from the deck)
 
 The deck contradicted itself in a few places. This is what the show uses. Points and

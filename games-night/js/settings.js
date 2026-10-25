@@ -54,6 +54,7 @@
             <div class="set-reset" data-reset-wrap>
               <button type="button" class="btn btn--ghost btn--small" data-reset>Start a new game…</button>
             </div>
+            ${GN.role === "remote" ? "" : `<h3 class="settings__h">Phone remote</h3><div class="set-remote" data-remote-panel></div>`}
           </section>
         </div>
       </form>`;
@@ -97,7 +98,12 @@
   });
 
   GN.settings = {
-    open() { render(); dlg.showModal(); },
+    open() {
+      render();
+      const rp = dlg.querySelector("[data-remote-panel]");
+      if (rp) GN.remote.panel(rp);
+      dlg.showModal();
+    },
     isOpen: () => dlg.open
   };
 })();

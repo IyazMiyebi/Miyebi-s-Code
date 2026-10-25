@@ -10,6 +10,7 @@
  */
 (function () {
   if (GN.role === "host") { GN.host.start(); return; }
+  if (GN.role === "remote") { GN.remote.startPhone(); return; }
 
   const ORDER = ["title", "teams", "rules", "order", "play"];
   const stage = document.getElementById("stage");
