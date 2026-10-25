@@ -158,14 +158,15 @@
       function renderView() {
         const s = GN.store.get(), sh = s.show, round = G().round();
         if (!round) return;
-        const k = `${sh.round}-${sh.item}-${sh.phase}`;
+        // A mini game's result screen is redrawn when the host picks the winner.
+        const k = `${sh.round}-${sh.item}-${sh.phase}` + (round.kind === "mini" && sh.phase === "reveal" ? `-${(sh.mini && sh.mini.winner) || "none"}` : "");
         if (k === key) return;
         const prevPhase = key.split("-")[2];
         const sameQuestion = key && key.split("-").slice(0, 2).join("-") === `${sh.round}-${sh.item}`;
         key = k;
 
         // Question → reveal on the same item keeps the screen and adds the answer.
-        if (sameQuestion && prevPhase === "question" && sh.phase === "reveal") {
+        if (sameQuestion && prevPhase === "question" && sh.phase === "reveal" && round.kind !== "mini") {
           showAnswer(round, viewEl.querySelector(".view:last-child"), true);
           return;
         }
@@ -178,6 +179,7 @@
         let html = "";
         if (sh.phase === "intro") html = introHTML(round, sh.round, total);
         else if (sh.phase === "standings") html = standingsHTML(round.number ? `After Round ${round.number}` : `After the ${round.name.toLowerCase()}`);
+        else if (round.kind === "mini") html = GN.miniView.html(round, sh.item, G().item(), sh.phase === "reveal");
         else html = questionHTML(round, sh.item, G().item(), sh.phase === "reveal");
 
         const next = document.createElement("div");
@@ -205,8 +207,15 @@
           });
         }
         if (round.kind === "music" && (sh.phase === "question" || sh.phase === "reveal")) mountSpiral(round, next, sh.phase === "reveal");
+        if (round.kind === "mini" && (sh.phase === "question" || sh.phase === "reveal")) {
+          cleanups.push(GN.miniView.start(next));
+          GN.miniView.update(next, s, null);
+          const h = next.querySelector("[data-decode]");
+          if (h) cleanups.push(GN.fx.decode(h, h.dataset.decode, 900));
+          if (sh.phase === "reveal" && sh.mini && sh.mini.winner) { GN.sound.play("applause"); GN.sound.play("reveal"); }
+        }
         if (sh.phase === "intro" && round.kind === "music") GN.music.prepare();
-        if (sh.phase === "reveal") showAnswer(round, next, false);
+        if (sh.phase === "reveal" && round.kind !== "mini") showAnswer(round, next, false);
         if (sh.phase === "question" || sh.phase === "reveal") { lastWhole = null; tickTimer(); }
       }
 
@@ -335,6 +344,8 @@
 
       function slam() {
         GN.sound.play("buzzer");
+        const m = GN.store.get().show.mini, round = G().round();
+        slamEl.querySelector("span").textContent = round && round.kind === "mini" && m && m.stage === "look" ? "Cover it!" : "Time’s up";
         slamEl.classList.remove("is-on"); void slamEl.offsetWidth; slamEl.classList.add("is-on");
         root.classList.remove("is-shake"); void root.offsetWidth;
         if (GN.motionOK()) root.classList.add("is-shake");
@@ -342,7 +353,11 @@
 
       function renderHint() {
         const r = G().round();
-        hintEl.innerHTML = `<kbd>Space</kbd> ${esc(G().nextLabel())} <span class="play__keys">· <kbd>←</kbd> back ${r && r.kind === "scramble" ? "· <kbd>X</kbd> shuffle " : ""}${r && r.kind === "music" ? "· <kbd>A</kbd> play again " : ""}· <kbd>P</kbd> pause · <kbd>1</kbd>–<kbd>${GN.store.get().teams.length}</kbd> score · <kbd>U</kbd> undo · <kbd>G</kbd> scoreboard · <kbd>Esc</kbd> rounds</span>`;
+        const n = GN.store.get().teams.length, ph = GN.store.get().show.phase;
+        const mini = r && r.kind === "mini", mode = mini && G().item() && G().item().mode;
+        const teamKeys = !mini || ph === "intro" || ph === "standings" ? "score"
+          : ph === "reveal" ? "pick the winner" : mode === "stopwatch" ? "team finished" : mode === "last-standing" ? "team out" : "score";
+        hintEl.innerHTML = `<kbd>Space</kbd> ${esc(G().nextLabel())} <span class="play__keys">· <kbd>←</kbd> back ${r && r.kind === "scramble" ? "· <kbd>X</kbd> shuffle " : ""}${r && r.kind === "music" ? "· <kbd>A</kbd> play again " : ""}· <kbd>P</kbd> pause · <kbd>1</kbd>–<kbd>${n}</kbd> ${teamKeys} · <kbd>U</kbd> undo · <kbd>G</kbd> scoreboard · <kbd>Esc</kbd> rounds</span>`;
       }
 
       function onChange(s, prev) {
@@ -354,6 +369,7 @@
         if (prev) {
           if (prev.teams !== s.teams) scoresChanged(prev);
           const sh = s.show, ph = prev.show;
+          if (G().round() && G().round().kind === "mini" && sh.phase === "question") GN.miniView.update(viewEl.querySelector(".view:last-child"), s, prev);
           if (!ph.timesUp && sh.timesUp && ph.phase === "question" && sh.phase === "question" && ph.item === sh.item && ph.round === sh.round) slam();
           if (!prev.timer.running && s.timer.running && s.timer.left === s.timer.duration) GN.sound.play("start");
           if (prev.timer !== s.timer || prev.show !== s.show) { lastWhole = null; tickTimer(); }
@@ -381,6 +397,18 @@
     // Keys while the show is running (see app.js for the rest).
     onKey(e) {
       const g = G(), k = e.key;
+      // Mini games: number keys mark a team finished/out, or pick the winner.
+      const round = g.round(), ph = GN.store.get().show.phase;
+      const num = /^[1-4]$/.test(k) ? Number(k) : { "!": 1, "@": 2, '"': 2, "#": 3, "£": 3, "$": 4 }[k];
+      if (round && round.kind === "mini" && num && (ph === "question" || ph === "reveal")) {
+        const team = GN.store.get().teams[num - 1];
+        if (!team) return false;
+        if (ph === "reveal") GN.mini.setWinner(team.id);
+        else if (e.shiftKey) GN.mini.unmark(team.id);
+        else GN.mini.mark(team.id);
+        return true;
+      }
+      if (round && round.kind === "mini" && ph === "question" && k.toLowerCase() === "p" && g.item() && g.item().mode !== "memory") { GN.mini.toggleClock(); return true; }
       if (/^[1-4]$/.test(k)) {
         const team = GN.store.get().teams[Number(k) - 1];
         if (!team) return false;
