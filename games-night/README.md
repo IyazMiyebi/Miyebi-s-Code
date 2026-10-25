@@ -75,10 +75,9 @@ automatically through Apple's free iTunes search. Nothing is hosted on this site
 Each challenge has its own screen. The winner gets the points (20) with one tap: in the
 host controls under *Winner*, or a number key on the result screen.
 
-- **Cup Stack Sprint, Charades Relay (race clock):** Space starts the clock. When a team
-  finishes, press its *Finished* button (or its number key). The clock stops when every
-  team is done, and the result suggests the fastest. For turn-by-turn play, *Reset clock
-  and times* between teams, or just stop and restart the clock.
+- **Alphabet Sprint, Charades Relay (turn by turn):** teams play one at a time on their
+  own clock. Space starts the next team's turn. Press Space again (or *Finished*) when
+  they finish. After every team has played, the result suggests the fastest.
 - **Wall Sit, One-Leg Stand (last one standing):** Space starts the clock. Press a team's
   *Out* button (or number key) as each one drops. When one team is left, the clock stops
   and that team is suggested as the winner.
@@ -90,6 +89,20 @@ host controls under *Winner*, or a number key on the result screen.
 
 During a challenge, number keys mark a team finished or out (Shift + number undoes it), and
 **P** starts or stops the race clock. On the result screen, a number key picks the winner.
+
+## Category Bank, tie-breaker and finale
+
+- **Category Bank:** Space starts the category, and the first team's 5-second turn begins
+  (a different team starts each category). Space (or *✓ Valid answer*) gives the team
+  their points and passes the turn on. **X** (or *✗ Out*) puts a team out for a repeat or a
+  wrong answer, and running out of time puts them out automatically. The last team
+  standing gets the bonus. *Bring back* undoes an out.
+- **Tie-breaker:** only played if the top two teams are level after Round 5. Type each
+  team's guess in the host controls. The reveal ranks the guesses, and you give the
+  tie-break (+1 point) to the closest. The backup question is offered if still level.
+- **Finale:** "And the winner is…", a drumroll, the winner in their colour, confetti and
+  the final scores. *Play again with these teams* resets the scores. The host controls
+  can replay the reveal any time, or show it early from the Rounds list.
 
 ## Decisions (from the deck)
 

@@ -67,6 +67,15 @@
     minus(t) { tone(330, t, 0.25, { type: "triangle", vol: 0.2, slide: 0.6 }); },
     whoosh(t) { noise(t, 0.5, { vol: 0.12, filter: 600, q: 1.5 }); },
     start(t) { tone(440, t, 0.12, { type: "triangle", vol: 0.2 }); tone(880, t + 0.12, 0.25, { type: "triangle", vol: 0.2 }); },
+    // A snare roll that builds, for "and the winner is…".
+    drumroll(t) {
+      for (let i = 0; i < 46; i++) {
+        const at = t + i * 0.055;
+        noise(at, 0.05, { vol: 0.04 + (i / 46) * 0.16, filter: 2600, q: 0.8 });
+      }
+      tone(60, t + 2.55, 0.5, { type: "sine", vol: 0.5 });
+      noise(t + 2.55, 0.6, { vol: 0.25, filter: 5000, q: 0.4, type: "highpass" });
+    },
     applause(t) {
       // Lots of tiny claps of filtered noise, swelling then fading.
       for (let i = 0; i < 90; i++) {

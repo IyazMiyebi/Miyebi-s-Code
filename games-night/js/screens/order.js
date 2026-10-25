@@ -54,6 +54,7 @@
             <button class="btn btn--ghost" type="button" data-back>Back</button>
             <button class="btn" type="button" data-play="${first}">Start ${pack.rounds[first].number ? "Round " + pack.rounds[first].number : esc(pack.rounds[first].name)}
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            ${played.length ? `<button class="btn btn--ghost" type="button" data-finale>Reveal the winner</button>` : ""}
             <p class="order__note"><kbd>H</kbd> opens the host controls in a second window, with the answers.</p>
           </div>
         </div>`;
@@ -76,6 +77,7 @@
         if (b) { grid.focus(b); show(Number(b.dataset.round)); }
       });
       root.addEventListener("click", (e) => {
+        if (e.target.closest("[data-finale]")) { GN.game.finale(); return; }
         const p = e.target.closest("[data-play]");
         if (p) { GN.game.startRound(Number(p.dataset.play)); return; }
         const b = e.target.closest(".round");

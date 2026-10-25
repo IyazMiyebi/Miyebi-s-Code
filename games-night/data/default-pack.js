@@ -123,10 +123,10 @@ GN.defaultPack = {
       ],
       points: "20 points per win",
       items: [
-        { name: "Cup Stack Sprint", mode: "stopwatch", text: "Each team stacks 10 plastic cups into a pyramid, then back into one stack. Fastest wins.", note: "Props: 10 cups per team." },
+        { name: "Alphabet Sprint", mode: "stopwatch", turns: true, text: "Teams take turns. Name an animal for every letter from A to Z, in order, as a team. Skip Q, X and Z. Fastest team wins.", note: "No props. One team at a time: the host stops the clock at Y." },
         { name: "Wall Sit", mode: "last-standing", text: "One player per team holds a wall sit. Last one holding wins.", note: "Stop if it hurts. No pushing." },
         { name: "One-Leg Stand", mode: "last-standing", text: "Stand on one leg, hands on head. Last player standing wins.", note: "No hopping, no contact." },
-        { name: "Charades Relay", mode: "stopwatch", text: "One teammate acts out 5 prompts without speaking. Fastest team to guess all five wins.", prompts: ["Brushing teeth", "Flying a plane", "Changing a tyre", "Walking a dog", "Making popcorn"] },
+        { name: "Charades Relay", mode: "stopwatch", turns: true, text: "One teammate acts out 5 prompts without speaking. Fastest team to guess all five wins.", prompts: ["Brushing teeth", "Flying a plane", "Changing a tyre", "Walking a dog", "Making popcorn"] },
         { name: "Memory Tray", mode: "memory", text: "12 household items are shown for 20 seconds, then covered. Teams have 45 seconds to write down as many as they can. Most correct wins." }
       ]
     },

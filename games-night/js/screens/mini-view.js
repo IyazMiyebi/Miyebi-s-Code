@@ -115,6 +115,11 @@
         const val = lane.querySelector("[data-lane-val]");
         let text = MI().running() ? (mode === "stopwatch" ? "racing…" : "still in") : MI().elapsed() ? "stopped" : "ready";
         let cls = "";
+        if (MI().turns()) {
+          const up = MI().upNext();
+          text = m.turn === t.id ? (MI().running() ? "on the clock" : "paused") : up && up.id === t.id ? "up next" : "waiting";
+          cls = m.turn === t.id ? "is-turn" : "";
+        }
         if (mode === "stopwatch" && m.times[t.id] != null) {
           const place = order.indexOf(t.id) + 1;
           text = `${fmt(m.times[t.id])} · ${["1st", "2nd", "3rd", "4th"][place - 1]}`;

@@ -3,7 +3,7 @@
  * after that it opens with no internet at all. When online it always loads the
  * latest files. Bump VERSION when the file list changes.
  */
-const VERSION = "gn-stage5-1";
+const VERSION = "gn-stage6-1";
 const FILES = [
   "./",
   "index.html",
@@ -21,8 +21,11 @@ const FILES = [
   "js/fx/boxgrid.js",
   "js/fx/ascii.js",
   "js/fx/spiral.js",
+  "js/fx/confetti.js",
   "js/music.js",
   "js/mini.js",
+  "js/category.js",
+  "js/tiebreak.js",
   "js/sound.js",
   "js/game.js",
   "js/ui/toast.js",
@@ -32,6 +35,8 @@ const FILES = [
   "js/screens/rules.js",
   "js/screens/order.js",
   "js/screens/mini-view.js",
+  "js/screens/category-view.js",
+  "js/screens/finale.js",
   "js/screens/play.js",
   "js/settings.js",
   "js/host.js",

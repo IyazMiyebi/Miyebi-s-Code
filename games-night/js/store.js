@@ -43,6 +43,7 @@
       timer: { duration: 0, left: 0, endsAt: null, running: false },
       music: {},    // song clips found for the music round (see js/music.js)
       tvSound: null, // false while the big screen can't make sound yet (nobody has clicked it)
+      finaleAt: 0,   // when the finale was last started (the host can replay it)
       log: [],      // every score change, newest last, so it can be undone
       played: []    // round ids that reached their standings
     };
@@ -56,6 +57,9 @@
         return {
           ...base,
           ...saved,
+          // Until the content editor (Stage 8) saves custom packs, always use the latest
+          // built-in questions, so fixes reach browsers that saved an older copy.
+          pack: saved.packCustom ? saved.pack : base.pack,
           rules: { ...base.rules, ...saved.rules },
           settings: { ...base.settings, ...saved.settings },
           show: { ...base.show, ...saved.show, clip: { ...base.show.clip, ...(saved.show && saved.show.clip), playing: false, pending: false } },
