@@ -52,6 +52,7 @@
                 <button type="button" class="hbtn" data-act="shuffle" hidden>Shuffle letters</button>
                 <button type="button" class="hbtn" data-act="board" aria-pressed="false">Scoreboard on TV</button>
               </div>
+              <div class="hclip" data-clip hidden></div>
               <div class="host__q"><p class="host__k" data-q-k>On the TV</p><p class="host__qtext" data-q></p></div>
               <div class="host__a"><p class="host__k">Answer · only you can see this</p><p class="host__atext" data-a></p></div>
               <p class="host__nextup" data-nextup></p>
@@ -67,13 +68,77 @@
               <div class="hrounds" data-rounds></div>
               <div class="host__reset" data-reset-wrap><button type="button" class="hbtn" data-act="reset">Reset scores to zero…</button></div>
             </section>
+            <section class="hcard hcard--clips" aria-label="Music clips">
+              <h2 class="hcard__h">Music clips</h2>
+              <p class="host__muted" data-clips-sum></p>
+              <button type="button" class="hbtn" data-act="clips-ready">Get clips ready</button>
+              <ol class="hclips" data-clips></ol>
+            </section>
           </div>
         </div>`;
 
       const $ = (sel) => stage.querySelector(sel);
+      let clipKey = "", clipsKey = "";
+
+      // The current song: which version plays, where it starts, play / stop.
+      function renderClip(s) {
+        const box = $("[data-clip]");
+        const round = G().round();
+        const on = round && round.kind === "music" && ["question", "reveal"].includes(s.show.phase);
+        box.hidden = !on;
+        if (!on) { clipKey = ""; return; }
+        const i = s.show.item, e = GN.music.entry(round, i) || {}, opt = GN.music.option(round, i);
+        const k = JSON.stringify([i, e.status, e.options && e.options.map((o) => o.url), e.choice, e.ready]);
+        if (k !== clipKey) {
+          clipKey = k;
+          box.innerHTML = `
+            <p class="hclip__info" data-clip-info></p>
+            <div class="hclip__row">
+              <button type="button" class="hbtn hbtn--big" data-act="clip-play">Play clip</button>
+              <button type="button" class="hbtn" data-act="clip-stop">Stop</button>
+              ${opt ? `<label class="hclip__field">Version
+                <select id="clip-choice" data-clip-choice>${e.options.map((o, j) => `<option value="${j}" ${j === (e.choice || 0) ? "selected" : ""}>${esc(o.track)} · ${esc(o.artist)}</option>`).join("")}</select></label>
+              <label class="hclip__field">Start at <input id="clip-start" type="number" min="0" max="25" step="1" value="${e.start || 0}" data-clip-start> s</label>` : ""}
+            </div>`;
+        }
+        const status = !opt ? (e.status === "searching" ? "Looking for this song…" : "No clip found for this song. Play it from your phone, or search again under Music clips.")
+          : `${s.show.clip.playing ? "▶ Playing on the TV: " : ""}${opt.track} · ${opt.artist}${e.ready ? " · saved for offline" : " · plays from the internet"}`;
+        $("[data-clip-info]").textContent = status;
+        $("[data-act=clip-play]").textContent = s.show.clip.played ? "Play again" : "Play clip";
+        $("[data-act=clip-play]").disabled = !opt;
+        $("[data-act=clip-stop]").disabled = !s.show.clip.playing;
+      }
+
+      // Every song in the round: found, saved, or missing (with a search box).
+      function renderClips(s) {
+        const round = GN.music.musicRound();
+        const card = $(".hcard--clips");
+        card.hidden = !round;
+        if (!round) return;
+        const sum = GN.music.summary();
+        $("[data-clips-sum]").textContent = !sum.found && !Object.keys(s.music).length
+          ? "Official 30-second previews, found automatically. Press the button before the night so they're saved for offline."
+          : `${sum.ready} of ${sum.total} saved for offline · ${sum.found} found${sum.missing.length ? ` · ${sum.missing.length} not found` : ""}`;
+        const k = JSON.stringify(round.items.map((_, i) => { const e = GN.music.entry(round, i) || {}; return [e.status, e.ready, e.choice, e.options && e.options.length]; }));
+        if (k === clipsKey) return;
+        clipsKey = k;
+        $("[data-clips]").innerHTML = round.items.map((it, i) => {
+          const e = GN.music.entry(round, i) || {};
+          const found = e.options && e.options.length;
+          const tag = e.status === "searching" ? "searching…" : e.ready ? "saved" : found ? "found" : e.status === "offline" ? "offline" : e.status ? "not found" : "";
+          return `<li class="hclips__row${found ? "" : e.status && e.status !== "searching" ? " is-missing" : ""}">
+            <span class="hclips__name">${i + 1}. ${esc(it.title)}</span><span class="hclips__tag">${tag}</span>
+            ${found || !e.status || e.status === "searching" ? "" : `<form class="hclips__search" data-search="${i}">
+              <input id="search-${i}" value="${esc(e.term || it.title + " " + it.artist)}" aria-label="Search for ${esc(it.title)}">
+              <button class="hbtn" type="submit">Search</button></form>`}
+          </li>`;
+        }).join("");
+      }
       let teamsKey = "", raf = 0;
 
       function render(s) {
+        renderClip(s);
+        renderClips(s);
         const sh = s.show, round = G().round(), item = G().item();
         // Where are we?
         $("[data-where]").textContent = !round
@@ -91,7 +156,9 @@
         else {
           a = G().answerOf(round, item);
           if (round.kind === "scramble") q = "Letters on screen: " + G().letters(round, item).split("").join(" ");
-          else if (round.kind === "music") q = `Play clip ${sh.item + 1} now (${item.title} by ${item.artist}), then start the timer.`;
+          else if (round.kind === "music") q = G().hasClip()
+            ? `Music clip ${sh.item + 1}. Press “Play clip”: it plays on the TV, then the timer starts by itself.`
+            : `Music clip ${sh.item + 1}. No clip found: play it from your phone, then start the timer.`;
           else q = item.q || "";
         }
         $("[data-q]").textContent = q;
@@ -169,6 +236,13 @@
           if (a === "reveal") g.reveal();
           if (a === "board") g.toggleBoard();
           if (a === "shuffle") g.shuffle();
+          if (a === "clip-play") g.playClip();
+          if (a === "clip-stop") g.stopClip(false);
+          if (a === "clips-ready") {
+            act.disabled = true;
+            act.textContent = "Getting clips ready…";
+            GN.music.prepare(true).finally(() => { act.disabled = false; act.textContent = "Get clips ready"; });
+          }
           if (a === "undo") g.undo();
           if (a === "reset") {
             const wrap = $("[data-reset-wrap]");
@@ -187,7 +261,19 @@
         const r = e.target.closest("[data-round]");
         if (r) g.startRound(Number(r.dataset.round));
       });
+      stage.addEventListener("change", (e) => {
+        const round = G().round();
+        if (e.target.matches("[data-clip-choice]")) GN.music.choose(round, GN.store.get().show.item, Number(e.target.value));
+        if (e.target.matches("[data-clip-start]")) GN.music.setStart(round, GN.store.get().show.item, Number(e.target.value) || 0);
+      });
       stage.addEventListener("submit", (e) => {
+        const sf = e.target.closest("[data-search]");
+        if (sf) {
+          e.preventDefault();
+          const round = GN.music.musicRound(), i = Number(sf.dataset.search);
+          GN.music.search(round, i, sf.querySelector("input").value.trim()).then((ok) => ok && GN.music.prepare());
+          return;
+        }
         const f = e.target.closest("[data-custom]");
         if (!f) return;
         e.preventDefault();

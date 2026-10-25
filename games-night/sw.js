@@ -3,7 +3,7 @@
  * after that it opens with no internet at all. When online it always loads the
  * latest files. Bump VERSION when the file list changes.
  */
-const VERSION = "gn-stage2-2";
+const VERSION = "gn-stage4-1";
 const FILES = [
   "./",
   "index.html",
@@ -20,6 +20,8 @@ const FILES = [
   "js/fx/hanging.js",
   "js/fx/boxgrid.js",
   "js/fx/ascii.js",
+  "js/fx/spiral.js",
+  "js/music.js",
   "js/sound.js",
   "js/game.js",
   "js/ui/toast.js",
@@ -47,7 +49,8 @@ self.addEventListener("install", (e) => {
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION).map((k) => caches.delete(k))))
+      // Remove old copies of the show, but keep the saved music clips ("gn-clips").
+      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== "gn-clips").map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });

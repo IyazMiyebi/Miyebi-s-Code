@@ -38,8 +38,10 @@
       settings: { sound: true, motion: "auto" },
       screen: "title",
       // Where we are in the live show (see js/game.js).
-      show: { round: null, item: 0, phase: "intro", timesUp: false, board: false, shuffle: 0 },
+      show: { round: null, item: 0, phase: "intro", timesUp: false, board: false, shuffle: 0,
+        clip: { n: 0, stop: 0, item: null, playing: false, played: false } },
       timer: { duration: 0, left: 0, endsAt: null, running: false },
+      music: {},    // song clips found for the music round (see js/music.js)
       log: [],      // every score change, newest last, so it can be undone
       played: []    // round ids that reached their standings
     };
@@ -55,7 +57,7 @@
           ...saved,
           rules: { ...base.rules, ...saved.rules },
           settings: { ...base.settings, ...saved.settings },
-          show: { ...base.show, ...saved.show },
+          show: { ...base.show, ...saved.show, clip: { ...base.show.clip, ...(saved.show && saved.show.clip), playing: false } },
           timer: { ...base.timer, ...saved.timer }
         };
       }

@@ -40,11 +40,13 @@
 
     /* ---------- Moving through the show ---------- */
     startRound(index) {
-      set((s) => ({ screen: "play", show: { ...s.show, round: index, item: 0, phase: "intro", timesUp: false, board: false, shuffle: 0 } }));
+      set((s) => ({ screen: "play", show: { ...s.show, round: index, item: 0, phase: "intro", timesUp: false, board: false, shuffle: 0,
+        clip: { ...s.show.clip, item: null, playing: false, played: false } } }));
       G.resetTimer();
     },
     goQuestion(item, { timesUp = false } = {}) {
-      set((s) => ({ show: { ...s.show, item, phase: "question", timesUp, shuffle: 0 } }));
+      set((s) => ({ show: { ...s.show, item, phase: "question", timesUp, shuffle: 0,
+        clip: { ...s.show.clip, item, playing: false, played: timesUp } } }));
       G.resetTimer(timesUp);
     },
 
@@ -60,6 +62,9 @@
           if (sh.timesUp) return G.reveal();
           if (t.running) return G.timeUp();
           if (t.left < t.duration) return G.resume();
+          // Music: play the clip first; the timer starts by itself when it ends.
+          if (round.kind === "music" && sh.clip.playing) return G.stopClip(true);
+          if (round.kind === "music" && !sh.clip.played && G.hasClip()) return G.playClip();
           return G.startTimer();
         case "reveal":
           return sh.item < round.items.length - 1 ? G.goQuestion(sh.item + 1) : G.toStandings();
@@ -81,6 +86,8 @@
           if (sh.timesUp) return "Reveal the answer";
           if (t.running) return "Stop the clock";
           if (t.left < t.duration) return "Resume the timer";
+          if (round.kind === "music" && sh.clip.playing) return "Stop the clip and start the timer";
+          if (round.kind === "music" && !sh.clip.played && G.hasClip()) return `Play clip ${sh.item + 1}`;
           return "Start the timer";
         case "reveal":
           return sh.item < round.items.length - 1 ? `Question ${sh.item + 2}` : "Show the standings";
@@ -141,6 +148,31 @@
       G.pause();
       set((s) => ({ show: { ...s.show, phase: "reveal", timesUp: true } }));
     },
+    /* ---------- Music clips ----------
+       The host asks for a clip; the big screen plays it and reports back. */
+    hasClip() {
+      const round = G.round();
+      return !!(round && round.kind === "music" && GN.music.option(round, S().show.item));
+    },
+    playClip() {
+      const round = G.round();
+      if (!round || round.kind !== "music" || !["question", "reveal"].includes(S().show.phase)) return;
+      set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, n: s.show.clip.n + 1, item: s.show.item } } }));
+    },
+    // thenTimer: start the answer timer straight away (Space during a clip).
+    stopClip(thenTimer) {
+      set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, stop: s.show.clip.stop + 1, playing: false, played: true } } }));
+      if (thenTimer && S().show.phase === "question" && !S().timer.running && !S().show.timesUp) G.startTimer();
+    },
+    clipStarted() { set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, playing: true, played: true } } })); },
+    // Called by the big screen when a clip finishes on its own.
+    clipEnded() {
+      const s = S();
+      set({ show: { ...s.show, clip: { ...s.show.clip, playing: false } } });
+      const t = S().timer;
+      if (S().show.phase === "question" && !S().show.timesUp && !t.running && t.left >= t.duration) G.startTimer();
+    },
+
     // Word scramble: show the same letters in a new order.
     shuffle() {
       const round = G.round();
