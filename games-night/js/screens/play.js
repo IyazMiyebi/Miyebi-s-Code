@@ -244,7 +244,7 @@
         if (!el) return;
         const s = GN.store.get(), sh = s.show, round = G().round();
         if (sh.phase !== "question") { el.textContent = ""; return; }
-        el.textContent = sh.clip.playing ? "Listen…" : G().hasClip() ? (sh.clip.played ? "" : "Get ready…") : "The host will play this one.";
+        el.textContent = sh.clip.playing ? "Listen…" : sh.clip.pending ? "Get ready…" : G().hasClip() ? (sh.clip.played ? "" : "Get ready…") : "The host will play this one.";
       }
       async function startClip() {
         const s = GN.store.get(), round = G().round();
@@ -252,14 +252,14 @@
         const i = s.show.clip.item, opt = GN.music.option(round, i);
         const entry = GN.music.entry(round, i) || {};
         const token = ++clipToken;
-        if (!opt) { GN.ui.toast("No clip found for this song. Play it from your phone, then start the timer."); return; }
+        if (!opt) { G().clipFailed("missing"); GN.ui.toast("No clip found for this song. Play it from your phone, then start the timer."); return; }
         const result = await GN.music.player.play(opt, entry.start || 0, s.rules.musicClipSeconds || 10, {
           onStart: () => { if (token === clipToken) G().clipStarted(); }
         });
         if (token !== clipToken) return;
         if (result === "ended") G().clipEnded();
-        else if (result === "blocked") GN.ui.toast("The browser wants a click first: click anywhere on this screen once, then press Play again.", 8000);
-        else if (result === "error") { GN.ui.toast("That clip wouldn't play. Check the internet, or play the song from your phone."); G().clipEnded(); }
+        else if (result === "blocked") { G().clipFailed("blocked"); GN.ui.toast("The browser wants a click first: click anywhere on this screen once, then press Play again.", 8000); }
+        else if (result === "error" || result === "missing") { G().clipFailed("error"); GN.ui.toast("That clip wouldn't play. Check the internet, or play the song from your phone."); }
       }
       function stopClip() { clipToken++; GN.music.player.stop(); }
 
