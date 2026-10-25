@@ -42,6 +42,7 @@
         clip: { n: 0, stop: 0, item: null, playing: false, pending: false, played: false, error: null } },
       timer: { duration: 0, left: 0, endsAt: null, running: false },
       music: {},    // song clips found for the music round (see js/music.js)
+      tvSound: null, // false while the big screen can't make sound yet (nobody has clicked it)
       log: [],      // every score change, newest last, so it can be undone
       played: []    // round ids that reached their standings
     };

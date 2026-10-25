@@ -147,6 +147,9 @@
     reveal() {
       G.pause();
       set((s) => ({ show: { ...s.show, phase: "reveal", timesUp: true } }));
+      // Music: play the song again as the answer goes up.
+      const round = G.round();
+      if (round && round.kind === "music" && G.hasClip()) setTimeout(() => { if (S().show.phase === "reveal") G.playClip(); }, 700);
     },
     /* ---------- Music clips ----------
        The host asks for a clip; the big screen plays it and reports back. */
@@ -157,7 +160,9 @@
     playClip() {
       const round = G.round();
       if (!round || round.kind !== "music" || !["question", "reveal"].includes(S().show.phase)) return;
-      set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, n: s.show.clip.n + 1, item: s.show.item, pending: true, error: null } } }));
+      // Bumping "stop" silences a clip playing in the other window first.
+      set((s) => ({ show: { ...s.show, clip: { ...s.show.clip, n: s.show.clip.n + 1, stop: s.show.clip.stop + 1, item: s.show.item, playing: false, pending: true, error: null } } }));
+      GN.music.playHere();
     },
     // thenTimer: start the answer timer straight away (Space during a clip).
     stopClip(thenTimer) {

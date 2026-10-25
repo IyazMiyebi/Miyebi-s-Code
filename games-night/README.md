@@ -56,7 +56,11 @@ automatically through Apple's free iTunes search. Nothing is hosted on this site
 - **Before the night:** open the host controls (press **H**) and press **Get clips ready**
   under *Music clips*. Every clip and album cover is saved in the browser, so the round
   still plays if the Wi-Fi drops. Use the same laptop and browser on the night.
-- **During the round:** press Space (or *Play clip*). The clip plays on the TV for the
+- **Sound needs one click per window.** Browsers keep a page silent until someone clicks
+  or presses a key in it. After opening or reloading the big screen, click it once: it
+  shows a *Click to turn on sound* button until you do, and the host controls warn you too.
+  Clips play from whichever window you pressed Play in, so the host's click is enough.
+- **During the round:** press Space (or *Play clip*). The clip plays for the
   "Music: clip length" set in Settings (10 seconds), then the answer timer starts by itself.
   Press Space during a clip to cut it short and start the timer. **A** plays it again.
   On the reveal, the album cover turns over in the spiral and the clip plays once more.

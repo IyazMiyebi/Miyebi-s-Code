@@ -211,7 +211,7 @@
       }
 
       /* ---------- Music: spiral of covers, clip playback, sound bars ---------- */
-      let spiral = null, clipToken = 0, eqRaf = 0;
+      let spiral = null, eqRaf = 0;
       function mountSpiral(round, view, revealed) {
         const host = view.querySelector(".q__spiral");
         if (!host) return;
@@ -246,33 +246,16 @@
         if (sh.phase !== "question") { el.textContent = ""; return; }
         el.textContent = sh.clip.playing ? "Listen…" : sh.clip.pending ? "Get ready…" : G().hasClip() ? (sh.clip.played ? "" : "Get ready…") : "The host will play this one.";
       }
-      async function startClip() {
-        const s = GN.store.get(), round = G().round();
-        if (!round || round.kind !== "music") return;
-        const i = s.show.clip.item, opt = GN.music.option(round, i);
-        const entry = GN.music.entry(round, i) || {};
-        const token = ++clipToken;
-        if (!opt) { G().clipFailed("missing"); GN.ui.toast("No clip found for this song. Play it from your phone, then start the timer."); return; }
-        const result = await GN.music.player.play(opt, entry.start || 0, s.rules.musicClipSeconds || 10, {
-          onStart: () => { if (token === clipToken) G().clipStarted(); }
-        });
-        if (token !== clipToken) return;
-        if (result === "ended") G().clipEnded();
-        else if (result === "blocked") { G().clipFailed("blocked"); GN.ui.toast("The browser wants a click first: click anywhere on this screen once, then press Play again.", 8000); }
-        else if (result === "error" || result === "missing") { G().clipFailed("error"); GN.ui.toast("That clip wouldn't play. Check the internet, or play the song from your phone."); }
-      }
-      function stopClip() { clipToken++; GN.music.player.stop(); }
 
       function showAnswer(round, view, withSound) {
         const box = view.querySelector("[data-answer]");
         const text = G().answerOf(round, G().item());
         view.querySelector(".q").classList.add("is-reveal");
         if (withSound) GN.sound.play("reveal");
-        // Music: the song's cover turns over in the spiral, and the clip plays again.
+        // Music: the song's cover turns over in the spiral (the clip replays from game.reveal).
         if (round.kind === "music") {
           const i = GN.store.get().show.item;
           if (spiral) { const sp = spiral; coverFor(round, i).then((u) => u && sp.reveal(i, u)); }
-          if (withSound && G().hasClip()) setTimeout(() => G().playClip(), 700);
         }
         // Word scramble: the tiles themselves fly into the answer.
         if (round.kind === "scramble") {
@@ -374,11 +357,6 @@
           if (!ph.timesUp && sh.timesUp && ph.phase === "question" && sh.phase === "question" && ph.item === sh.item && ph.round === sh.round) slam();
           if (!prev.timer.running && s.timer.running && s.timer.left === s.timer.duration) GN.sound.play("start");
           if (prev.timer !== s.timer || prev.show !== s.show) { lastWhole = null; tickTimer(); }
-          // Music clips: the host asks, this screen plays.
-          if (sh.clip.n !== ph.clip.n) startClip();
-          if (sh.clip.stop !== ph.clip.stop) stopClip();
-          if (ph.item !== sh.item || ph.round !== sh.round || !["question", "reveal"].includes(sh.phase)) { if (GN.music.player.playing()) stopClip(); }
-          if (prev.settings.sound !== s.settings.sound) GN.music.player.setVolume(s.settings.sound);
           if ((prev.show.shuffle || 0) !== (sh.shuffle || 0) && sh.phase === "question" && ph.item === sh.item && ph.round === sh.round) {
             arrange(viewEl.querySelector(".view:last-child"), G().letters(G().round(), G().item()), false);
             GN.sound.play("whoosh");
@@ -393,7 +371,6 @@
         unsub();
         cancelAnimationFrame(raf);
         cancelAnimationFrame(eqRaf);
-        stopClip();
         clear(cleanups);
         clear(boardCleanups);
         Object.values(hangers).forEach((h) => h.destroy());
