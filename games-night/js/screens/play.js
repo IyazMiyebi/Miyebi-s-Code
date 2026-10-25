@@ -20,7 +20,11 @@
       tiebreak: "Closest answer wins"
     }[round.kind];
   }
-  const STAGE_FOR = { music: 4, scramble: 3, mini: 5, category: 6 };
+  const STAGE_FOR = { mini: 5, category: 6 };
+  const NOTE = {
+    music: "For now, play each song from your own phone or playlist, then start the timer. Stage 4 adds a built-in clip player.",
+    scramble: "Stage 3 adds animated letter tiles."
+  };
 
   /* ---------- Views ---------- */
   function introHTML(round, index, total) {
@@ -34,14 +38,27 @@
           ${round.subtitle ? `<p class="intro__sub">${esc(round.subtitle)}</p>` : ""}
           <ul class="intro__how">${round.howTo.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
           <p class="intro__pts">${pointsLine(round)}</p>
-          ${playable ? "" : `<p class="intro__note">This round’s screens arrive in Stage ${STAGE_FOR[round.kind]}. For now, play it off-screen, award points with the team buttons, then press Space for the standings.</p>`}
+          ${playable ? (NOTE[round.kind] ? `<p class="intro__note">${NOTE[round.kind]}</p>` : "") : `<p class="intro__note">This round’s screens arrive in Stage ${STAGE_FOR[round.kind]}. For now, play it off-screen, award points with the team buttons, then press Space for the standings.</p>`}
         </div>
       </div>`;
   }
 
-  function questionHTML(round, i, item, reveal) {
+  // What the players see for each kind of question.
+  function promptHTML(round, item) {
+    if (round.kind === "scramble") {
+      const letters = [...GN.scramble(item.answer, item.scrambled)];
+      return `<div class="tiles" aria-label="Letters: ${esc(letters.join(" "))}">${letters.map((c, j) =>
+        `<span class="tile" style="--j:${j}">${esc(c)}</span>`).join("")}</div>`;
+    }
+    if (round.kind === "music") {
+      return `<div class="clip"><span class="eq" aria-hidden="true">${"<i></i>".repeat(5)}</span>
+        <p class="q__text">Name the <em>song</em> and the <em>artist</em>.</p></div>`;
+    }
     const q = item.q || "";
-    const long = q.length > 90;
+    return `<p class="q__text${q.length > 90 ? " is-long" : ""}">${esc(q)}</p>`;
+  }
+
+  function questionHTML(round, i, item, reveal) {
     return `
       <div class="q${reveal ? " is-reveal" : ""}">
         <canvas class="q__ascii" aria-hidden="true"></canvas>
@@ -49,7 +66,7 @@
           <p class="eyebrow">${esc(G().itemLabel(round, i))}</p>
           <p class="q__round">${esc(round.name)}</p>
         </header>
-        <p class="q__text${long ? " is-long" : ""}">${esc(q)}</p>
+        <div class="q__prompt">${promptHTML(round, item)}</div>
         <div class="timer" data-timer>
           <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="timer__track" cx="60" cy="60" r="54"/><circle class="timer__ring" cx="60" cy="60" r="54" style="stroke-dasharray:${RING}"/></svg>
           <span class="timer__num" data-num></span>

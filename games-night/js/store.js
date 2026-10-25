@@ -139,11 +139,15 @@
     if (GN.isValidScramble(answer, scrambled)) return scrambled.toUpperCase().replace(/\s/g, "");
     const a = answer.toUpperCase().replace(/\s/g, "");
     if (new Set(a).size < 2) return a; // "AAA" cannot be scrambled
+    // Shuffle with a random sequence seeded by the word itself, so the big screen and
+    // the host window always show the same scramble.
+    let seed = [...a].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+    const rand = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
     let s = a;
     while (s === a) {
       const arr = [...a];
       for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
+        const j = Math.floor(rand() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
       }
       s = arr.join("");

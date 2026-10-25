@@ -87,7 +87,12 @@
         if (!round) q = "Pick a round below to start it.";
         else if (sh.phase === "intro") q = G().playable(round) ? `Round intro: ${round.name}. Press the big button to show question 1.` : `Round intro: ${round.name}. Play this round off-screen for now and score it here.`;
         else if (sh.phase === "standings") q = "Standings between rounds.";
-        else { q = item.q || ""; a = G().answerOf(round, item); }
+        else {
+          a = G().answerOf(round, item);
+          if (round.kind === "scramble") q = "Letters on screen: " + GN.scramble(item.answer, item.scrambled).split("").join(" ");
+          else if (round.kind === "music") q = `Play clip ${sh.item + 1} now (${item.title} by ${item.artist}), then start the timer.`;
+          else q = item.q || "";
+        }
         $("[data-q]").textContent = q;
         $("[data-a]").textContent = a || "–";
         $("[data-a]").closest(".host__a").classList.toggle("is-shown", sh.phase === "reveal");
@@ -97,7 +102,7 @@
         if (round && G().playable(round)) {
           const ni = sh.phase === "intro" ? 0 : sh.item + 1;
           const n = round.items[ni];
-          if (n && sh.phase !== "standings") nextUp = `Next: ${n.q}  →  ${G().answerOf(round, n)}`;
+          if (n && sh.phase !== "standings") nextUp = `Next: ${n.q ? n.q + "  →  " : ""}${G().answerOf(round, n)}`;
         }
         $("[data-nextup]").textContent = nextUp;
 
@@ -136,7 +141,10 @@
         const s = GN.store.get(), round = G().round();
         const el = $("[data-clock]"), st = $("[data-clock-state]");
         if (!round || s.show.phase === "intro" || s.show.phase === "standings") {
-          el.textContent = "–"; st.textContent = "";
+          el.textContent = "–";
+          st.textContent = !round ? "the timer appears when a question is on screen"
+            : !G().playable(round) ? "no timer in this round yet"
+            : s.show.phase === "intro" ? "the timer starts with question 1" : "";
         } else {
           const left = G().secondsLeft();
           el.textContent = s.show.timesUp ? "0" : Math.ceil(left - 0.001);
