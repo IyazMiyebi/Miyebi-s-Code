@@ -102,7 +102,7 @@
       const ranked = GN.tiebreak.ranked(), w = GN.tiebreak.state().winner;
       list.hidden = !ranked.length;
       list.innerHTML = ranked.map((r, j) => `
-        <li class="${r.team.id === w ? "is-win" : ""}" style="--team:${GN.colourHex(r.team.colour)}">
+        <li class="${r.team.id === w ? "is-win" : ""}" style="--team:${GN.colourHex(r.team.colour)}" data-pick="${r.team.id}" title="Give ${esc(r.team.name)} the tie-break">
           <span>${esc(r.team.name)}</span><b>${r.guess.toLocaleString("en-GB")} · ${r.diff === 0 ? "spot on!" : "off by " + r.diff.toLocaleString("en-GB")}${r.team.id === w ? " · wins the tie-break" : j === 0 && !w ? " · closest" : ""}</b>
         </li>`).join("");
     }

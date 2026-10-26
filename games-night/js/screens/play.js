@@ -145,12 +145,29 @@
           <div class="slam" data-slam aria-hidden="true"><span>Time’s up</span></div>
           <p class="play__hint" data-hint></p>
           <div data-strip></div>
+          <div class="dock-wrap" data-dock></div>
         </div>`;
       const viewEl = root.querySelector("[data-view]");
       const boardEl = root.querySelector("[data-board]");
       const slamEl = root.querySelector("[data-slam]");
       const hintEl = root.querySelector("[data-hint]");
       const strip = GN.ui.scoreStrip(root.querySelector("[data-strip]"));
+      const undock = GN.ui.dock(root.querySelector("[data-dock]"));
+      // Taps and clicks on the screen itself: team lanes (finished / out) and picking a winner.
+      root.addEventListener("click", (e) => {
+        const round = G().round(), ph = GN.store.get().show.phase;
+        const lane = e.target.closest("[data-lane]");
+        if (lane && round && round.kind === "mini" && ph === "question") {
+          const id = lane.dataset.lane, m = GN.mini.state();
+          if (m.times[id] != null || m.out[id] != null) GN.mini.unmark(id); else GN.mini.mark(id);
+          return;
+        }
+        const pick = e.target.closest("[data-pick]");
+        if (pick && round && ph === "reveal") {
+          if (round.kind === "mini") GN.mini.setWinner(pick.dataset.pick);
+          if (round.kind === "tiebreak") GN.tiebreak.setWinner(pick.dataset.pick);
+        }
+      });
       let key = "", boardKey = "", cleanups = [], boardCleanups = [], hangers = {}, raf = 0, lastWhole = null;
 
       const clear = (list) => { list.forEach((f) => f()); list.length = 0; };
@@ -407,6 +424,7 @@
         clear(boardCleanups);
         Object.values(hangers).forEach((h) => h.destroy());
         strip.destroy();
+        undock();
       };
     },
 

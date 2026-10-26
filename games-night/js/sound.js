@@ -18,7 +18,8 @@
     return ac;
   }
   // Browsers only allow sound after the first click or key press.
-  ["pointerdown", "keydown"].forEach((ev) => window.addEventListener(ev, () => ctx(), { once: true, capture: true }));
+  // (Phones need the sound switched on during a tap itself, so this listens on every tap.)
+  ["pointerdown", "touchend", "keydown"].forEach((ev) => window.addEventListener(ev, () => { if (!ac || ac.state !== "running") ctx(); }, { capture: true, passive: true }));
 
   const on = () => GN.role === "show" && GN.store.get().settings.sound;
 

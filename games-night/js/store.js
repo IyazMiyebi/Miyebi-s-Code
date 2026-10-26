@@ -37,7 +37,7 @@
       pack: GN.defaultPack,
       rules: { ...GN.defaultPack.rules },
       teams: [makeTeam(0), makeTeam(1)],
-      settings: { sound: true, motion: "auto" },
+      settings: { sound: true, motion: "auto", touchControls: "auto" },
       screen: "title",
       // Where we are in the live show (see js/game.js).
       show: { round: null, item: 0, phase: "intro", timesUp: false, board: false, shuffle: 0,

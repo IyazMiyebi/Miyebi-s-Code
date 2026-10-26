@@ -80,12 +80,18 @@
   GN.store.subscribe(syncSound);
 
   function toggleFull() {
+    const d = document, el = d.documentElement;
     try {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else document.documentElement.requestFullscreen().catch(() => {});
+      if (d.fullscreenElement || d.webkitFullscreenElement) (d.exitFullscreen || d.webkitExitFullscreen).call(d);
+      else {
+        const p = (el.requestFullscreen || el.webkitRequestFullscreen).call(el);
+        if (p && p.catch) p.catch(() => {});
+      }
     } catch (e) { /* not available on this device */ }
   }
   document.getElementById("btn-full").addEventListener("click", toggleFull);
+  // iPhones can't put a web page full screen: hide the button rather than have it do nothing.
+  if (!document.fullscreenEnabled && !document.webkitFullscreenEnabled) document.getElementById("btn-full").hidden = true;
   document.getElementById("btn-settings").addEventListener("click", () => GN.settings.open());
 
   // Host controls open in their own window, to keep on the laptop while the TV shows the game.

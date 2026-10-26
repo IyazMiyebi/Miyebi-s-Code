@@ -153,60 +153,75 @@
     localUrl
   });
 
-  /* ---------- Playing a clip (big screen only) ----------
-     Only one clip ever plays. Every audio element we create is remembered until it's
-     stopped, so a second press of Play (or Stop) always silences the one before,
+  /* ---------- Playing a clip ----------
+     One audio player is made once and reused for every clip. Phones and tablets (Safari
+     especially) only let a player make sound if a tap has started it, so the first tap
+     anywhere unlocks it with a moment of silence; after that, clips can play any time.
+     Only one clip ever plays: a new Play, Stop or moving on silences the one before,
      even if it was still loading. */
-  let ac = null, gain = null, analyser = null, audio = null, bins = null, gen = 0;
-  const live = new Set();
+  let ac = null, gain = null, analyser = null, bins = null, gen = 0;
+  let el = null;        // the one audio player
+  let audio = null;     // the player, while a clip is loading or playing
+  let timers = [], pendingDone = null;
+  const SILENCE = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=";
 
   function graph() {
-    if (ac) return true;
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return false;
-    ac = new AC();
-    gain = ac.createGain();
-    analyser = ac.createAnalyser();
-    analyser.fftSize = 64;
-    analyser.smoothingTimeConstant = 0.75;
-    bins = new Uint8Array(analyser.frequencyBinCount);
-    gain.connect(analyser).connect(ac.destination);
+    if (!ac) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return false;
+      ac = new AC();
+      gain = ac.createGain();
+      analyser = ac.createAnalyser();
+      analyser.fftSize = 64;
+      analyser.smoothingTimeConstant = 0.75;
+      bins = new Uint8Array(analyser.frequencyBinCount);
+      gain.connect(analyser).connect(ac.destination);
+    }
+    if (!el) {
+      el = new Audio();
+      el.crossOrigin = "anonymous";
+      el.preload = "auto";
+      el.setAttribute("playsinline", "");
+      ac.createMediaElementSource(el).connect(gain);
+    }
     return true;
   }
+  function unlock() {
+    if (!graph()) return;
+    if (ac.state !== "running") ac.resume().catch(() => {});
+    if (!audio && el.paused) {
+      try { el.src = SILENCE; const p = el.play(); if (p) p.catch(() => {}); } catch (e) { /* ignore */ }
+    }
+  }
+  ["pointerdown", "touchend", "keydown"].forEach((ev) => window.addEventListener(ev, unlock, { capture: true, passive: true }));
 
-  function kill(el, why) {
-    clearTimeout(el._timer);
-    clearTimeout(el._fade);
-    try { el.pause(); } catch (e) { /* ignore */ }
-    try { el._src && el._src.disconnect(); } catch (e) { /* ignore */ }
-    live.delete(el);
-    if (audio === el) audio = null;
-    if (el._done) { const d = el._done; el._done = null; d(why); }
+  function finish(why) {
+    timers.forEach(clearTimeout);
+    timers = [];
+    const d = pendingDone;
+    pendingDone = null;
+    if (d) d(why);
   }
 
   M.player = {
-    playing: () => !!(audio && !audio.paused),
-    // How many clips are loaded or playing right now (should only ever be 0 or 1).
-    count: () => [...live].filter((el) => !el.paused || el.readyState < 3).length,
+    playing: () => !!(audio && !el.paused),
+    // How many clips are loading or playing right now (only ever 0 or 1).
+    count: () => (audio && (!el.paused || el.readyState < 3) ? 1 : 0),
     // Play `seconds` of the clip from `start`, fading out at the end. Resolves when it ends.
     async play(opt, start, seconds, { onStart } = {}) {
       M.player.stop(true);
       if (!opt || !graph()) return "missing";
       const my = ++gen;
-      const el = new Audio();
-      el.crossOrigin = "anonymous";
-      el.preload = "auto";
-      live.add(el);
-      audio = el;
       const stale = () => my !== gen;
-      // A window nobody has clicked can't make sound; don't wait for it forever.
+      audio = el;
+      // A window nobody has tapped can't make sound; don't wait for it forever.
       if (ac.state !== "running") await Promise.race([ac.resume().catch(() => {}), new Promise((r) => setTimeout(r, 1500))]);
-      if (stale()) { kill(el, "replaced"); return "replaced"; }
-      if (ac.state !== "running") { kill(el, "blocked"); return "blocked"; }
-      el.src = await localUrl(opt.url);
-      if (stale()) { kill(el, "replaced"); return "replaced"; }
-      el._src = ac.createMediaElementSource(el);
-      el._src.connect(gain);
+      if (stale()) return "replaced";
+      if (ac.state !== "running") { audio = null; return "blocked"; }
+      const url = await localUrl(opt.url);
+      if (stale()) return "replaced";
+      el.src = url;
+      try { el.load(); } catch (e) { /* ignore */ }
       gain.gain.cancelScheduledValues(ac.currentTime);
       gain.gain.setValueAtTime(0.0001, ac.currentTime);
       gain.gain.exponentialRampToValueAtTime(GN.store.get().settings.sound ? 1 : 0.0001, ac.currentTime + 0.25);
@@ -216,25 +231,28 @@
         el.addEventListener("error", ok, { once: true });
         setTimeout(ok, 8000);
       });
-      if (stale()) { kill(el, "replaced"); return "replaced"; }
-      if (el.error || el.readyState < 1) { kill(el, "error"); return "error"; }
+      if (stale()) return "replaced";
+      if (el.error || el.readyState < 1) { audio = null; return "error"; }
       try { el.currentTime = Math.min(start || 0, Math.max(0, (el.duration || 30) - 1)); } catch (e) { /* ignore */ }
-      try { await el.play(); } catch (e) { kill(el, "blocked"); return "blocked"; }
-      if (stale() || !live.has(el)) { kill(el, "replaced"); return "replaced"; }
+      try { await el.play(); } catch (e) { if (stale()) return "replaced"; audio = null; return "blocked"; }
+      if (stale()) return "replaced";
       onStart && onStart();
       return new Promise((done) => {
-        el._done = done;
-        el.addEventListener("ended", () => kill(el, "ended"), { once: true });
+        pendingDone = done;
+        el.addEventListener("ended", () => { if (my === gen) { audio = null; finish("ended"); } }, { once: true });
         // After `seconds`, fade out over 0.6s, then stop.
-        el._timer = setTimeout(() => {
-          if (!live.has(el)) return;
-          if (audio === el) {
-            gain.gain.cancelScheduledValues(ac.currentTime);
-            gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value), ac.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.6);
-          }
-          el._fade = setTimeout(() => kill(el, "ended"), 650);
-        }, Math.max(1, seconds) * 1000);
+        timers.push(setTimeout(() => {
+          if (my !== gen) return;
+          gain.gain.cancelScheduledValues(ac.currentTime);
+          gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value), ac.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.6);
+          timers.push(setTimeout(() => {
+            if (my !== gen) return;
+            try { el.pause(); } catch (e) { /* ignore */ }
+            audio = null;
+            finish("ended");
+          }, 650));
+        }, Math.max(1, seconds) * 1000));
       });
     },
     setVolume(on) {
@@ -242,11 +260,12 @@
       gain.gain.cancelScheduledValues(ac.currentTime);
       gain.gain.setValueAtTime(on ? 1 : 0.0001, ac.currentTime);
     },
-    // Silence everything: the current clip and any still loading.
+    // Silence everything: the current clip, or one still loading.
     stop(quiet) {
       gen++;
-      [...live].forEach((el) => kill(el, quiet ? "replaced" : "stopped"));
+      if (el && audio) { try { el.pause(); } catch (e) { /* ignore */ } }
       audio = null;
+      finish(quiet ? "replaced" : "stopped");
     },
     // Loudness of a few frequency bands, 0–1, for the sound bars. If the clip is playing
     // in the other window, use the levels it sends across.
@@ -310,7 +329,7 @@
     if (!prev) return;
     const sh = s.show, ph = prev.show;
     if (sh.clip.stop !== ph.clip.stop) M.stopHere();
-    else if (live.size && (ph.item !== sh.item || ph.round !== sh.round || !["question", "reveal"].includes(sh.phase))) M.stopHere();
+    else if (audio && (ph.item !== sh.item || ph.round !== sh.round || !["question", "reveal"].includes(sh.phase))) M.stopHere();
     if (prev.settings.sound !== s.settings.sound) M.player.setVolume(s.settings.sound);
   });
 })();

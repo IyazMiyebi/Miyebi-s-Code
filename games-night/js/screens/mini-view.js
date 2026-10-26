@@ -36,9 +36,9 @@
         ${mode === "memory"
           ? `<div class="tray" data-tray>${Array.from({ length: 12 }, (_, j) => `<span class="mt" style="--j:${j}"><b>${j + 1}</b><i aria-hidden="true">?</i></span>`).join("")}</div>`
           : `<div class="lanes">${teams.map((t) => `
-              <div class="lane" data-lane="${t.id}" style="--team:${GN.colourHex(t.colour)}">
+              <button type="button" class="lane" data-lane="${t.id}" style="--team:${GN.colourHex(t.colour)}" aria-label="${esc(t.name)}: ${item.mode === "last-standing" ? "tap when out" : "tap when finished"}">
                 <span class="lane__name">${esc(t.name)}</span><span class="lane__val" data-lane-val></span>
-              </div>`).join("")}</div>`}
+              </button>`).join("")}</div>`}
         ${prompts.length ? `<div class="cards" data-cards aria-label="Charades prompts">${prompts.map((_, j) => `
             <div class="ccard" data-i="${j}"><span class="ccard__n">${j + 1}</span><span class="ccard__t"></span></div>`).join("")}</div>` : ""}
       </div>`;
@@ -67,8 +67,8 @@
     const sug = MI().suggestion() && team(MI().suggestion());
     const mode = item.mode || "stopwatch";
     const ask = sug
-      ? `${esc(sug.name)} ${mode === "stopwatch" ? "was fastest" : "lasted longest"}. The host confirms the winner.`
-      : "Who won? The host picks the winner.";
+      ? `${esc(sug.name)} ${mode === "stopwatch" ? "was fastest" : "lasted longest"}. Confirm the winner:`
+      : "Who won?";
     return `
       <div class="mg mg--result">
         <header class="q__head">
@@ -78,7 +78,8 @@
         <h2 class="mg__name">${esc(item.name)}</h2>
         ${w ? `<p class="mg__winner" style="--team:${GN.colourHex(w.colour)}"><span class="mg__wk">Winner</span>
               <span class="mg__wn" data-decode="${esc(w.name)}">${esc(w.name)}</span><span class="mg__wp">+${s.rules.mini} points</span></p>`
-          : `<p class="mg__ask">${ask}</p>`}
+          : `<p class="mg__ask">${ask}</p>
+             <div class="mg__pick"><span>Winner:</span>${s.teams.map((t) => `<button type="button" class="pick" data-pick="${t.id}" style="--team:${GN.colourHex(t.colour)}">${esc(t.name)}</button>`).join("")}</div>`}
         ${resultsList(item)}
       </div>`;
   }
