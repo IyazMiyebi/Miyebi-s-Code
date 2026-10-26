@@ -31,7 +31,8 @@
     }).join("");
     return `
       <fieldset class="team-form" data-team="${t.id}" style="--team:${GN.colourHex(t.colour)}">
-        <legend class="team-form__legend">Team ${i + 1}</legend>
+        <legend class="sr">Team ${i + 1}</legend>
+        <p class="team-form__legend" aria-hidden="true">Team ${i + 1}</p>
         <label class="field"><span class="field__label">Team name</span>
           <input id="name-${t.id}" class="field__input field__input--big" value="${esc(t.name)}" maxlength="24" data-field="name" autocomplete="off"></label>
         <div class="field"><span class="field__label" id="colour-label-${t.id}">Colour</span>

@@ -327,8 +327,7 @@ body.is-idle { cursor: none; }
   gap: 0.6rem;
 }
 .team-form__legend {
-  float: left;
-  padding: 0;
+  margin: 0;
   font-family: var(--f-mono);
   font-size: var(--t-s);
   letter-spacing: 0.2em;
@@ -1357,15 +1356,20 @@ body.is-remote .bar #btn-host, body.is-remote .bar #btn-full, body.is-remote .ba
   .title__hint { display: none; }
   .q { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "timer" "text" "answer"; align-content: start; }
   .timer { width: 120px; justify-self: start; }
-  .intro__ascii { width: 100%; opacity: 0.4; }
+
   .q--music { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "timer" "text" "answer"; }
   .q__spiral { display: none; }
   .tray { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .sound-gate { top: calc(env(safe-area-inset-top, 0px) + 70px); font-size: 0.85rem; }
+  .sound-gate { top: auto; bottom: calc(env(safe-area-inset-bottom, 0px) + 150px); font-size: 0.85rem; white-space: nowrap; padding: 0.5em 0.9em; }
   .cards { grid-template-columns: minmax(0, 1fr); }
   .ccard { min-height: 0; }
   .play__keys { display: none; }
   .strip { flex-wrap: wrap; justify-content: center; bottom: calc(env(safe-area-inset-bottom, 0px) + 40px); }
+}
+/* Tall screens (phones): the big round number gets its own space above the text. */
+@media (max-width: 560px), (max-aspect-ratio: 3/4) {
+  .intro { align-content: start; gap: 0.5rem; }
+  .intro__ascii { position: relative; inset: auto; width: 100%; height: clamp(120px, 24vh, 260px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .screen--title .btn, .planet::before { animation: none; }
