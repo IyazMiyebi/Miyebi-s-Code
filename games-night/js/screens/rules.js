@@ -10,20 +10,25 @@
     mount(root, nav) {
       const { pack, rules: r, teams } = GN.store.get();
       const esc = GN.esc;
-      const scoring = [
-        ["Music", `${r.musicBoth} for title and artist · ${r.musicOne} for one`],
-        ["Nauseous", `${r.scramble} per word`],
-        ["Brain Games", `${r.brain} per question`],
-        ["Mini Games", `${r.mini} per win`],
-        ["Category Bank", `${r.categoryAnswer} per answer · ${r.categoryBonus} bonus for the last team standing`],
-        ["Tie-breaker", "Closest answer wins"]
-      ];
+      const SCORING = {
+        music: `${r.musicBoth} for title and artist · ${r.musicOne} for one`,
+        scramble: `${r.scramble} per word`,
+        quiz: `${r.brain} per question`,
+        mini: `${r.mini} per win`,
+        category: `${r.categoryAnswer} per answer · ${r.categoryBonus} bonus for the last team standing`,
+        tiebreak: "Closest answer wins"
+      };
+      // One line per game in tonight's line-up (a game played twice is listed once).
+      const rounds = GN.rounds();
+      const n = rounds.filter((x) => x.number).length;
+      const scoring = rounds.filter((x, i) => rounds.findIndex((y) => (y.game || y.id) === (x.game || x.id)) === i)
+        .map((x) => [esc(x.game ? GN.store.get().pack.rounds.find((g) => g.id === x.game).name : x.name), SCORING[x.kind] || ""]);
 
       root.innerHTML = `
         <div class="rules">
           <div class="rules__text">
             <div class="rules__planet" aria-hidden="true"><span class="planet"></span></div>
-            <p class="eyebrow">${teams.length} teams · ${pack.rounds.filter((x) => x.number).length} rounds</p>
+            <p class="eyebrow">${teams.length} teams · ${n} ${n === 1 ? "round" : "rounds"}</p>
             <h2 class="display">House <em>rules</em></h2>
             <ol class="rules__list">
               ${pack.houseRules.map((x) => `<li>${esc(x)}</li>`).join("")}
@@ -32,7 +37,7 @@
             <dl class="rules__score">
               ${scoring.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}
             </dl>
-            <p class="rules__end">Most points after five rounds takes the crown.</p>
+            <p class="rules__end">Most points after ${GN.numberWord(n)} ${n === 1 ? "round" : "rounds"} takes the crown.</p>
             <div class="teams__actions">
               <button class="btn btn--ghost" type="button" data-back>Back</button>
               <button class="btn" type="button" data-next data-autofocus>See the running order

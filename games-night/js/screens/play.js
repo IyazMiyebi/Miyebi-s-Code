@@ -193,7 +193,7 @@
         hangers = {};
         spiral = null;
 
-        const total = s.pack.rounds.filter((r) => r.number).length;
+        const total = GN.rounds().filter((r) => r.number).length;
         let html = "";
         if (sh.phase === "intro") html = introHTML(round, sh.round, total);
         else if (sh.phase === "standings") html = standingsHTML(round.number ? `After Round ${round.number}` : `After the ${round.name.toLowerCase()}`);

@@ -216,14 +216,14 @@ body.is-idle { cursor: none; }
 .calm .screen--title .btn { animation: none; }
 
 /* ---------- Shared page frame (teams, rules, order) ---------- */
-.teams, .rules, .order {
+.teams, .rules, .order, .setup {
   position: relative;
   min-height: 100%;
   padding-block: clamp(72px, 9vh, 120px) clamp(72px, 10vh, 110px);
   padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
   padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
 }
-.screen--teams, .screen--rules, .screen--order {
+.screen--teams, .screen--rules, .screen--order, .screen--setup {
   background:
     radial-gradient(60% 50% at 85% 110%, rgba(255, 74, 28, 0.28), transparent 70%),
     radial-gradient(40% 40% at 0% 0%, rgba(139, 92, 255, 0.16), transparent 70%),
@@ -235,6 +235,78 @@ body.is-idle { cursor: none; }
   align-items: center;
   gap: 12px;
   margin-top: clamp(24px, 4vh, 48px);
+}
+
+/* ---------- Pick the games ---------- */
+.setup { max-width: 1100px; margin: 0 auto; }
+.presets { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 10px; margin-bottom: 1.4rem; }
+.preset {
+  display: grid;
+  gap: 2px;
+  min-height: 64px;
+  padding: 0.7em 1em;
+  border: 0;
+  border-radius: 14px;
+  background: var(--coal);
+  box-shadow: inset 0 0 0 1px var(--line);
+  text-align: left;
+  cursor: pointer;
+  transition: box-shadow 0.2s, background-color 0.2s;
+}
+.preset:hover { box-shadow: inset 0 0 0 1px var(--paper); }
+.preset[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
+.preset__name { font-weight: 800; }
+.preset__note { font-size: var(--t-s); color: var(--muted); }
+.preset[aria-pressed="true"] .preset__note { color: #5e514e; }
+.step-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.step-btn:hover:not(:disabled) { box-shadow: inset 0 0 0 1px var(--paper); }
+.step-btn:disabled { opacity: 0.3; cursor: default; }
+.setup__n { min-width: 2ch; text-align: center; font-weight: 900; font-stretch: 70%; font-size: var(--t-l); }
+.slots { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.slot {
+  display: grid;
+  grid-template-columns: 6.5em minmax(0, 1fr) auto auto;
+  grid-template-areas: "no game qs move" "no blurb qs move";
+  align-items: center;
+  gap: 4px 16px;
+  padding: 0.8rem 1rem;
+  border-radius: 16px;
+  background: var(--coal);
+  box-shadow: inset 0 0 0 1px var(--line), inset 4px 0 0 var(--tint);
+}
+.slot__no { grid-area: no; font-family: var(--f-mono); font-size: var(--t-s); letter-spacing: 0.16em; text-transform: uppercase; color: var(--tint); }
+.slot__game { grid-area: game; min-width: 0; }
+.slot__game select { --team: var(--tint); font-weight: 800; min-height: 44px; cursor: pointer; }
+.slot__game option { background: var(--coal); color: var(--paper); }
+.slot__blurb { grid-area: blurb; margin: 0; font-size: var(--t-s); color: var(--muted); }
+.slot__qs { grid-area: qs; display: flex; align-items: center; gap: 8px; }
+.slot__count { min-width: 7.5em; text-align: center; font-size: var(--t-s); }
+.slot__count b { font-size: var(--t-m); }
+.slot__move { grid-area: move; display: flex; gap: 4px; }
+.set-row.setup__tb { margin-top: 1rem; padding-top: 1rem; font-size: var(--t-m); }
+.setup__full { margin: -0.4rem 0 1rem; font-size: var(--t-s); color: var(--muted); }
+.setup__confirm { margin-top: 1rem; padding: 12px 14px; border-radius: 12px; background: var(--coal); box-shadow: inset 0 0 0 1px var(--ember); display: grid; gap: 8px; }
+.setup__confirm p { margin: 0; }
+.setup__confirm.is-nudge { animation: nudge 0.4s; }
+@keyframes nudge { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@media (max-width: 760px) {
+  .slot { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "no move" "game game" "blurb blurb" "qs qs"; }
+  .slot__qs { justify-content: space-between; }
+  .slot__count { flex: 1; }
 }
 
 /* ---------- Teams ---------- */

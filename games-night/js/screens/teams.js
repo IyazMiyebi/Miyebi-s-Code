@@ -64,7 +64,7 @@
             <div class="team-forms" data-forms></div>
             <div class="teams__actions">
               <button class="btn btn--ghost" type="button" data-back>Back</button>
-              <button class="btn" type="button" data-next>House rules
+              <button class="btn" type="button" data-next>Pick the games
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             </div>
           </div>

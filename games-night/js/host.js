@@ -337,7 +337,7 @@
           `<li><b>${l.points > 0 ? "+" : ""}${l.points}</b> ${esc(nameOf(l.team))} <span>${esc(l.label)}</span></li>`).join("");
 
         // Rounds.
-        $("[data-rounds]").innerHTML = s.pack.rounds.map((r, i) => `
+        $("[data-rounds]").innerHTML = GN.rounds().map((r, i) => `
           <button type="button" class="hround${sh.round === i ? " is-on" : ""}" data-round="${i}">
             <span class="hround__no">${r.number ? "R" + r.number : "TB"}</span>
             <span class="hround__name">${esc(r.name)}</span>

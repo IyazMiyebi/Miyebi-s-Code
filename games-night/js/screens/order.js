@@ -1,5 +1,5 @@
 /*
- * Running order: the five rounds and the tie-breaker over a glowing box grid.
+ * Running order: tonight's rounds and the tie-breaker over a glowing box grid.
  * Picking a round shows its rules (never its answers: this is the big screen).
  */
 (function () {
@@ -29,7 +29,10 @@
   GN.screens.order = {
     label: "Running order",
     mount(root, nav) {
-      const { pack, rules: r, played } = GN.store.get();
+      const { rules: r, played } = GN.store.get();
+      const rounds = GN.rounds();
+      const n = rounds.filter((x) => x.number).length;
+      const word = GN.numberWord(n);
       const first = GN.game.firstUnplayed();
       const esc = GN.esc;
       root.innerHTML = `
@@ -37,10 +40,10 @@
         <div class="order">
           <header class="order__head">
             <p class="eyebrow">Tonight’s running order</p>
-            <h2 class="display">Five rounds. <em>One crown.</em></h2>
+            <h2 class="display">${word[0].toUpperCase() + word.slice(1)} ${n === 1 ? "round" : "rounds"}. <em>One crown.</em></h2>
           </header>
           <div class="rounds">
-            ${pack.rounds.map((round, i) => `
+            ${rounds.map((round, i) => `
               <button type="button" class="round${round.number ? "" : " round--extra"}${played.includes(round.id) ? " is-played" : ""}" data-round="${i}" ${i === first ? "data-autofocus" : ""}>
                 <span class="round__no">${round.number ? "Round " + round.number : "Extra time"}${played.includes(round.id) ? ' <span class="round__done">· played</span>' : ""}</span>
                 <span class="round__name">${esc(round.name)}</span>
@@ -52,7 +55,7 @@
           <div class="order__detail" data-detail aria-live="polite"></div>
           <div class="teams__actions">
             <button class="btn btn--ghost" type="button" data-back>Back</button>
-            <button class="btn" type="button" data-play="${first}">Start ${pack.rounds[first].number ? "Round " + pack.rounds[first].number : esc(pack.rounds[first].name)}
+            <button class="btn" type="button" data-play="${first}">Start ${rounds[first].number ? "Round " + rounds[first].number : esc(rounds[first].name)}
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
             ${played.length ? `<button class="btn btn--ghost" type="button" data-finale>Reveal the winner</button>` : ""}
             <p class="order__note"><kbd>H</kbd> opens the host controls in a second window, with the answers.</p>
@@ -64,7 +67,7 @@
       const settle = setTimeout(() => grid.play(), 800);
 
       function show(i) {
-        const round = pack.rounds[i];
+        const round = rounds[i];
         root.querySelectorAll(".round").forEach((b) => b.classList.toggle("is-on", b.dataset.round === String(i)));
         detailEl.innerHTML = `
           <p class="order__detail-k">${round.number ? "Round " + round.number : "Extra time"} · ${points(round, r)}</p>

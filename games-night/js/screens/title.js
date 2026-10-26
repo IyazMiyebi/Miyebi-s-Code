@@ -98,9 +98,15 @@
       };
       const px = Math.max(11, m * 0.022);
       monoLine((pack.tagline || "").toUpperCase(), above - px * 1.6);
-      monoLine((pack.strapline || "").toUpperCase(), base + px * 2.6);
+      monoLine(strap(pack).toUpperCase(), base + px * 2.6);
     };
   }
+
+  // "5 rounds • …" follows tonight's line-up.
+  const strap = (pack) => {
+    const n = GN.rounds().filter((r) => r.number).length;
+    return (pack.strapline || "").replace(/^\d+ rounds?/i, n + (n === 1 ? " round" : " rounds"));
+  };
 
   GN.screens.title = {
     label: "Title",
@@ -108,7 +114,7 @@
       const pack = GN.store.get().pack;
       root.innerHTML = `
         <canvas class="title__canvas" aria-hidden="true"></canvas>
-        <h1 class="sr">${GN.esc(pack.title)}: ${GN.esc(pack.tagline)}. ${GN.esc(pack.strapline)}.</h1>
+        <h1 class="sr">${GN.esc(pack.title)}: ${GN.esc(pack.tagline)}. ${GN.esc(strap(pack))}.</h1>
         <div class="title__foot">
           <p class="title__ask">Are you ready?</p>
           <button class="btn btn--big" type="button" data-autofocus data-start>Start the show

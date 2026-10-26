@@ -19,8 +19,15 @@
   const mainArtist = (a) => String(a).split(/\s+(?:ft\.?|feat\.?|featuring|&|and|x)\s+|,\s*/i)[0];
 
   const S = () => GN.store.get();
-  const key = (round, i) => `${round.id}:${i}`;
-  const musicRound = () => S().pack.rounds.find((r) => r.kind === "music");
+  // Matches are stored per song, so a song is found once whichever round it lands in.
+  const key = (round, i) => { const it = round.items[i] || {}; return `song:${norm(it.title)}|${norm(mainArtist(it.artist || ""))}`; };
+  // Every song in tonight's music rounds, as one list for "Get clips ready".
+  function musicRound() {
+    const rounds = (GN.rounds ? GN.rounds() : S().pack.rounds).filter((r) => r.kind === "music");
+    if (!rounds.length) return null;
+    if (rounds.length === 1) return rounds[0];
+    return { ...rounds[0], id: "songs", items: rounds.flatMap((r) => r.items) };
+  }
 
   function setEntry(k, patch) {
     GN.store.set((s) => ({ music: { ...s.music, [k]: { ...(s.music[k] || {}), ...patch } } }));
@@ -234,8 +241,12 @@
       if (stale()) return "replaced";
       if (el.error || el.readyState < 1) { audio = null; return "error"; }
       try { el.currentTime = Math.min(start || 0, Math.max(0, (el.duration || 30) - 1)); } catch (e) { /* ignore */ }
-      try { await el.play(); } catch (e) { if (stale()) return "replaced"; audio = null; return "blocked"; }
+      // If the clip hasn't started after 10 seconds, give up rather than wait forever.
+      let begun;
+      try { begun = await Promise.race([el.play().then(() => true), new Promise((r) => setTimeout(() => r(false), 10000))]); }
+      catch (e) { if (stale()) return "replaced"; audio = null; return "blocked"; }
       if (stale()) return "replaced";
+      if (!begun) { try { el.pause(); } catch (e) { /* ignore */ } audio = null; return "error"; }
       onStart && onStart();
       return new Promise((done) => {
         pendingDone = done;
@@ -332,4 +343,19 @@
     else if (audio && (ph.item !== sh.item || ph.round !== sh.round || !["question", "reveal"].includes(sh.phase))) M.stopHere();
     if (prev.settings.sound !== s.settings.sound) M.player.setVolume(s.settings.sound);
   });
+
+  // Older versions stored matches by position ("music:3"): move them onto their songs.
+  if (GN.role !== "remote") {
+    const music = S().music, old = Object.keys(music).filter((k) => /^[^:|]+:\d+$/.test(k));
+    if (old.length) {
+      const next = { ...music };
+      old.forEach((k) => {
+        const [id, i] = k.split(":");
+        const round = S().pack.rounds.find((r) => r.id === id);
+        delete next[k];
+        if (round && round.items[+i] && !next[key(round, +i)]) next[key(round, +i)] = music[k];
+      });
+      GN.store.set({ music: next });
+    }
+  }
 })();
