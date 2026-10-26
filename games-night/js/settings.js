@@ -50,6 +50,12 @@
                   `<label><input type="radio" name="motion" value="${v}" ${settings.motion === v ? "checked" : ""} data-setting="motion"><span>${l}</span></label>`).join("")}
               </div>
             </fieldset>
+            <fieldset class="set-row set-row--stack"><legend>On-screen controls (Next, Back, Out…)</legend>
+              <div class="seg">
+                ${[["auto", "Touch screens"], ["on", "Always"], ["off", "Never"]].map(([v, l]) =>
+                  `<label><input type="radio" name="touchControls" value="${v}" ${(settings.touchControls || "auto") === v ? "checked" : ""} data-setting="touchControls"><span>${l}</span></label>`).join("")}
+              </div>
+            </fieldset>
             <h3 class="settings__h">Questions</h3>
             <div class="set-reset"><button type="button" class="btn btn--ghost btn--small" data-edit-open>Edit questions and packs</button>
               <a class="btn btn--ghost btn--small" href="cheatsheet.html" target="_blank" rel="noopener">Host cheat sheet (printable)</a></div>
@@ -75,6 +81,7 @@
     const t = e.target;
     if (t.dataset.setting === "sound") GN.store.set((s) => ({ settings: { ...s.settings, sound: t.checked } }));
     if (t.dataset.setting === "motion") GN.store.set((s) => ({ settings: { ...s.settings, motion: t.value } }));
+    if (t.dataset.setting === "touchControls") GN.store.set((s) => ({ settings: { ...s.settings, touchControls: t.value } }));
     if (t.dataset.rule && t.value === "") t.value = GN.store.get().rules[t.dataset.rule];
   });
   dlg.addEventListener("click", (e) => {

@@ -1137,6 +1137,85 @@ body.is-idle .play__hint { opacity: 0; }
 }
 body.is-host .sound-gate { display: none; }
 
+/* ---------- On-screen controls (touch screens) ---------- */
+.dock-wrap[hidden] { display: none; }
+.dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 35;
+  display: flex;
+  gap: 8px;
+  padding: 10px max(12px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 10px) max(12px, env(safe-area-inset-left, 0px));
+  background: linear-gradient(transparent, rgba(12, 8, 9, 0.92) 30%);
+}
+.dock__btn, .dock__main {
+  min-height: 52px;
+  border: 0;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.dock__btn { min-width: 52px; padding: 0 14px; background: var(--coal-2); color: var(--paper); box-shadow: inset 0 0 0 1px var(--line); font-size: 1.15rem; }
+.dock__btn.is-danger { background: var(--ember); color: var(--ink); box-shadow: none; }
+.dock__quick { font-size: 0.95rem; }
+.dock__main { flex: 1; min-width: 0; padding: 4px 14px; background: var(--paper); color: var(--ink); font-size: clamp(0.85rem, 3.6vw, 1rem); line-height: 1.15; text-wrap: balance; overflow-wrap: anywhere; }
+.dock__main:active, .dock__btn:active { transform: scale(0.97); }
+.sheet {
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right, 0px));
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 74px);
+  z-index: 36;
+  display: grid;
+  gap: 4px;
+  min-width: min(300px, calc(100vw - 24px));
+  padding: 8px;
+  border-radius: 18px;
+  background: var(--coal);
+  box-shadow: inset 0 0 0 1px var(--line), 0 24px 70px rgba(0, 0, 0, 0.7);
+}
+.sheet[hidden] { display: none; }
+.sheet__item { min-height: 46px; padding: 0 14px; border: 0; border-radius: 12px; background: transparent; color: var(--paper); font-weight: 700; text-align: left; cursor: pointer; }
+.sheet__item:hover, .sheet__item:focus-visible { background: var(--coal-2); }
+body.is-touch .play__hint, body.is-touch .title__hint { display: none; }
+body.is-touch .strip { bottom: calc(env(safe-area-inset-bottom, 0px) + 84px); }
+body.is-touch .view, body.is-touch .board { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 200px); }
+/* On a touch screen the first tap anywhere turns sound on, so the reminder isn't needed. */
+body.is-touch .sound-gate { display: none; }
+body.is-touch.is-idle { cursor: auto; }
+body.is-touch.is-idle .bar, body.is-touch.is-idle .steps { opacity: 1; pointer-events: auto; }
+/* The step links would sit under the controls during the show. */
+body:has(.dock-wrap:not([hidden])) .steps { display: none; }
+/* Landscape phones: scores move up beside the top buttons so the bottom is only controls. */
+@media (max-height: 520px) {
+  .steps { display: none; }
+  body.is-touch .strip { top: calc(env(safe-area-inset-top, 0px) + 14px); bottom: auto; left: max(14px, env(safe-area-inset-left, 0px)); transform: none; max-width: calc(100% - 240px); flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; }
+  body.is-touch .strip__team { font-size: 0.8rem; flex-shrink: 0; }
+  body.is-touch .view { padding-top: calc(env(safe-area-inset-top, 0px) + 72px); padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 84px); }
+  body.is-touch .dock { padding-top: 8px; padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); }
+  body.is-touch .dock__btn, body.is-touch .dock__main { min-height: 46px; }
+}
+/* Bigger tap targets for fingers. */
+@media (pointer: coarse) {
+  .btn--small, .hbtn, .set-reset .btn { min-height: 44px; }
+  .hbtn { min-width: 44px; }
+  .pop__undo { min-height: 40px; }
+  .steps__item { min-height: 40px; align-items: center; }
+  .set-num input { min-height: 40px; }
+  .ed-nav a { display: inline-flex; align-items: center; min-height: 40px; }
+  body.is-editor input:not([type=checkbox]):not([type=radio]), body.is-editor select { min-height: 44px; }
+}
+
+/* Lanes are buttons: tap a team when it finishes or drops out. Pick buttons choose a winner. */
+button.lane { font: inherit; color: inherit; text-align: left; border: 0; cursor: pointer; width: 100%; }
+.mg__pick { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.mg__pick > span { font-family: var(--f-mono); font-size: var(--t-s); letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.pick { min-height: 48px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--team); color: var(--ink); font-weight: 800; font-size: var(--t-m); cursor: pointer; }
+.mg__results.tb li { cursor: pointer; }
+
 /* ---------- Host controls window ---------- */
 body.is-host { overflow: auto; }
 body.is-host #stage { position: static; }

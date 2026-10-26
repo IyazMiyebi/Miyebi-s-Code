@@ -88,7 +88,8 @@
       const r = btn.getBoundingClientRect();
       const pw = pop.offsetWidth, ph = pop.offsetHeight;
       pop.style.left = Math.max(8, Math.min(innerWidth - pw - 8, r.left + r.width / 2 - pw / 2)) + "px";
-      pop.style.top = Math.max(8, r.top - ph - 12) + "px";
+      // Above the team, or below it when the scores sit at the top (landscape phones).
+      pop.style.top = (r.top - ph - 12 >= 8 ? r.top - ph - 12 : Math.min(innerHeight - ph - 8, r.bottom + 12)) + "px";
       pop.querySelector("[data-add]").focus();
       pop.addEventListener("click", (e) => {
         const add = e.target.closest("[data-add]");
