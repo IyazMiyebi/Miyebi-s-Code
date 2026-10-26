@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Wordmark } from "../wordmark";
 import { INTRO_KEY } from "@/lib/intro";
+import { ASCII_SCRAMBLE, asciiCells } from "./ascii";
 import { optimisedSrc } from "./water-ripple";
 
 // "ASCII pixels" from the reference reel, as a first-visit intro: the hero
@@ -14,8 +15,6 @@ import { optimisedSrc } from "./water-ripple";
 // so returning visitors never see a flash of it. A CSS animation also hides
 // it after a few seconds in case this script never runs.
 
-const CHARS = " .·:-=+*%#@";
-const SCRAMBLE = "BNIMbn✦*+#%@";
 const DURATION = 1300;
 
 function markSeen() {
@@ -70,34 +69,8 @@ export function AsciiIntro({ src }: { src: string }) {
       const cols = Math.floor(width / cell);
       const rows = Math.floor(height / (cell * 1.4));
 
-      // Sample the photo (object-fit: cover) at one pixel per character.
-      const sample = document.createElement("canvas");
-      sample.width = cols;
-      sample.height = rows;
-      const sctx = sample.getContext("2d", { willReadFrequently: true })!;
-      const scale = Math.max(cols / image.width, (rows * 1.4) / image.height);
-      const w = image.width * scale;
-      const h = (image.height * scale) / 1.4;
-      sctx.drawImage(image, (cols - w) / 2, (rows - h) / 2, w, h);
-      const pixels = sctx.getImageData(0, 0, cols, rows).data;
-
-      // Stretch the photo's contrast to use the whole character ramp.
-      const lums = new Float32Array(cols * rows);
-      let lo = 1;
-      let hi = 0;
-      for (let i = 0; i < lums.length; i++) {
-        const lum = (0.299 * pixels[i * 4] + 0.587 * pixels[i * 4 + 1] + 0.114 * pixels[i * 4 + 2]) / 255;
-        lums[i] = lum;
-        lo = Math.min(lo, lum);
-        hi = Math.max(hi, lum);
-      }
-      const glyphs: string[] = [];
-      const reveal: number[] = [];
-      for (let i = 0; i < lums.length; i++) {
-        const lum = (lums[i] - lo) / Math.max(hi - lo, 0.01);
-        glyphs.push(CHARS[Math.min(CHARS.length - 1, Math.floor(lum * CHARS.length))]);
-        reveal.push(Math.random() * DURATION * 0.7);
-      }
+      const { glyphs } = asciiCells(image, cols, rows, 1.4);
+      const reveal = glyphs.map(() => Math.random() * DURATION * 0.7);
 
       const gold = getComputedStyle(canvas).getPropertyValue("--gold").trim() || "#c9a46a";
       const font = `${cell * 1.15}px ui-monospace, monospace`;
@@ -132,7 +105,7 @@ export function AsciiIntro({ src }: { src: string }) {
         const pending = order.length - next;
         for (let k = 0; k < Math.min(160, pending); k++) {
           const i = order[next + ((Math.random() * pending) | 0)];
-          ctx.fillText(SCRAMBLE[(Math.random() * SCRAMBLE.length) | 0], (i % cols) * cell, Math.floor(i / cols) * cell * 1.4);
+          ctx.fillText(ASCII_SCRAMBLE[(Math.random() * ASCII_SCRAMBLE.length) | 0], (i % cols) * cell, Math.floor(i / cols) * cell * 1.4);
         }
         ctx.globalAlpha = 1;
         if (t < DURATION) raf = requestAnimationFrame(frame);

@@ -4,8 +4,9 @@
 //
 // Items use the regional price rule in currency.ts (₦35,499 / 34.99). Delivery
 // fees are real costs set in Naira, so overseas customers see them converted
-// at the day's exchange rate. Paystack charges in Naira: a foreign total is
-// converted at the same rate and rounded up to the next whole Naira.
+// at the day's exchange rate. A gift card (in the order's currency) pays what
+// it can; Paystack charges the rest in Naira: a foreign amount is converted at
+// the same rate and rounded up to the next whole Naira.
 
 import { priceIn, type CurrencyCode } from "./currency";
 
@@ -23,7 +24,10 @@ export type Quote = {
   freeShipping: boolean;
   discount: number;
   total: number;
-  /** What Paystack charges, in whole Naira. */
+  /** Paid by gift card, and what's left to pay. */
+  giftCard: number;
+  due: number;
+  /** What Paystack charges for `due`, in whole Naira (0 when a gift card covers it all). */
   totalNgn: number;
 };
 
@@ -43,12 +47,15 @@ export function quote({
   lines,
   zone,
   discount,
+  giftCardBalance = 0,
 }: {
   currency: CurrencyCode;
   fxRate: number;
   lines: PricedLine[];
   zone: Zone | null;
   discount: Discount | null;
+  /** Balance of a gift card in `currency`, if one is applied. */
+  giftCardBalance?: number;
 }): Quote {
   const rate = currency === "NGN" ? 1 : fxRate;
   const priced = lines.map((l) => {
@@ -65,8 +72,10 @@ export function quote({
   off = Math.min(off, subtotal); // a discount never touches delivery
 
   const total = roundMoney(currency, subtotal + shipping - off);
-  const totalNgn = currency === "NGN" ? total : Math.ceil(total * rate);
-  return { currency, fxRate: rate, lines: priced, subtotal, shipping, freeShipping, discount: off, total, totalNgn };
+  const giftCard = roundMoney(currency, Math.min(Math.max(giftCardBalance, 0), total));
+  const due = roundMoney(currency, total - giftCard);
+  const totalNgn = currency === "NGN" ? due : Math.ceil(due * rate);
+  return { currency, fxRate: rate, lines: priced, subtotal, shipping, freeShipping, discount: off, total, giftCard, due, totalNgn };
 }
 
 /** Short order codes like BN-7K3F9Q, without look-alike characters. */

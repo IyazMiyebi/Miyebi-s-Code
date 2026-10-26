@@ -194,20 +194,26 @@ Reviews with photos, customer accounts with loyalty points, "build your bag" (ba
   - [x] `stock_requests` table created in Supabase
   - [ ] Email Nimi when a pre-order arrives (needs the email key, see Stage 3)
   - Note for Stage 3: Paystack charges in naira (USD only with a Zenith dom account), so a £34.99 order is charged as its naira equivalent at the day's rate and the checkout says so
-- [ ] Stage 3: Cart, checkout and payments (built; waiting on the items below)
+- [x] Stage 3: Cart, checkout and payments (live 25 Oct 2026; test order paid through Paystack test mode)
   - [x] Bag in the browser: slide-out drawer, quantities capped at stock, "Add to bag" on product pages
-  - [x] Checkout: contact, country, all 23 of Nimi's delivery zones and fees (Lagos areas, pick-ups, states, international), address, discount codes (WELCOME10, first orders only), live totals in the visitor's currency
+  - [x] Checkout: contact, country, all 23 of Nimi's delivery zones and fees, address, discount codes (WELCOME10, first orders only), live totals in the visitor's currency
   - [x] Paystack hosted payment (card, bank transfer, USSD) in Naira; overseas totals converted at the day's rate and shown before paying
   - [x] Stock reserved at checkout, released after 30 minutes unpaid; payment confirmed on return and by webhook, recorded once; underpayments and late payments flagged for Nimi
   - [x] UK launch offer: free delivery on the first 5 UK orders, counted down automatically
   - [x] Order confirmation page; customer receipt and new-order alert to Nimi (sent once the email key is set)
-  - [x] Tested end to end against a private copy of the database and a Paystack stand-in (no real money, no live data)
-  - [ ] You: run `supabase/migrations/20261022000000_orders.sql` in Supabase
-  - [ ] You: add `SUPABASE_SECRET_KEY` and `PAYSTACK_SECRET_KEY` (test key first) to Vercel as Secret; set the Paystack webhook URL
-  - [ ] You: a real test order with Paystack's test card on the preview
+  - [x] Secret keys in Vercel, webhook set, orders migration run, test order paid
   - [ ] Optional: Resend account + key for emails (and verify bynimiie.com in Resend at launch)
   - [ ] Later: "quick add" on product cards
-- [ ] Stage 4: Brand and content pages
+- [ ] Stage 4: Brand and content pages (built 26 Oct 2026; words are placeholders for Nimi)
+  - [x] **The Charm Bar**: cat, cherry, initial, bear charms and the mini scarf hang from a rail on strings (rope physics): drag and throw them, brush past to set them swaying, tap one to choose a colour and add it to the bag
+  - [x] **Our story**: the campaign photo drawn in gold characters (types itself in, stirs under the cursor), and the story text **wrapping around a bag** that drifts down as you read
+  - [x] **Lookbook**: campaign photos spill out behind the cursor (**image trail**; on phones, a finger or a gentle self-drawing trail), then a grid where every photo opens its bag in the right colour
+  - [x] Help pages: shipping (fees straight from the delivery zones), returns, care guide, FAQ, contact; "Help" column in the footer
+  - [x] The Inner Circle (loyalty) page: sign-up now; points and birthday treats need customer accounts, after launch
+  - [x] **Gift cards**: buy through Paystack (any amount, in the visitor's currency), emailed with a message and shown on the confirmation page; spend at checkout over several orders, alone or with card payment; balance check
+  - [ ] Run `20261026000000_gift_cards.sql` in Supabase
+  - [ ] Nimi: rewrite the draft words (story, returns policy, care, FAQ, opening hours) in `src/content/pages.ts`, or send them and I'll put them in
+  - [ ] Nimi: confirm the returns policy and gift card terms (12 months, no refunds) are what she wants
 - [ ] Stage 5: Back office
 - [ ] Stage 6: Polish, speed, SEO, testing
 - [ ] Stage 7: Launch
