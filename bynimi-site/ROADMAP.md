@@ -204,7 +204,16 @@ Reviews with photos, customer accounts with loyalty points, "build your bag" (ba
   - [x] Secret keys in Vercel, webhook set, orders migration run, test order paid
   - [ ] Optional: Resend account + key for emails (and verify bynimiie.com in Resend at launch)
   - [ ] Later: "quick add" on product cards
-- [ ] Stage 4: Brand and content pages
+- [ ] Stage 4: Brand and content pages (built 26 Oct 2026; words are placeholders for Nimi)
+  - [x] **The Charm Bar**: cat, cherry, initial, bear charms and the mini scarf hang from a rail on strings (rope physics): drag and throw them, brush past to set them swaying, tap one to choose a colour and add it to the bag
+  - [x] **Our story**: the campaign photo drawn in gold characters (types itself in, stirs under the cursor), and the story text **wrapping around a bag** that drifts down as you read
+  - [x] **Lookbook**: campaign photos spill out behind the cursor (**image trail**; on phones, a finger or a gentle self-drawing trail), then a grid where every photo opens its bag in the right colour
+  - [x] Help pages: shipping (fees straight from the delivery zones), returns, care guide, FAQ, contact; "Help" column in the footer
+  - [x] The Inner Circle (loyalty) page: sign-up now; points and birthday treats need customer accounts, after launch
+  - [x] **Gift cards**: buy through Paystack (any amount, in the visitor's currency), emailed with a message and shown on the confirmation page; spend at checkout over several orders, alone or with card payment; balance check
+  - [ ] Run `20261026000000_gift_cards.sql` in Supabase
+  - [ ] Nimi: rewrite the draft words (story, returns policy, care, FAQ, opening hours) in `src/content/pages.ts`, or send them and I'll put them in
+  - [ ] Nimi: confirm the returns policy and gift card terms (12 months, no refunds) are what she wants
 - [ ] Stage 5: Back office
 - [ ] Stage 6: Polish, speed, SEO, testing
 - [ ] Stage 7: Launch

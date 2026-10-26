@@ -83,7 +83,8 @@ async function Result({ searchParams }: Pick<PageProps<"/checkout/complete">, "s
         <div className="flex justify-between"><dt className="text-muted">Delivery</dt><dd>{order.shipping ? money(order.shipping) : "Free"}</dd></div>
         {order.discount > 0 && <div className="flex justify-between"><dt className="text-muted">Discount</dt><dd>−{money(order.discount)}</dd></div>}
         <div className="flex justify-between text-lg"><dt>Total</dt><dd>{money(order.total)}</dd></div>
-        {order.currency !== "NGN" && <div className="flex justify-between text-muted"><dt>Charged</dt><dd>{formatAmount("NGN", order.totalNgn)}</dd></div>}
+        {order.giftCard > 0 && <div className="flex justify-between"><dt className="text-muted">Paid by gift card</dt><dd>{money(order.giftCard)}</dd></div>}
+        {order.currency !== "NGN" && order.totalNgn > 0 && <div className="flex justify-between text-muted"><dt>Charged</dt><dd>{formatAmount("NGN", order.totalNgn)}</dd></div>}
       </dl>
       <Link href="/shop" className="label mt-10 inline-block rounded-full bg-accent px-6 py-3.5 text-accent-ink">
         Keep shopping

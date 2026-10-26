@@ -1,5 +1,6 @@
 import { revalidateTag } from "next/cache";
 import { CATALOG_TAG } from "@/lib/catalog";
+import { confirmGiftCardPayment } from "@/lib/server/gift-cards";
 import { confirmPayment } from "@/lib/server/orders";
 import { isValidSignature } from "@/lib/server/paystack";
 
@@ -12,11 +13,16 @@ export async function POST(request: Request) {
     return new Response("Invalid signature", { status: 401 });
   }
   const event = JSON.parse(raw) as { event: string; data?: { reference?: string } };
-  if (event.event === "charge.success" && event.data?.reference?.startsWith("BN-")) {
+  const reference = event.data?.reference;
+  if (event.event === "charge.success" && reference) {
     try {
       // Re-checks with Paystack rather than trusting the event body.
-      await confirmPayment(event.data.reference);
-      revalidateTag(CATALOG_TAG, { expire: 0 });
+      if (reference.startsWith("BN-")) {
+        await confirmPayment(reference);
+        revalidateTag(CATALOG_TAG, { expire: 0 });
+      } else if (reference.startsWith("GC-")) {
+        await confirmGiftCardPayment(reference);
+      }
     } catch (e) {
       console.error("webhook confirm failed", e);
       return new Response("Retry later", { status: 500 }); // Paystack retries

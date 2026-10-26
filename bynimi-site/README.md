@@ -2,7 +2,7 @@
 
 The new [bynimiie.com](https://bynimiie.com). See [ROADMAP.md](ROADMAP.md) for the plan and progress.
 
-Next.js 16 (App Router, Cache Components) · Tailwind CSS 4 · Supabase · Paystack (Stage 3)
+Next.js 16 (App Router, Cache Components) · Tailwind CSS 4 · Supabase · Paystack
 
 ## Run it locally
 
@@ -24,7 +24,16 @@ Other checks: `npm run lint`, `npm run build`.
 | `/products/[slug]` | atelier | Finish and colour picker, zoomable gallery, add to bag, pre-order / notify me for sold-out colours, complete the look |
 | `/checkout`, `/checkout/complete` | atelier | Contact, delivery zone, address, discount code, live totals, Paystack payment and confirmation |
 | `/style-guide` | atelier | Colours, type and components, for Nimi to approve |
-| `/charm-bar`, `/lookbook`, `/about` | noir | Placeholders for Stage 4 |
+| `/charm-bar` | noir | Charms and scarves hanging on strings: drag, throw, tap to pick a colour and add to bag |
+| `/lookbook` | noir | Campaign photos that trail behind the cursor (or finger), then a grid linking each photo to its bag |
+| `/about` | noir | Our story: the campaign photo drawn in type, and the story wrapping around a bag that drifts down the page |
+| `/gift-cards`, `/gift-cards/complete` | noir | Buy a gift card (Paystack), with the card hanging on a string; check a balance |
+| `/inner-circle` | noir | The loyalty programme and sign-up |
+| `/shipping`, `/returns`, `/care`, `/faq`, `/contact` | atelier | Help pages; delivery fees come straight from the delivery zones |
+
+**Placeholder words:** the text on the brand and help pages is a draft written for the build, in
+`src/content/pages.ts` (lookbook photos in `src/content/lookbook.ts`). Pages show a "Draft, for Nimi
+to edit" tag until `draft` is set to `false` there.
 
 The effects live in `src/components/effects/`. Each one keeps the plain content underneath (the
 photo, the form), pauses when off screen, and respects the phone's "reduce motion" setting.
@@ -64,7 +73,8 @@ To set up a fresh database, run these in the SQL editor, in order:
 2. `supabase/migrations/20261019000000_newsletter.sql` (once): Inner Circle sign-ups
 3. `supabase/migrations/20261020000000_stock_requests.sql` (once): pre-orders and "notify me"
 4. `supabase/migrations/20261022000000_orders.sql` (once): delivery zones, discount codes, orders
-5. `supabase/seed.sql` (safe to re-run; it updates, never duplicates)
+5. `supabase/migrations/20261026000000_gift_cards.sql` (once): gift cards, and paying for orders with them
+6. `supabase/seed.sql` (safe to re-run; it updates, never duplicates)
 
 Sign-ups land in `newsletter_subscribers`, and pre-orders / back-in-stock requests in
 `stock_requests` (Table Editor in Supabase; set a request's `status` to `contacted` or `fulfilled` as
@@ -96,7 +106,13 @@ webhook (`/api/paystack/webhook`), whichever comes first; emails go out once.
 
 In Paystack, set the **Webhook URL** to `https://<your site>/api/paystack/webhook`.
 
-Orders are in Supabase → Table Editor → `orders` (with `order_items`). Delivery fees, the UK
+Orders are in Supabase → Table Editor → `orders` (with `order_items`).
+
+**Gift cards** are paid through the same Paystack account and webhook (references start `GC-`, orders
+`BN-`). They're in `gift_cards`, with each use on an order in `gift_card_redemptions`. A card is
+spent in the currency it was bought in, over as many orders as it takes; while an order waits for
+payment its gift card amount is held, and given back if the order expires. An order a gift card pays
+in full skips Paystack. Delivery fees, the UK
 launch offer (`free_orders_left`) and discount codes are in `shipping_zones` and `discount_codes`.
 
 ## Deploying a preview (Vercel)

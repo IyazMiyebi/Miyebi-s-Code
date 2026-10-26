@@ -45,6 +45,8 @@ export function CheckoutForm({ zones }: { zones: ShippingZone[] }) {
   const [note, setNote] = useState("");
   const [codeInput, setCodeInput] = useState("");
   const [code, setCode] = useState<string | null>(null);
+  const [giftInput, setGiftInput] = useState("");
+  const [giftCode, setGiftCode] = useState<string | null>(null);
 
   const [result, setResult] = useState<CheckoutQuote | null>(null);
   const [quoteError, setQuoteError] = useState<string | null>(null);
@@ -61,7 +63,7 @@ export function CheckoutForm({ zones }: { zones: ShippingZone[] }) {
     if (!lines.length) return;
     let cancelled = false;
     const t = setTimeout(async () => {
-      const r = await quoteCheckout({ lines, currency, zoneId: zone?.id ?? null, code, email: emailForQuote });
+      const r = await quoteCheckout({ lines, currency, zoneId: zone?.id ?? null, code, giftCode, email: emailForQuote });
       if (cancelled) return;
       if ("error" in r) {
         setQuoteError(r.error);
@@ -79,7 +81,7 @@ export function CheckoutForm({ zones }: { zones: ShippingZone[] }) {
       clearTimeout(t);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- cartKey stands in for `lines`
-  }, [cartKey, currency, zone?.id, code, emailForQuote]);
+  }, [cartKey, currency, zone?.id, code, giftCode, emailForQuote]);
 
   if (!cart.length) {
     return (
@@ -116,6 +118,7 @@ export function CheckoutForm({ zones }: { zones: ShippingZone[] }) {
         currency,
         zoneId: zone?.id ?? null,
         code,
+        giftCode,
         email: contact.email,
         name: contact.name,
         phone: contact.phone,
@@ -123,7 +126,7 @@ export function CheckoutForm({ zones }: { zones: ShippingZone[] }) {
         note,
       });
       if ("url" in r) {
-        window.location.assign(r.url); // Paystack's secure payment page
+        window.location.assign(r.url); // Paystack's secure payment page (or the confirmation)
         return;
       }
       setPayError(r.error);
@@ -244,6 +247,7 @@ export function CheckoutForm({ zones }: { zones: ShippingZone[] }) {
             <button
               type="button"
               onClick={() => setCode(codeInput.trim() || null)}
+              aria-label="Apply discount code"
               className="label rounded-xl border border-line px-4 hover:border-ink"
             >
               Apply
@@ -267,6 +271,38 @@ export function CheckoutForm({ zones }: { zones: ShippingZone[] }) {
             </p>
           )}
 
+          <div className="mt-3 flex gap-2">
+            <label className="flex-1">
+              <span className="sr-only">Gift card code</span>
+              <input placeholder="Gift card (NIMI-…)" value={giftInput} onChange={(e) => setGiftInput(e.target.value.toUpperCase())} className={`${input} uppercase`} />
+            </label>
+            <button
+              type="button"
+              onClick={() => setGiftCode(giftInput.trim() || null)}
+              aria-label="Apply gift card"
+              className="label rounded-xl border border-line px-4 hover:border-ink"
+            >
+              Apply
+            </button>
+          </div>
+          {result?.giftCard && (
+            <p className={`mt-2 text-sm ${result.giftCard.applied ? "text-success" : "text-warning"}`}>
+              {result.giftCard.code}: {result.giftCard.message}
+              {result.giftCard.applied && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setGiftCode(null);
+                    setGiftInput("");
+                  }}
+                  className="ml-2 underline"
+                >
+                  Remove
+                </button>
+              )}
+            </p>
+          )}
+
           <dl className="mt-6 space-y-2 border-t border-line pt-4 text-sm">
             <Row label="Subtotal" value={q ? money(q.subtotal) : "…"} />
             <Row label="Delivery" value={!zone ? "Choose an option" : q ? (q.shipping ? money(q.shipping) : "Free") : "…"} />
@@ -275,7 +311,16 @@ export function CheckoutForm({ zones }: { zones: ShippingZone[] }) {
               <dt>Total</dt>
               <dd className="font-medium">{q ? money(q.total) : "…"}</dd>
             </div>
-            {q && q.currency !== "NGN" && (
+            {q && q.giftCard > 0 && (
+              <>
+                <Row label="Gift card" value={`−${money(q.giftCard)}`} />
+                <div className="flex items-baseline justify-between text-lg">
+                  <dt>To pay</dt>
+                  <dd className="font-medium">{money(q.due)}</dd>
+                </div>
+              </>
+            )}
+            {q && q.currency !== "NGN" && q.due > 0 && (
               <p className="text-xs text-muted">
                 Paystack charges in Naira: {formatAmount("NGN", q.totalNgn)}, at today&apos;s rate of{" "}
                 {formatAmount("NGN", q.fxRate)} per {formatAmount(q.currency, 1).replace(/[\d.,]+$/, "")}1. Your bank converts it
@@ -295,7 +340,15 @@ export function CheckoutForm({ zones }: { zones: ShippingZone[] }) {
             disabled={!ready || paying}
             className="label mt-6 w-full rounded-full bg-accent py-5 text-accent-ink transition-opacity hover:opacity-85 disabled:opacity-50"
           >
-            {paying ? "Taking you to Paystack…" : q && zone ? `Pay ${money(q.total)}` : "Choose delivery to continue"}
+            {!q || !zone
+              ? "Choose delivery to continue"
+              : q.due === 0
+                ? paying
+                  ? "Placing your order…"
+                  : "Place order, paid by gift card"
+                : paying
+                  ? "Taking you to Paystack…"
+                  : `Pay ${money(q.due)}`}
           </button>
           <p className="mt-3 text-center text-xs text-muted">Secure payment by Paystack: card, bank transfer or USSD.</p>
         </div>

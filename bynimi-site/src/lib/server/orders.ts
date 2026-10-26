@@ -1,6 +1,7 @@
 import "server-only";
 import { quote, type Discount, type Quote } from "@/lib/checkout";
-import type { CurrencyCode } from "@/lib/currency";
+import { formatAmount, type CurrencyCode } from "@/lib/currency";
+import { normaliseGiftCardCode } from "@/lib/gift-cards";
 import { adminDb } from "./admin-db";
 import { nairaPerUnit } from "./fx";
 import { notifyOrderPaid } from "./notify";
@@ -27,6 +28,7 @@ export type PricedCart = {
   quote: Quote;
   zone: { id: string; name: string; countries: string[]; isPickup: boolean } | null;
   discount: { code: string; applied: boolean; message: string } | null;
+  giftCard: { code: string; applied: boolean; message: string } | null;
 };
 
 type VariantRow = {
@@ -41,7 +43,7 @@ type VariantRow = {
 /**
  * Prices a bag from fresh database values (never the browser's numbers):
  * current prices and stock, the delivery zone, any discount code, and the
- * day's exchange rate. Quantities above what's in stock are reduced, with a
+ * day's exchange rate, and any gift card. Quantities above what's in stock are reduced, with a
  * problem reported for each so the bag can be corrected.
  */
 export async function priceCart({
@@ -49,12 +51,14 @@ export async function priceCart({
   currency,
   zoneId,
   code,
+  giftCode = null,
   email,
 }: {
   lines: CartRequestLine[];
   currency: CurrencyCode;
   zoneId: string | null;
   code: string | null;
+  giftCode?: string | null;
   email: string | null;
 }): Promise<PricedCart> {
   const db = adminDb();
@@ -138,6 +142,35 @@ export async function priceCart({
     discountInfo = { code: normalised, applied: ok, message };
   }
 
+  // Gift card: active, in date, in this order's currency, with money on it.
+  let giftCardBalance = 0;
+  let giftInfo: PricedCart["giftCard"] = null;
+  if (giftCode?.trim()) {
+    const normalisedGift = normaliseGiftCardCode(giftCode);
+    let message = "We couldn't find that gift card. Please check the code.";
+    let ok = false;
+    if (normalisedGift) {
+      const { data: card } = await db
+        .from("gift_cards")
+        .select("status, currency, balance, expires_at")
+        .eq("code", normalisedGift)
+        .maybeSingle();
+      if (card?.status === "active") {
+        const balance = Number(card.balance);
+        if (card.expires_at && Date.parse(card.expires_at) < Date.now()) message = "That gift card has expired.";
+        else if (balance <= 0) message = "That gift card has been fully spent.";
+        else if (card.currency.trim() !== currency) {
+          message = `That gift card is in ${card.currency.trim()}. Switch the currency (top of the page) to ${card.currency.trim()} to use it.`;
+        } else {
+          ok = true;
+          giftCardBalance = balance;
+          message = `Balance ${formatAmount(currency, balance)}`;
+        }
+      }
+    }
+    giftInfo = { code: normalisedGift ?? giftCode.trim().toUpperCase(), applied: ok, message };
+  }
+
   const fallback = Object.fromEntries((currencies.data ?? []).map((c) => [c.code.trim(), Number(c.ngn_per_unit)]));
   const fxRate = await nairaPerUnit(currency, fallback);
   const z = zone.data;
@@ -150,9 +183,11 @@ export async function priceCart({
       lines: items.map((i) => ({ sku: i.sku, priceNgn: i.priceNgn, quantity: i.quantity })),
       zone: z ? { id: z.id, priceNgn: z.price_ngn, freeOrdersLeft: z.free_orders_left } : null,
       discount,
+      giftCardBalance,
     }),
     zone: z ? { id: z.id, name: z.name, countries: z.countries, isPickup: z.is_pickup } : null,
     discount: discountInfo,
+    giftCard: giftInfo,
   };
 }
 
@@ -166,6 +201,7 @@ export type OrderSummary = {
   shipping: number;
   discount: number;
   total: number;
+  giftCard: number;
   totalNgn: number;
   zoneName: string;
   items: { name: string; variantLabel: string | null; quantity: number; unitPrice: number; image: string | null }[];
@@ -174,13 +210,13 @@ export type OrderSummary = {
 export async function getOrderSummary(reference: string): Promise<OrderSummary | null> {
   const { data } = await adminDb()
     .from("orders")
-    .select("reference, status, name, email, currency, subtotal, shipping, discount, total, total_ngn, shipping_zones (name), order_items (name, variant_label, quantity, unit_price, image)")
+    .select("reference, status, name, email, currency, subtotal, shipping, discount, total, gift_card_amount, total_ngn, shipping_zones (name), order_items (name, variant_label, quantity, unit_price, image)")
     .eq("reference", reference)
     .maybeSingle();
   if (!data) return null;
   const d = data as unknown as {
     reference: string; status: string; name: string; email: string; currency: CurrencyCode;
-    subtotal: string; shipping: string; discount: string; total: string; total_ngn: number;
+    subtotal: string; shipping: string; discount: string; total: string; gift_card_amount: string; total_ngn: number;
     shipping_zones: { name: string } | null;
     order_items: { name: string; variant_label: string | null; quantity: number; unit_price: string; image: string | null }[];
   };
@@ -194,6 +230,7 @@ export async function getOrderSummary(reference: string): Promise<OrderSummary |
     shipping: Number(d.shipping),
     discount: Number(d.discount),
     total: Number(d.total),
+    giftCard: Number(d.gift_card_amount),
     totalNgn: d.total_ngn,
     zoneName: d.shipping_zones?.name ?? "",
     items: d.order_items.map((i) => ({ name: i.name, variantLabel: i.variant_label, quantity: i.quantity, unitPrice: Number(i.unit_price), image: i.image })),
@@ -201,22 +238,32 @@ export async function getOrderSummary(reference: string): Promise<OrderSummary |
 }
 
 /**
+ * Records an order as paid (once) and sends the emails the first time.
+ * `paidKobo` is what Paystack took: 0 for an order a gift card paid in full.
+ */
+export async function recordPayment(reference: string, paidKobo: number, paystackRef: string | null): Promise<"paid" | "already_paid"> {
+  const { data, error } = await adminDb().rpc("mark_order_paid", {
+    ref: reference,
+    paid_kobo: paidKobo,
+    paystack_ref: paystackRef,
+  });
+  if (error) throw error;
+  if (data !== "paid") return "already_paid";
+  const summary = await getOrderSummary(reference);
+  if (summary) await notifyOrderPaid(summary).catch((e) => console.error("order emails failed", e));
+  return "paid";
+}
+
+/**
  * Checks a payment with Paystack and records it. Used by the return page and
  * the webhook; whichever gets there first records it and sends the emails.
  */
 export async function confirmPayment(reference: string): Promise<"paid" | "already_paid" | "unpaid"> {
+  // Already recorded (including orders a gift card paid in full, which never
+  // went to Paystack): nothing to check.
+  const { data: order } = await adminDb().from("orders").select("status").eq("reference", reference).maybeSingle();
+  if (order && ["paid", "fulfilled", "refunded"].includes(order.status)) return "already_paid";
   const tx = await verifyPayment(reference);
   if (tx.status !== "success" || tx.currency !== "NGN") return "unpaid";
-  const { data, error } = await adminDb().rpc("mark_order_paid", {
-    ref: reference,
-    paid_kobo: tx.amount,
-    paystack_ref: String(tx.id),
-  });
-  if (error) throw error;
-  if (data === "paid") {
-    const summary = await getOrderSummary(reference);
-    if (summary) await notifyOrderPaid(summary).catch((e) => console.error("order emails failed", e));
-    return "paid";
-  }
-  return "already_paid";
+  return recordPayment(reference, tx.amount, String(tx.id));
 }
