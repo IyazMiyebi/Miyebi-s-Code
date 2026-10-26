@@ -59,8 +59,20 @@
           `<div class="ed-scr"><span class="ed-scr__st ${st.cls}" data-scr="${i}-${j}">${st.text}</span>
             <button type="button" class="hbtn" data-ed="shuffle" data-i="${i}" data-j="${j}">Shuffle</button></div>`;
       }
-      case "quiz":
-        return input(`${p}.q`, "Question", { area: true, wide: true }) + input(`${p}.a`, "Answer (only the host sees it until the reveal)", { wide: true });
+      case "quiz": {
+        const noun = r.noun || "Question";
+        const hasHint = r.items.some((x) => x && x.hint) || r.style === "emoji";
+        let html = (hasHint ? input(`${p}.hint`, "Hint shown with it (optional)", { placeholder: "Film, Song…" }) : "")
+          + input(`${p}.q`, r.style === "emoji" ? "Emojis" : noun, { area: r.style !== "emoji", wide: true });
+        if (r.choices) {
+          const fixed = !(it.options && it.options.length) && r.options;
+          if (!fixed) html += input(`${p}.options`, "Choices, one per line", { lines: true, wide: true });
+          const list = (fixed ? r.options : it.options) || [];
+          html += input(`${p}.correct`, "Right choice (its number)", { type: "number", hint: list.length ? list.map((o, k) => `${k + 1} = ${esc(o)}`).join(" · ") : "1 is the first choice." })
+            + input(`${p}.a`, "Extra detail at the reveal (optional)", { wide: true });
+        } else html += input(`${p}.a`, r.turns ? "Example answers (only the host sees them until the reveal)" : "Answer (only the host sees it until the reveal)", { wide: true });
+        return html;
+      }
       case "mini":
         return input(`${p}.name`, "Challenge name") +
           `<label class="ed-field" for="${idFor(p + ".mode")}"><span class="ed-label">How it's played</span>
@@ -90,7 +102,7 @@
     return `
       <section class="ed-round" id="round-${i}" aria-labelledby="round-h-${i}">
         <header class="ed-round__head">
-          <p class="eyebrow">${r.number ? "Round " + r.number : "Extra time"}</p>
+          <p class="eyebrow">${r.number ? "Round " + r.number : r.kind === "tiebreak" ? "Extra time" : "Game library"}</p>
           <h2 class="ed-round__h" id="round-h-${i}">${esc(r.name || "Untitled round")}</h2>
           <span class="ed-count">${n} ${KIND_LABEL[r.kind]}</span>
         </header>
@@ -116,9 +128,9 @@
   }
 
   function rulesHTML() {
-    const { POINTS, TIMERS } = GN.settings.FIELDS;
+    const { POINTS, TIMERS } = GN.settings.fields(draft);
     const row = ([k, label], unit) => `<label class="ed-rule" for="${idFor("rules." + k)}"><span>${label}</span>
-      <span class="set-num"><input id="${idFor("rules." + k)}" type="number" min="0" max="999" step="1" inputmode="numeric" data-path="rules.${k}" data-number="1" value="${draft.rules[k]}"><small>${unit}</small></span></label>`;
+      <span class="set-num"><input id="${idFor("rules." + k)}" type="number" min="0" max="999" step="1" inputmode="numeric" data-path="rules.${k}" data-number="1" value="${draft.rules[k] ?? 0}"><small>${unit}</small></span></label>`;
     return `<section class="ed-round" id="round-rules"><header class="ed-round__head"><p class="eyebrow">Scoring</p><h2 class="ed-round__h">Points and timers</h2></header>
       <div class="ed-rules"><div>${POINTS.map((f) => row(f, "pts")).join("")}</div><div>${TIMERS.map((f) => row(f, "sec")).join("")}</div></div></section>`;
   }
@@ -243,7 +255,7 @@
     const a = b.dataset.ed, i = Number(b.dataset.i), j = Number(b.dataset.j);
     const items = i >= 0 && draft.rounds[i] ? draft.rounds[i].items : null;
     if (a === "add") {
-      items.push(P().BLANK[draft.rounds[i].kind]());
+      items.push(P().BLANK[draft.rounds[i].kind](draft.rounds[i]));
       saveDraft(); render();
       const el = root.querySelector(`[data-item="${i}-${items.length - 1}"] input, [data-item="${i}-${items.length - 1}"] textarea`);
       if (el) { el.scrollIntoView({ block: "center" }); el.focus(); }

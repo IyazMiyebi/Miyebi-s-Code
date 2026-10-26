@@ -14,7 +14,7 @@
   const BLANK = {
     music: () => ({ title: "", artist: "" }),
     scramble: () => ({ answer: "", scrambled: "" }),
-    quiz: () => ({ q: "", a: "" }),
+    quiz: (r) => (r && r.choices ? (r.options ? { q: "", correct: 1, a: "" } : { q: "", options: [], correct: 1, a: "" }) : { q: "", a: "" }),
     mini: () => ({ name: "", mode: "stopwatch", turns: true, text: "", note: "" }),
     category: () => "",
     tiebreak: () => ({ q: "", a: "", value: null })
@@ -58,10 +58,16 @@
               if (it.scrambled && a && !GN.isValidScramble(a, it.scrambled)) err(`${q}.scrambled`, `${n}: the scramble must use exactly the word's letters and not spell it. Clear it to shuffle automatically.`);
               break;
             }
-            case "quiz":
-              if (blankText(it.q)) err(`${q}.q`, `${n}: the question is empty.`);
-              if (blankText(it.a)) err(`${q}.a`, `${n}: the answer is empty.`);
+            case "quiz": {
+              if (blankText(it.q)) err(`${q}.q`, `${n}: the ${(r.noun || "question").toLowerCase()} is empty.`);
+              const opts = (it.options && it.options.length ? it.options : r.options) || [];
+              if (r.choices) {
+                if (opts.length < 2) err(`${q}.options`, `${n}: give at least two choices, one per line.`);
+                const c = Number(it.correct);
+                if (!(Number.isInteger(c) && c >= 1 && c <= opts.length)) err(`${q}.correct`, `${n}: say which choice is right (a number from 1 to ${Math.max(2, opts.length)}).`);
+              } else if (blankText(it.a)) err(`${q}.a`, `${n}: the answer is empty.`);
               break;
+            }
             case "mini":
               if (blankText(it.name)) err(`${q}.name`, `${n}: the challenge needs a name.`);
               if (blankText(it.text)) err(`${q}.text`, `${n}: explain how it's played.`);
@@ -92,7 +98,9 @@
       pack.rules = { ...base.rules, ...(pack.rules || {}) };
       Object.keys(pack.rules).forEach((k) => { pack.rules[k] = Math.max(0, Math.min(999, Math.round(Number(pack.rules[k]) || 0))); });
       pack.rounds = base.rounds.map((b) => {
-        const r = (input.rounds || []).find((x) => x && x.kind === b.kind) || b;
+        // Match rounds by id; older files without ids match by kind (first of each kind only).
+        const firstOfKind = base.rounds.find((x) => x.kind === b.kind) === b;
+        const r = (input.rounds || []).find((x) => x && x.id === b.id) || (firstOfKind && (input.rounds || []).find((x) => x && x.kind === b.kind && !x.id)) || b;
         const out = { ...clone(b), ...clone(r), id: b.id, kind: b.kind, number: b.number };
         out.name = trim(out.name);
         out.subtitle = trim(out.subtitle || "") || undefined;
@@ -104,6 +112,11 @@
           if (b.kind === "scramble") { o.answer = (o.answer || "").toUpperCase().replace(/\s/g, ""); o.scrambled = (o.scrambled || "").toUpperCase().replace(/\s/g, ""); }
           if (b.kind === "tiebreak" && o.value != null && o.value !== "") o.value = Number(String(o.value).replace(/[,\s]/g, ""));
           if (b.kind === "mini" && !(o.prompts && o.prompts.length)) delete o.prompts;
+          if (b.kind === "quiz") {
+            if (!(o.options && o.options.length)) delete o.options;
+            if (o.correct != null && o.correct !== "") o.correct = Number(o.correct); else delete o.correct;
+            if (!o.hint) delete o.hint;
+          }
           return o;
         });
         return out;
@@ -117,15 +130,12 @@
       const pack = P.normalize(input);
       const s = S();
       if (s.show.round != null) GN.game.exit();
-      const oldMusic = (s.pack.rounds.find((r) => r.kind === "music") || { items: [] }).items;
-      const newRound = pack.rounds.find((r) => r.kind === "music");
+      // Keep the clips found for songs that are still in the pack.
       const music = {};
-      if (newRound) {
-        newRound.items.forEach((it, i) => {
-          const old = oldMusic[i], k = `${newRound.id}:${i}`;
-          if (old && old.title === it.title && old.artist === it.artist && s.music[k]) music[k] = s.music[k];
-        });
-      }
+      pack.rounds.filter((r) => r.kind === "music").forEach((r) => r.items.forEach((_, i) => {
+        const k = GN.music.key(r, i);
+        if (s.music[k]) music[k] = s.music[k];
+      }));
       // Identical to the built-in pack: treat it as built-in, so later fixes still arrive.
       const isBuiltIn = builtIn || JSON.stringify(pack) === JSON.stringify(P.normalize(GN.defaultPack));
       GN.store.set({ pack, packCustom: !isBuiltIn, rules: { ...pack.rules }, music });
@@ -161,4 +171,11 @@
       return P.normalize(pack);
     }
   });
+
+  // A custom pack saved before new games were added gets them (with the built-in questions).
+  const s = S();
+  if (GN.role !== "remote" && s.packCustom && GN.defaultPack.rounds.some((b) => !s.pack.rounds.some((r) => r.id === b.id))) {
+    const pack = P.normalize(s.pack);
+    GN.store.set({ pack, rules: { ...pack.rules, ...s.rules } });
+  }
 })();

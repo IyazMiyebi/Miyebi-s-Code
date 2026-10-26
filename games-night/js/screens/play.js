@@ -14,7 +14,7 @@
     return {
       music: `${r.musicBoth} points for title and artist · ${r.musicOne} for one`,
       scramble: `${r.scramble} points per word`,
-      quiz: `${r.brain} points per question`,
+      quiz: `${G().points(round)} points ${round.turns ? "if the team manages it" : "per " + GN.lineup.noun(round, 1)}`,
       mini: `${r.mini} points per win`,
       category: `${r.categoryAnswer} points per answer · ${r.categoryBonus} bonus for the last team standing`,
       tiebreak: "Closest answer wins"
@@ -57,8 +57,15 @@
     }
     // Questions arrive a word at a time.
     const q = item.q || "";
+    const emoji = round.style === "emoji";
     const words = q.split(/\s+/).map((w, i) => `<span class="w" style="--w:${i}">${esc(w)}</span>`).join(" ");
-    return `<p class="q__text${q.length > 90 ? " is-long" : ""}${reveal ? "" : " is-arriving"}">${words}</p>`;
+    const team = G().turnTeam(round, GN.store.get().show.item);
+    const opts = G().options(round, item), right = Number(item.correct) || 0;
+    return (team ? `<p class="turn" style="--team:${GN.colourHex(team.colour)}"><span>Your turn</span> ${esc(team.name)}</p>` : "")
+      + (item.hint ? `<p class="q__hint">${esc(item.hint)}</p>` : "")
+      + `<p class="q__text${q.length > 90 ? " is-long" : ""}${emoji ? " is-emoji" : ""}${reveal ? "" : " is-arriving"}"${emoji ? ` aria-label="Emojis: ${esc(q)}"` : ""}>${words}</p>`
+      + (opts.length ? `<ol class="opts${opts.length === 2 ? " opts--two" : ""}">${opts.map((o, j) =>
+        `<li class="opt${reveal ? (j + 1 === right ? " is-right" : " is-wrong") : ""}" data-opt="${j + 1}" style="--o:${j}"><span class="opt__k" aria-hidden="true">${"ABCDEF"[j]}</span><span class="opt__v">${esc(o)}</span></li>`).join("")}</ol>` : "");
   }
 
   // Slide the scramble tiles into a new order (a reshuffle, or the answer).
@@ -296,7 +303,14 @@
           if (withSound) arrange(view, G().letters(round, G().item()), true);
           return;
         }
+        // Multiple choice: the right option lights up, the others fade.
+        const right = Number((G().item() || {}).correct) || 0;
+        view.querySelectorAll("[data-opt]").forEach((o) => {
+          o.classList.toggle("is-right", Number(o.dataset.opt) === right);
+          o.classList.toggle("is-wrong", Number(o.dataset.opt) !== right);
+        });
         box.hidden = false;
+        box.querySelector("[data-answer-text]").classList.toggle("is-long", text.length > 28);
         cleanups.push(GN.fx.decode(box.querySelector("[data-answer-text]"), text, 900));
         // Short answers are also written large in ASCII behind the question.
         if (round.kind === "tiebreak") GN.categoryView.tiebreak(view);

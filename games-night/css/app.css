@@ -724,6 +724,24 @@ body.is-idle .play__hint { opacity: 0; }
 .q__text.is-long { max-width: 30ch; font-size: clamp(1.9rem, 4.3vw, 5rem); }
 .q.is-reveal .q__text { font-size: clamp(1.5rem, 3vw, 3.2rem); opacity: 0.7; }
 .q__text em { color: var(--ember); }
+/* Emoji puzzles: the emojis are the question, so they're huge. */
+.q__text.is-emoji { display: flex; flex-wrap: wrap; gap: 0.12em 0.3em; max-width: none; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: clamp(3.4rem, 11vw, 11rem); line-height: 1.1; }
+.q.is-reveal .q__text.is-emoji { font-size: clamp(2.4rem, 6vw, 6rem); opacity: 1; }
+.q__hint { margin: 0 0 0.6rem; font-family: var(--f-mono); font-size: var(--t-s); letter-spacing: 0.24em; text-transform: uppercase; color: var(--neon); }
+/* Whose turn it is (games played a team at a time). */
+.turn { display: inline-flex; align-items: baseline; gap: 0.6em; margin: 0 0 1rem; padding: 0.35em 0.9em; border-radius: 999px; background: var(--team); color: var(--ink); font-weight: 900; font-stretch: 70%; font-size: var(--t-l); text-transform: uppercase; line-height: 1.1; }
+.turn span { font-family: var(--f-mono); font-weight: 500; font-stretch: normal; font-size: var(--t-s); letter-spacing: 0.2em; }
+/* Multiple choice. */
+.opts { list-style: none; margin: clamp(16px, 3vh, 32px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: clamp(8px, 1.2vw, 16px); max-width: 1200px; }
+.opts--two { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 900px; }
+.opt { display: flex; align-items: center; gap: 0.8em; min-width: 0; padding: 0.55em 0.9em; border-radius: 16px; background: var(--coal); box-shadow: inset 0 0 0 1px var(--line); font-weight: 800; font-size: var(--t-l); line-height: 1.15; animation: opt-in 0.6s var(--ease-out) backwards; animation-delay: calc(var(--o) * 90ms + 300ms); transition: background-color 0.4s, color 0.4s, opacity 0.4s, transform 0.4s var(--ease-out); }
+.opt__k { flex-shrink: 0; display: grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--line); font-family: var(--f-mono); font-weight: 500; font-size: 0.75em; color: var(--muted); }
+.opt__v { min-width: 0; overflow-wrap: anywhere; }
+.opt.is-right { background: var(--paper); color: var(--ink); transform: scale(1.03); box-shadow: 0 0 0 2px var(--paper), 0 20px 60px -20px var(--neon); }
+.opt.is-right .opt__k { background: var(--ink); color: var(--paper); box-shadow: none; }
+.opt.is-wrong { opacity: 0.32; }
+@keyframes opt-in { from { opacity: 0; transform: translateY(16px); } }
+.calm .opt { animation: none; }
 .tiles { display: flex; flex-wrap: wrap; gap: clamp(6px, 0.9vw, 14px); }
 .tile { display: block; width: clamp(48px, 8vw, 128px); aspect-ratio: 1; perspective: 600px; }
 .tile b {
@@ -788,6 +806,7 @@ body.is-idle .play__hint { opacity: 0; }
   text-wrap: balance;
   text-shadow: 0 0 60px rgba(255, 63, 208, 0.45);
 }
+.answer__v.is-long { font-size: clamp(1.8rem, 4vw, 4.4rem); line-height: 1; text-transform: none; font-stretch: 80%; }
 
 /* Countdown ring */
 .timer { grid-area: timer; position: relative; width: clamp(150px, 19vw, 300px); aspect-ratio: 1; align-self: center; display: grid; place-items: center; container-type: inline-size; }

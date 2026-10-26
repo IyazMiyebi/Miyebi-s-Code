@@ -2,7 +2,8 @@
  * Tonight's line-up: which games are played, in what order, and how many questions each.
  * The games (with all their questions) live in the pack; the line-up only picks from them.
  * A game played twice gets the next questions the second time, never the same ones again.
- * No line-up (null) means the pack's own running order, exactly as before.
+ * No line-up (null) means the pack's own running order: its numbered rounds. Games with
+ * no number are in the library only, ready to be picked.
  *
  *   lineup = { rounds: [{ game: "brain", count: 5 }, …], tiebreak: true }
  */
@@ -18,13 +19,20 @@
     mini: ["challenge", "challenges"],
     category: ["category", "categories"]
   };
-  const noun = (kind, n) => (NOUNS[kind] || NOUNS.quiz)[n === 1 ? 0 : 1];
+  // Pass a round (or game) to use its own word: "statement", "emoji"…
+  const noun = (kindOrRound, n) => {
+    if (kindOrRound && typeof kindOrRound === "object") {
+      if (kindOrRound.noun && kindOrRound.kind === "quiz") { const w = kindOrRound.noun.toLowerCase(); return n === 1 ? w : w + (/(s|x|ch|sh)$/.test(w) ? "es" : "s"); }
+      kindOrRound = kindOrRound.kind;
+    }
+    return (NOUNS[kindOrRound] || NOUNS.quiz)[n === 1 ? 0 : 1];
+  };
 
   // Every game the line-up can use. The tie-breaker isn't one: it's added automatically.
   const library = (pack = S().pack) => pack.rounds.filter((r) => r.kind !== "tiebreak" && r.items.length);
 
-  // The pack's own running order, with every question.
-  const fromPack = (pack = S().pack) => ({ rounds: library(pack).map((g) => ({ game: g.id, count: g.items.length })), tiebreak: true });
+  // The pack's own running order (its numbered rounds), with every question.
+  const fromPack = (pack = S().pack) => ({ rounds: library(pack).filter((g) => g.number).map((g) => ({ game: g.id, count: g.items.length })), tiebreak: true });
 
   // How many of a game's questions are still free for line-up slot `index`.
   function left(pack, rounds, index) {
@@ -37,7 +45,7 @@
 
   // Turn the line-up into the rounds the show plays (same shape as the pack's rounds).
   function build(pack, lineup) {
-    if (!lineup || !Array.isArray(lineup.rounds)) return pack.rounds;
+    if (!lineup || !Array.isArray(lineup.rounds)) lineup = fromPack(pack);
     const games = library(pack), used = {}, parts = {}, out = [];
     for (const entry of lineup.rounds) {
       const g = games.find((x) => x.id === entry.game);
@@ -56,7 +64,7 @@
         items
       });
     }
-    if (!out.length) return pack.rounds;
+    if (!out.length) return pack.rounds.filter((r) => r.number || r.kind === "tiebreak");
     if (lineup.tiebreak !== false) out.push(...pack.rounds.filter((r) => r.kind === "tiebreak"));
     return out;
   }
@@ -70,35 +78,36 @@
   };
 
   // Rough length of a round in seconds, for "about 45 minutes".
-  function seconds(kind, n, r) {
+  function seconds(round, r) {
     const each = {
       music: r.musicClipSeconds + r.musicSeconds + 25,
       scramble: r.scrambleSeconds + 20,
-      quiz: r.brainSeconds + 25,
+      quiz: GN.game.seconds(round) + 25,
       mini: 150,
       category: 100
-    }[kind] || 45;
-    return 60 + each * n;
+    }[round.kind] || 45;
+    return 60 + each * round.items.length;
   }
   function minutes(rounds, r = S().rules) {
-    const total = rounds.filter((x) => x.number).reduce((t, x) => t + seconds(x.kind, x.items.length, r), 0);
+    const total = rounds.filter((x) => x.number).reduce((t, x) => t + seconds(x, r), 0);
     return Math.max(5, Math.round(total / 60 / 5) * 5);
   }
 
-  // Ready-made line-ups. Each slot names a kind of game; the first game of that kind is used.
+  // Ready-made line-ups. Each slot names a game (or, failing that, the first game of a kind).
   const PRESETS = [
-    { id: "full", name: "The full night", note: "Every game, every question" },
-    { id: "quick", name: "Quick game", note: "Three short rounds", slots: [["quiz", 5], ["scramble", 4], ["music", 5]] },
-    { id: "quiz", name: "Quiz night", note: "Brains and words", slots: [["quiz", 5], ["scramble", 4], ["quiz", 5], ["scramble", 4]] },
-    { id: "party", name: "Party games", note: "Up on your feet", slots: [["mini", 3], ["music", 5], ["category", 4], ["mini", 2]] }
+    { id: "full", name: "The classic", note: "The original five rounds" },
+    { id: "family", name: "Family night", note: "Something for every age", slots: [["truefalse", 6], ["emoji", 6], ["higherlower", 6], ["mini", 2], ["music", 5]] },
+    { id: "quick", name: "Quick game", note: "Three short rounds", slots: [["truefalse", 5], ["oddoneout", 5], ["music", 5]] },
+    { id: "quiz", name: "Quiz night", note: "Brains, words and facts", slots: [["brain", 5], ["truefalse", 6], ["scramble", 4], ["whosaid", 5], ["higherlower", 6], ["oddoneout", 5]] },
+    { id: "party", name: "Party games", note: "Loud and on your feet", slots: [["mini", 3], ["lyrics", 6], ["namefive", 4], ["category", 4], ["emoji", 6]] }
   ];
   function preset(id, pack = S().pack) {
     const p = PRESETS.find((x) => x.id === id);
     if (!p) return null;
     if (!p.slots) return fromPack(pack);
     const games = library(pack), rounds = [];
-    for (const [kind, count] of p.slots) {
-      const g = games.find((x) => x.kind === kind);
+    for (const [want, count] of p.slots) {
+      const g = games.find((x) => x.id === want) || games.find((x) => x.kind === want);
       if (!g) continue;
       rounds.push({ game: g.id, count });
       const free = left(pack, rounds, rounds.length - 1);

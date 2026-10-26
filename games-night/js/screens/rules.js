@@ -13,7 +13,7 @@
       const SCORING = {
         music: `${r.musicBoth} for title and artist · ${r.musicOne} for one`,
         scramble: `${r.scramble} per word`,
-        quiz: `${r.brain} per question`,
+        quiz: "",
         mini: `${r.mini} per win`,
         category: `${r.categoryAnswer} per answer · ${r.categoryBonus} bonus for the last team standing`,
         tiebreak: "Closest answer wins"
@@ -22,7 +22,8 @@
       const rounds = GN.rounds();
       const n = rounds.filter((x) => x.number).length;
       const scoring = rounds.filter((x, i) => rounds.findIndex((y) => (y.game || y.id) === (x.game || x.id)) === i)
-        .map((x) => [esc(x.game ? GN.store.get().pack.rounds.find((g) => g.id === x.game).name : x.name), SCORING[x.kind] || ""]);
+        .map((x) => [esc(x.game ? GN.store.get().pack.rounds.find((g) => g.id === x.game).name : x.name),
+          x.kind === "quiz" ? `${GN.game.points(x)} ${x.turns ? "for each team that manages it" : "per " + GN.lineup.noun(x, 1)}` : SCORING[x.kind] || ""]);
 
       root.innerHTML = `
         <div class="rules">

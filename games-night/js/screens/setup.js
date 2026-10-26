@@ -10,6 +10,7 @@
 
   // Each kind of game has its own colour on this screen.
   const TINT = { music: "var(--neon)", scramble: "var(--iris)", quiz: "var(--ember)", mini: "#c6ff3d", category: "#5ce1ff" };
+  const tint = (g) => g.tint || TINT[g.kind] || "var(--paper)";
   const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
   GN.numberWord = (n) => WORDS[n] || String(n);
 
@@ -91,15 +92,15 @@
         }).join("");
         const n = draft.rounds.length;
         return `
-          <li class="slot" style="--tint:${TINT[g.kind] || "var(--paper)"}">
+          <li class="slot" style="--tint:${tint(g)}">
             <span class="slot__no">Round ${i + 1}</span>
             <label class="slot__game"><span class="sr">Game for round ${i + 1}</span>
               <select class="field__input" data-game="${i}">${options}</select></label>
             <p class="slot__blurb">${esc(g.blurb || "")}</p>
             <div class="slot__qs">
-              <button type="button" class="step-btn" data-count="${i}" data-by="-1" ${e.count <= 1 ? "disabled" : ""} aria-label="Fewer ${L().noun(g.kind, 2)} in round ${i + 1}">−</button>
-              <span class="slot__count"><b>${e.count}</b> ${L().noun(g.kind, e.count)}</span>
-              <button type="button" class="step-btn" data-count="${i}" data-by="1" ${e.count >= free ? "disabled" : ""} aria-label="More ${L().noun(g.kind, 2)} in round ${i + 1}">+</button>
+              <button type="button" class="step-btn" data-count="${i}" data-by="-1" ${e.count <= 1 ? "disabled" : ""} aria-label="Fewer ${L().noun(g, 2)} in round ${i + 1}">−</button>
+              <span class="slot__count"><b>${e.count}</b> ${L().noun(g, e.count)}</span>
+              <button type="button" class="step-btn" data-count="${i}" data-by="1" ${e.count >= free ? "disabled" : ""} aria-label="More ${L().noun(g, 2)} in round ${i + 1}">+</button>
             </div>
             <div class="slot__move">
               <button type="button" class="step-btn" data-move="${i}" data-by="-1" ${i === 0 ? "disabled" : ""} aria-label="Move round ${i + 1} earlier">↑</button>

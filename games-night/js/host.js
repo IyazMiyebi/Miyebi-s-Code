@@ -295,7 +295,11 @@
             : `Music clip ${sh.item + 1}. No clip found: play it from your phone, then start the timer.`;
           else if (round.kind === "mini") { q = `${item.name}: ${item.text}`; a = item.note || ""; }
           else if (round.kind === "category") { q = `Category: ${typeof item === "string" ? item : item.name}`; a = ""; }
-          else q = item.q || "";
+          else {
+            const opts = G().options(round, item), team = G().turnTeam(round, sh.item);
+            q = (team ? `${team.name}'s turn. ` : "") + (item.hint ? `(${item.hint}) ` : "") + (item.q || "")
+              + (opts.length ? "  ·  " + opts.map((o, j) => `${"ABCDEF"[j]}: ${o}`).join("  ·  ") : "");
+          }
         }
         $("[data-q]").textContent = q;
         $("[data-a]").textContent = a || "–";

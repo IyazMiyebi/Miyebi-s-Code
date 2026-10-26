@@ -3,7 +3,7 @@
  * after that it opens with no internet at all. When online it always loads the
  * latest files. Bump VERSION when the file list changes.
  */
-const VERSION = "gn-app1-1";
+const VERSION = "gn-app2-1";
 const FILES = [
   "./",
   "index.html",

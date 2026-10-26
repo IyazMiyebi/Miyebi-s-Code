@@ -19,6 +19,8 @@
     // Seconds on the clock for a round's questions.
     seconds(round) {
       const r = S().rules;
+      // Question games can have their own timer ("trueFalseSeconds"); Brain Games' otherwise.
+      if (round.kind === "quiz" && round.rulesKey && r[round.rulesKey + "Seconds"] != null) return r[round.rulesKey + "Seconds"];
       return { music: r.musicSeconds, scramble: r.scrambleSeconds, quiz: r.brainSeconds, tiebreak: r.brainSeconds,
         category: r.categoryTurnSeconds, mini: r.memoryShowSeconds }[round.kind] || 30;
     },
@@ -26,6 +28,7 @@
     points(round) {
       const r = S().rules;
       if (!round) return 10;
+      if (round.kind === "quiz" && round.rulesKey && r[round.rulesKey] != null) return r[round.rulesKey];
       return { music: r.musicBoth, scramble: r.scramble, quiz: r.brain, mini: r.mini, category: r.categoryAnswer, tiebreak: 10 }[round.kind] || 10;
     },
     // Other quick amounts offered for this round.
@@ -89,7 +92,7 @@
       }
       if (sh.board) return "Hide the scoreboard";
       switch (sh.phase) {
-        case "intro": return !G.playable(round) ? "Show the standings" : round.kind === "mini" ? "Show challenge 1" : round.kind === "category" ? "Show category 1" : "Show question 1";
+        case "intro": return !G.playable(round) ? "Show the standings" : round.kind === "mini" ? "Show challenge 1" : round.kind === "category" ? "Show category 1" : round.noun ? `Show ${round.noun.toLowerCase()} 1` : "Show question 1";
         case "question":
           if (round.kind === "mini") return GN.mini.nextLabel();
           if (round.kind === "category") return GN.category.nextLabel();
@@ -101,7 +104,7 @@
           return "Start the timer";
         case "reveal":
           if (round.kind === "tiebreak") return GN.tiebreak.state().winner ? "Show the standings" : sh.item < round.items.length - 1 ? "Still level: backup question" : "Show the standings";
-          return sh.item < round.items.length - 1 ? `${{ mini: "Challenge", category: "Category" }[round.kind] || "Question"} ${sh.item + 2}` : "Show the standings";
+          return sh.item < round.items.length - 1 ? `${round.noun || { mini: "Challenge", category: "Category" }[round.kind] || "Question"} ${sh.item + 2}` : "Show the standings";
         case "standings": {
           const next = GN.rounds()[sh.round + 1];
           if (next && (next.kind !== "tiebreak" || G.needsTiebreak())) return next.number ? `Start Round ${next.number}` : `Start the ${next.name.toLowerCase()} (scores are level)`;
@@ -113,14 +116,31 @@
     // "Brain Game 04 / 10" style label for the current item.
     itemLabel(round, i) {
       const n = String(i + 1).padStart(2, "0"), of = String(round.items.length).padStart(2, "0");
-      const noun = { quiz: "Brain Game", scramble: "Unscramble", music: "Music Clip", category: "Category", mini: "Challenge", tiebreak: "Tie-breaker" }[round.kind] || "Question";
+      const noun = round.noun || { quiz: "Brain Game", scramble: "Unscramble", music: "Music Clip", category: "Category", mini: "Challenge", tiebreak: "Tie-breaker" }[round.kind] || "Question";
       return round.kind === "tiebreak" ? (i === 0 ? "Tie-breaker" : "Tie-breaker · backup") : `${noun} ${n} / ${of}`;
     },
     answerOf(round, item) {
       if (!item) return "";
       if (round.kind === "music") return `${item.title} · ${item.artist}`;
       if (round.kind === "scramble") return item.answer;
-      return item.a || "";
+      const right = G.choice(round, item);
+      if (right && item.a) return item.a.toLowerCase().startsWith(right.toLowerCase()) ? item.a : `${right}${/[.!?]$/.test(right) ? "" : "."} ${item.a}`;
+      return right || item.a || "";
+    },
+    // Multiple choice: the options for a question (its own, or the round's, like True/False).
+    options(round, item) {
+      const list = (item && Array.isArray(item.options) && item.options.length ? item.options : round.options) || [];
+      return list.filter(Boolean);
+    },
+    // The right option's text (`correct` counts from 1), or "" if it isn't multiple choice.
+    choice(round, item) {
+      const list = G.options(round, item);
+      return list[(Number(item && item.correct) || 0) - 1] || "";
+    },
+    // Games played a team at a time (Name 5): whose turn this question is.
+    turnTeam(round, i) {
+      const teams = S().teams;
+      return round && round.turns && round.kind === "quiz" && teams.length ? teams[i % teams.length] : null;
     },
     firstUnplayed() {
       const s = S();

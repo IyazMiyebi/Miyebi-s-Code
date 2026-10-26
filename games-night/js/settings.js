@@ -23,6 +23,16 @@
     ["memoryWriteSeconds", "Memory Tray: writing"]
   ];
 
+  // Games with their own points and timer (True or False…) get rows too.
+  function fields(pack = GN.store.get().pack) {
+    const extra = pack.rounds.filter((r) => r.kind === "quiz" && r.rulesKey && r.rulesKey !== "brain");
+    const each = (r) => (r.turns ? "per turn" : "per " + GN.lineup.noun(r, 1));
+    return {
+      POINTS: [...POINTS, ...extra.map((r) => [r.rulesKey, `${r.name}: ${each(r)}`])],
+      TIMERS: [...TIMERS, ...extra.map((r) => [r.rulesKey + "Seconds", `${r.name}: ${each(r)}`])]
+    };
+  }
+
   function numberRow([key, label], value, unit) {
     return `<label class="set-row"><span>${label}</span>
       <span class="set-num"><input id="set-${key}" type="number" inputmode="numeric" min="0" max="999" step="1" value="${value}" data-rule="${key}"><small>${unit}</small></span></label>`;
@@ -30,6 +40,7 @@
 
   function render() {
     const { rules, settings } = GN.store.get();
+    const F = fields();
     dlg.innerHTML = `
       <form method="dialog" class="settings__inner">
         <header class="settings__head">
@@ -38,8 +49,8 @@
         </header>
         <p class="settings__saved">Changes save straight away.</p>
         <div class="settings__cols">
-          <section><h3 class="settings__h">Points</h3>${POINTS.map((p) => numberRow(p, rules[p[0]], "pts")).join("")}</section>
-          <section><h3 class="settings__h">Timers</h3>${TIMERS.map((p) => numberRow(p, rules[p[0]], "sec")).join("")}</section>
+          <section><h3 class="settings__h">Points</h3>${F.POINTS.map((p) => numberRow(p, rules[p[0]] ?? 0, "pts")).join("")}</section>
+          <section><h3 class="settings__h">Timers</h3>${F.TIMERS.map((p) => numberRow(p, rules[p[0]] ?? 0, "sec")).join("")}</section>
           <section>
             <h3 class="settings__h">Show</h3>
             <label class="set-row"><span>Sound effects</span>
@@ -117,7 +128,8 @@
   dlg.addEventListener("click", (e) => { if (e.target.closest("[data-edit-open]")) GN.openEditor(); });
 
   GN.settings = {
-    FIELDS: { POINTS, TIMERS },
+    get FIELDS() { return fields(); },
+    fields,
     open() {
       render();
       const rp = dlg.querySelector("[data-remote-panel]");

@@ -9,7 +9,7 @@
     switch (round.kind) {
       case "music": return `${round.items.length} clips · ${r.musicSeconds}s to answer`;
       case "scramble": return `${round.items.length} words · ${r.scrambleSeconds}s each`;
-      case "quiz": return `${round.items.length} questions · ${r.brainSeconds}s each`;
+      case "quiz": return `${round.items.length} ${GN.lineup.noun(round, round.items.length)} · ${GN.game.seconds(round)}s ${round.turns ? "a turn" : "each"}`;
       case "mini": return `${round.items.length} challenges`;
       case "category": return `${round.items.length} categories · ${r.categoryTurnSeconds}s turns`;
       default: return "Only if the scores are level";
@@ -19,7 +19,7 @@
     switch (round.kind) {
       case "music": return `${r.musicBoth} pts · ${r.musicOne} for one half`;
       case "scramble": return `${r.scramble} pts a word`;
-      case "quiz": return `${r.brain} pts a question`;
+      case "quiz": return `${GN.game.points(round)} pts ${round.turns ? "a turn" : "a " + GN.lineup.noun(round, 1)}`;
       case "mini": return `${r.mini} pts a win`;
       case "category": return `${r.categoryAnswer} pts an answer · ${r.categoryBonus} bonus`;
       default: return "Closest wins";
