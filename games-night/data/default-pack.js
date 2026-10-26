@@ -116,9 +116,9 @@ GN.defaultPack = {
       kind: "mini",
       number: 4,
       name: "Mini Games",
-      blurb: "Five physical challenges.",
+      blurb: "Physical challenges, team against team.",
       howTo: [
-        "Five physical challenges.",
+        "Physical challenges, team against team.",
         "Clear a safe space and get your props ready."
       ],
       points: "20 points per win",

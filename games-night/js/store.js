@@ -39,6 +39,7 @@
       teams: [makeTeam(0), makeTeam(1)],
       settings: { sound: true, motion: "auto", touchControls: "auto" },
       screen: "title",
+      lineup: null,  // tonight's games (js/lineup.js); null = the pack's own running order
       // Where we are in the live show (see js/game.js).
       show: { round: null, item: 0, phase: "intro", timesUp: false, board: false, shuffle: 0,
         clip: { n: 0, stop: 0, item: null, playing: false, pending: false, played: false, error: null } },

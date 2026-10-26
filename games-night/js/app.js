@@ -13,7 +13,7 @@
   if (GN.role === "remote") { GN.remote.startPhone(); return; }
   if (GN.role === "edit") { GN.editor.start(); return; }
 
-  const ORDER = ["title", "teams", "rules", "order", "play"];
+  const ORDER = ["title", "teams", "setup", "rules", "order", "play"];
   const stage = document.getElementById("stage");
   const steps = document.getElementById("steps");
   let current = null; // { id, el, cleanup }

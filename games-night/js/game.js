@@ -12,7 +12,7 @@
   const PLAYABLE = ["quiz", "tiebreak", "music", "scramble", "mini", "category"];
 
   const G = (GN.game = {
-    round() { const s = S(); return s.show.round == null ? null : s.pack.rounds[s.show.round]; },
+    round() { const s = S(); return s.show.round == null ? null : GN.rounds()[s.show.round]; },
     item() { const r = G.round(); return r ? r.items[S().show.item] : null; },
     playable(round) { return !!round && PLAYABLE.includes(round.kind); },
 
@@ -73,7 +73,7 @@
           return sh.item < round.items.length - 1 ? G.goQuestion(sh.item + 1) : G.toStandings();
         case "standings": {
           // The tie-breaker is only played if the top teams are level; then the finale.
-          const next = s.pack.rounds[sh.round + 1];
+          const next = GN.rounds()[sh.round + 1];
           if (next && (next.kind !== "tiebreak" || G.needsTiebreak())) return G.startRound(sh.round + 1);
           return G.finale();
         }
@@ -84,7 +84,7 @@
       const s = S(), sh = s.show, round = G.round(), t = s.timer;
       if (!round) {
         if (s.screen === "finale") return "Replay the reveal";
-        const r = s.pack.rounds[G.firstUnplayed()];
+        const r = GN.rounds()[G.firstUnplayed()];
         return r.number ? `Start Round ${r.number}` : `Start the ${r.name.toLowerCase()}`;
       }
       if (sh.board) return "Hide the scoreboard";
@@ -103,7 +103,7 @@
           if (round.kind === "tiebreak") return GN.tiebreak.state().winner ? "Show the standings" : sh.item < round.items.length - 1 ? "Still level: backup question" : "Show the standings";
           return sh.item < round.items.length - 1 ? `${{ mini: "Challenge", category: "Category" }[round.kind] || "Question"} ${sh.item + 2}` : "Show the standings";
         case "standings": {
-          const next = s.pack.rounds[sh.round + 1];
+          const next = GN.rounds()[sh.round + 1];
           if (next && (next.kind !== "tiebreak" || G.needsTiebreak())) return next.number ? `Start Round ${next.number}` : `Start the ${next.name.toLowerCase()} (scores are level)`;
           return "Reveal the winner";
         }
@@ -124,7 +124,7 @@
     },
     firstUnplayed() {
       const s = S();
-      const i = s.pack.rounds.findIndex((r) => r.number && !s.played.includes(r.id));
+      const i = GN.rounds().findIndex((r) => r.number && !s.played.includes(r.id));
       return i === -1 ? 0 : i;
     },
 
@@ -135,7 +135,7 @@
       switch (sh.phase) {
         case "intro":
           if (sh.round > 0) {
-            const prev = s.pack.rounds[sh.round - 1];
+            const prev = GN.rounds()[sh.round - 1];
             set({ show: { ...sh, round: sh.round - 1, item: prev.items.length - 1, phase: "standings", timesUp: false } });
           } else set({ screen: "order", show: { ...sh, round: null } });
           return;

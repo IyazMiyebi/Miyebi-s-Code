@@ -8,7 +8,16 @@ needs no sign-up, and works offline after the first visit.
 1. Open the show on the laptop, connect the TV and set the display to **Extend**.
 2. Drag the show onto the TV, press **F**, and **click it once** (so it can make sound).
 3. Press **H** for the host controls on the laptop, then **Get clips ready**.
-4. Set up the teams, then keep pressing **Space**.
+4. Set up the teams, pick the games, then keep pressing **Space**.
+
+### Picking the games
+
+After the teams comes **Pick the games**: choose how many rounds (up to 10), which game each
+round is, and how many questions it has. A game can be played more than once; each time it
+gets the next questions in the pack, never the same ones again. Ready-made line-ups are one
+tap away (The full night, Quick game, Quiz night, Party games), and the tie-breaker can be
+switched off. Changing the games in the middle of a game starts the scores again, so the
+screen asks first.
 
 The printable **host cheat sheet** (`cheatsheet.html`, also under Settings and in the host
 controls) has the keys, the setup and a "before the night" checklist on one A4 page.
