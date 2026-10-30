@@ -37,7 +37,7 @@ python3 -m http.server 8000
 One-time setup in the Vercel dashboard:
 
 1. **Add New → Project**, import `IyazMiyebi/Miyebi-s-Code` again. The existing `miyebi-s-code` project serves `bynimi-site`, so Halo needs its own project; name it e.g. `halo-energy`.
-2. Set **Root Directory** to `halo-energy`. Framework preset: **Other**. Leave build and output settings empty.
+2. Set **Root Directory** to `halo-energy`. Framework preset: **Other**. Leave build and output settings empty. (The import screen's folder picker only lists folders on `main`. If `halo-energy` isn't there yet, import anyway, then type `halo-energy` under **Settings → Build and Deployment → Root Directory** and redeploy.)
 3. **Deploy.** Every push to `main` then updates production, and every pull request gets its own preview URL.
 4. To use your own domain: **Settings → Domains**, add it, and follow the DNS instructions. Then replace `https://www.example.com` in `sitemap.xml` and `robots.txt`.
 
