@@ -30,6 +30,17 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
+## Deploy on Vercel
+
+`vercel.json` serves the folder as a static site (no build step) with clean URLs (`/equipment` instead of `/equipment.html`), basic security headers and asset caching. `.vercelignore` keeps `docs/`, `partials/`, `scripts/` and this README off the public site.
+
+One-time setup in the Vercel dashboard:
+
+1. **Add New → Project**, import `IyazMiyebi/Miyebi-s-Code` (install the Vercel GitHub app on the repo if asked).
+2. Set **Root Directory** to `halo-energy`. Framework preset: **Other**. Leave build and output settings empty.
+3. **Deploy.** Every push to `main` then updates production, and every pull request gets its own preview URL.
+4. To use your own domain: **Settings → Domains**, add it, and follow the DNS instructions. Then replace `https://www.example.com` in `sitemap.xml` and `robots.txt`.
+
 ## Editing
 
 - **Header, footer or shared head:** edit the file in `partials/`, then run `node scripts/sync-partials.mjs`. Each page marks the regions with `<!-- header:start -->` / `<!-- header:end -->` (and likewise `head`, `footer`), and sets its active nav item with `<body data-nav="…">`.
