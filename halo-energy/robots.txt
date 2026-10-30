@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /brand.html
+Disallow: /partials/
+Disallow: /scripts/
+Disallow: /docs/
+
+# Replace with the production domain before launch.
+Sitemap: https://www.example.com/sitemap.xml
